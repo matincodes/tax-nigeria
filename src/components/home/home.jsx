@@ -1,12 +1,12 @@
+import TopNav from "../topNav/TopNav";
+import { Hero } from "./Hero";
+
 const Home = () => {
     return ( 
-        <div>
-            <header>
-                <nav>
-                                   
-                </nav>
-            </header>
-        </div>
+        <>
+        <TopNav/>
+        <Hero/>
+        </>
      );
 }
  

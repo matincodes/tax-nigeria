@@ -1,0 +1,8 @@
+html, body {
+    font-family: "Montserrat";
+}
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
