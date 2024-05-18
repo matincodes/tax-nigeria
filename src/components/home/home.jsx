@@ -1,4 +1,4 @@
-import TopNav from "../topNav/TopNav";
+import TopNav from "./topNav/TopNav";
 import { Hero } from "./Hero";
 
 const Home = () => {
