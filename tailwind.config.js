@@ -5,10 +5,12 @@ module.exports = {
     extend: {
       colors:{
         "tax-gray": "#F2F2F2",
-        "tax-lime": "#B0C892"
+        "tax-lime": "#B0C892",
+        "tax-blue": "#4E72D1"
       },
       fontFamily: {
-        "manrope": ['Manrope', "sans-serif"]
+        "manrope": ['Manrope', "sans-serif"],
+        "montserrat": ['Montserrat', "sans-serif"]
       }
     },
   },
