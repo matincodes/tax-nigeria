@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import DashNav from "../../routes/dashnav/dashnav";
 
-
 const Dashboard = () => {
     return ( 
         <Routes>

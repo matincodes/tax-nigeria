@@ -31,6 +31,17 @@ const DashNav = () => {
                             ))
                         }
                     </ul>
+                    <ul>
+                        {
+                            navData.slice(-2).map((index, items) =>(
+                                <li key={index}>
+                                    <Link>
+
+                                    </Link>
+                                </li>
+                            ))
+                        }
+                    </ul>
                 </div>
             </div>
             <Outlet/>
