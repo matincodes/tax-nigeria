@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export default function TopNav() {
+const  TopNav = () => {
   return (
     <nav className="w-full px-4 sm:px-6 py-3 inset-x-0 top-0 sticky sm:py-4 flex items-center justify-between bg-[#0C0E40] text-gray-50">
       <div>
@@ -24,3 +24,5 @@ export default function TopNav() {
     </nav>
   );
 }
+
+export default TopNav;

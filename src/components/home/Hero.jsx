@@ -50,13 +50,13 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="flex text-black my-12 flex-col items-center justify-center md:items-start md:justify-start gap-5 px-4 sm:px-8 md:px-10">
-       <div className="flex items-start justify-start gap-y-3">
-       <h2 className="font-semibold text-base sm:text-lg md:text-xl">
+      <div className="flex text-black my-8 flex-col md:flex-row items-center justify-center md:items-center md:justify-start gap-5 px-4 sm:px-8 md:px-10">
+       <div className="flex items-center md:items-start flex-col justify-center md:justify-start gap-y-3">
+       <h2 className="font-semibold text-lg sm:text-xl md:text-3xl">
           Facilitate tax payments across borders seamlessly, without fees, for
           effortless financial management.
         </h2>
-        <p className="">
+        <p className="text-sm sm:text-base md:text-lg">
           Manage taxes effortlessly. Pay taxes for zero fees, anytime, anywhere,
           with lightning-speed transfers.
         </p>
