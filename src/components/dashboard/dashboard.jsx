@@ -14,7 +14,6 @@ const Dashboard = () => {
     { title: "Register TaxPayer", href: "" },
     { title: "Register Agent", href: "" },
   ];
-  //
 
   return (
     <div className="p-4 w-[85%] ml-[15%]">

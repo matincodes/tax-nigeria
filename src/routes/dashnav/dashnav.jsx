@@ -12,7 +12,7 @@ const DashNav = () => {
     }
     return ( 
         <div className="flex">
-            <div className="flex flex-col flex-start h-screen bg-tax-gray w-[15%]">
+            <div className="flex flex-col flex-start h-screen bg-tax-gray w-[20%]">
                 <div className="px-10 py-12">
                     <img src={Logo} alt="Logo" />
                 </div>
@@ -36,7 +36,10 @@ const DashNav = () => {
                             navData.slice(-2).map((index, items) =>(
                                 <li key={index}>
                                     <Link>
-
+                                        <img src={items.icon} alt={items.label} />
+                                        <p className="ml-3 text-base">
+                                            {items.label}
+                                        </p> 
                                     </Link>
                                 </li>
                             ))
@@ -44,7 +47,18 @@ const DashNav = () => {
                     </ul>
                 </div>
             </div>
-            <Outlet/>
+            <div className="w-full h-screen">
+                <div className="flex flex-end pr-5">
+                    <div className="relative ">
+                        
+                    </div>
+                    <div>
+                    
+                    </div> 
+                </div>
+                 
+                <Outlet/>       
+            </div>
         </div>
      );
 }
