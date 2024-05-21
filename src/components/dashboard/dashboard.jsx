@@ -16,7 +16,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="p-4 w-[85%] ml-[15%]">
+    <div className="p-4 w-full">
       <h2 className="font-semibold text-2xl mb-2">Welcome Back, Nathan</h2>
       <div className="w-full grid grid-cols-10 gap-4">
         <div className="w-full col-span-8">

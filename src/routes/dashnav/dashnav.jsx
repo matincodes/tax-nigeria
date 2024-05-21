@@ -1,6 +1,8 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 import Logo from "../../assets/img/tax-logo.svg";
 import { navData } from "../../data/navData";
+import Notification  from "../../assets/img/notification.svg";
+import ProfilePicture from "../../assets/img/profile-pic.png";
 const DashNav = () => {
     const location = useLocation()
     const isNavActive = (path) => {
@@ -48,12 +50,23 @@ const DashNav = () => {
                 </div>
             </div>
             <div className="w-full h-screen">
-                <div className="flex flex-end pr-5">
-                    <div className="relative ">
-                        
+                <div className="flex justify-end items-center mr-10 mt-5">
+                    <div className="relative mr-5">
+                        <img src={Notification} alt="" />
+                        <span className="absolute right-0 top-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+                                <circle cx="5" cy="5" r="4.5" fill="#534FEB" stroke="white"/>
+                            </svg>
+                        </span>
                     </div>
-                    <div>
-                    
+                    <div className="flex justify-center items-center">
+                        <div className="w-full">
+                            <img src={ProfilePicture} alt="" className="w-[100%]"/>
+                        </div>
+                        <div className="ml-2 flex flex-col font-manrope">
+                            <h4 className="font-medium">Abdulmatin</h4>
+                            <p className="text-gray-400">Admin</p>
+                        </div>
                     </div> 
                 </div>
                  

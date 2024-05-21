@@ -13,7 +13,7 @@ export const navData = [
     {
         label: "Business",
         icon: profile,
-        path: "dashboard/business",
+        path: "/dashboard/business",
         subsection: [
             {
                 label: "Sector Management",
