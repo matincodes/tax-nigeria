@@ -55,6 +55,7 @@ export const navData = [
     },
     {
         label: "Logout",
-        icon: logout
+        icon: logout,
+        path: "/login"
     }
 ]

@@ -4,17 +4,17 @@ import { navData } from "../../data/navData";
 import Notification  from "../../assets/img/notification.svg";
 import ProfilePicture from "../../assets/img/profile-pic.png";
 const DashNav = () => {
-    const location = useLocation()
-    const isNavActive = (path) => {
-        const currentpage = location.pathname.split("/").slice(-1)[0]
+  const location = useLocation();
+  const isNavActive = (path) => {
+    const currentpage = location.pathname.split("/").slice(-1)[0];
 
-        const navpath = path.split("/").slice(-1)[0]
+    const navpath = path.split("/").slice(-1)[0];
 
         return currentpage === navpath
     }
     return ( 
         <div className="flex">
-            <div className="flex flex-col flex-start h-screen bg-tax-gray w-[20%]">
+            <div className="flex flex-col flex-start h-screen bg-tax-gray w-[16%] fixed">
                 <div className="px-10 py-12">
                     <img src={Logo} alt="Logo" />
                 </div>
@@ -22,10 +22,10 @@ const DashNav = () => {
                     <ul className="flex flex-col gap-3 font-manrope">
                         {
                             navData.slice(0, -2).map((items, index) => (
-                                <li key={index} className={`py-2 pl-2 w-[90%] rounded-md ${isNavActive(items.path) ? "bg-tax-lime" : "bg-none"}`}>
+                                <li key={index} className={`py-3 pl-2 w-[90%] rounded-md ${isNavActive(items.path) ? "bg-tax-lime" : "bg-none"}`}>
                                     <Link to={items.path} className="flex items-center">
                                         <img src={items.icon} alt={items.label} />
-                                        <p className="ml-3 text-base">
+                                        <p className="ml-3 text-base text-text-gray">
                                             {items.label}
                                         </p>
                                     </Link>
@@ -33,13 +33,13 @@ const DashNav = () => {
                             ))
                         }
                     </ul>
-                    <ul>
+                    <ul className="pt-16">
                         {
-                            navData.slice(-2).map((index, items) =>(
-                                <li key={index}>
-                                    <Link>
+                            navData.slice(-2).map((items, index) =>(
+                                <li key={index} className={`py-3 pl-2 w-[90%] rounded-md ${isNavActive(items.path) ? "bg-tax-lime" : "bg-none"}`}>
+                                    <Link to={items.path} className="flex items-center">
                                         <img src={items.icon} alt={items.label} />
-                                        <p className="ml-3 text-base">
+                                        <p className="ml-3 text-base text-text-gray">
                                             {items.label}
                                         </p> 
                                     </Link>
@@ -49,7 +49,7 @@ const DashNav = () => {
                     </ul>
                 </div>
             </div>
-            <div className="w-full h-screen">
+            <div className="w-full h-screen ml-[16%]">
                 <div className="flex justify-end items-center mr-10 mt-5">
                     <div className="relative mr-5">
                         <img src={Notification} alt="" />
