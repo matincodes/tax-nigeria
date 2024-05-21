@@ -21,7 +21,7 @@ const LineChart = () => {
     },
     grid: {
       row: {
-        colors: ["#f3f3f3", "transparent"], 
+        colors: ["#f3f3f3", "transparent"],
         opacity: 0.5,
       },
     },
@@ -48,7 +48,7 @@ const LineChart = () => {
   ];
 
   return (
-    <div className="w-full h-full col-span-full rounded-xl bg-gray-200 p-4">
+    <div className="w-full h-full col-span-full rounded-xl shadow bg-gray-100 border p-4">
       <Chart options={options} height={320} series={series} type="line" />
     </div>
   );
