@@ -48,7 +48,7 @@ const LineChart = () => {
   ];
 
   return (
-    <div className="w-full h-full col-span-3 rounded-xl bg-gray-200 p-4">
+    <div className="w-full h-full col-span-full rounded-xl bg-gray-200 p-4">
       <Chart options={options} height={320} series={series} type="line" />
     </div>
   );
