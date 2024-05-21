@@ -29,7 +29,7 @@ const Dashboard = () => {
           </div>
         </div>
         {/** 2 */}
-        <div className="w-full col-span-3 rounded-xl bg-gray-200 p-4">
+        <div className="w-full col-span-3 rounded-xl shadow p-4">
           <div className="w-full flex-col   items-start flex gap-3 mb-3   py-4 px-2">
             <h2 className="text-sm w-full ">Registered TaxPayers</h2>
             <p className="text-2xl text-black">20k</p>

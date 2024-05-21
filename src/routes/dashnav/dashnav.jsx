@@ -1,6 +1,8 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 import Logo from "../../assets/img/tax-logo.svg";
 import { navData } from "../../data/navData";
+import { CiBellOn } from "react-icons/ci";
+import user from "../../assets/img/Ellipse 1.png"
 const DashNav = () => {
   const location = useLocation();
   const isNavActive = (path) => {
@@ -45,9 +47,21 @@ const DashNav = () => {
         </div>
       </div>
       <div className="w-full h-screen">
-        <div className="flex flex-end pr-5">
-          <div className="relative "></div>
-          <div></div>
+        <div className="w-full px-6 items-end flex justify-end py-4">
+          <div className="flex items-center gap-x-3">
+                <button >
+                  <CiBellOn className="text-3xl"/>
+                  </button>
+                  <div className="flex items-start gap-x-2">
+                    <img src={user} alt="" />
+                    <div className="flex flex-col items-start">
+                      <p className="text-sm">Idris Muhammed</p>
+                      <p className="text-gray-500 text-sm">Admin</p>
+                    </div>
+                  </div>
+                
+
+          </div>
         </div>
 
         <Outlet />
