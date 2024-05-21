@@ -29,19 +29,6 @@ const Dashboard = () => {
         </div>
         {/** 2 */}
         <div className="w-full col-span-3 space-y-7">
-          {/*<div className="w-full rounded-xl shadow p-4">
-            <div className="w-full flex-col   items-start flex gap-3 mb-3   py-4 px-2">
-              <h2 className="text-sm w-full ">Registered TaxPayers</h2>
-              <p className="text-2xl text-black">20k</p>
-            </div>
-            <div className="w-full flex-col  items-start flex gap-3 mb-3   py-6 px-5">
-              <h2 className="text-sm w-full">Registered Businesses</h2>
-              <p className="text-xl text-black">7k</p>
-            </div>
-            <div className="w-full flex-col  items-start flex gap-3 mb-3   py-6 px-5">
-              <h2 className="text-sm w-full">Registered Tax Agents</h2>
-              <p className="text-xl text-black">3k</p>
-        </div>*/}
               {
                 inventoryData.slice(-2).map(({title, numbers, imageSrc}, index) => (
                   <Inventories key={index} title={title} metric={numbers} image={imageSrc
