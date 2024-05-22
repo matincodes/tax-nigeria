@@ -26,7 +26,7 @@ const TaxInflow = () => {
           <p>In. Amount</p>
           <p>Status</p>
         </div>
-        {[1, 2, 3, 4].map((_) => (
+        {[1, 2, 3, 4].map((_, index) => (
           <div
             key={_}
             className=" border-b border-gray-300 mb-1 text-sm grid w-full grid-cols-6 p-2 gap-2 "
@@ -37,7 +37,13 @@ const TaxInflow = () => {
               Chukuemeka Emmmanuel
             </p>
             <p>N45,000</p>
-            <p className="text-green-600">Cleared</p>
+            <p
+              className={` ${
+                index === 1 ? "text-yellow-600" : "text-green-600"
+              }`}
+            >
+              {index === 1 ? "Pending" : "Cleared"}
+            </p>
           </div>
         ))}
       </div>
