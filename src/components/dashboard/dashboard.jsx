@@ -1,6 +1,6 @@
 import Inventories from "./inventories/inventories";
 import { inventoryData } from "../../data/inventoryData";
-import LineChart from "./linechart/linechart";
+// import LineChart from "./linechart/linechart";
 import TaxInflow from "./tax-inflow/tax-inflow";
 import { AiOutlinePlus } from "react-icons/ai";
 
@@ -20,7 +20,7 @@ const Dashboard = () => {
         <div className="w-full col-span-9">
           {/** */}
           <div className="w-full grid grid-cols-5 ">
-            <LineChart />
+            {/*<LineChart />*/}
           </div>
           {/** */}
           <div className="w-full mt-3 grid grid-cols-5 gap-3 items-start">
