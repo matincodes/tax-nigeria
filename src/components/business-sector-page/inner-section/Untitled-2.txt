@@ -1,0 +1,1 @@
+("border w-[30px] h-[30px] rounded-full flex place-content-center items-center")}
