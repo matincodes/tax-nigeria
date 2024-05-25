@@ -35,7 +35,7 @@ const InnerTable = () => {
         <thead className="text-[#4C4C4C] text-[14px] grid bg-[#F7F7F7] p-[10px]">
           <tr className=" grid grid-cols-2">
             <th className="text-left ">Business Sector</th>
-            <th className="flex   justify-end">Action</th>
+            <th className="flex justify-end pr-3">Action</th>
           </tr>
         </thead>
 
@@ -48,7 +48,7 @@ const InnerTable = () => {
               <td className="py-[14px] text-left"> {business.sector} </td>
               <td className="py-[14px] flex justify-end items-center">
                 <button type="button" className="w-full mr-4">
-                  <img src={ThreeDotIcon} alt="" className="p-1" />
+                  <img src={ThreeDotIcon} alt="" className="pr-3" />
                 </button>
               </td>
             </tr>
