@@ -1,7 +1,7 @@
 const ConsultantPage = () => {
     return ( 
         <div>
-        
+        Consultant
         </div>
      );
 }
