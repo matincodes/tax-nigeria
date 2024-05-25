@@ -1,4 +1,4 @@
-import Button from "./button/button";
+import Button from "../button/button";
 import InnerTable from "./inner-section/inner-table";
 
 const businessSectorPage = () => {

@@ -2,6 +2,7 @@
 import ThreeDotIcon from "../../../assets/img/Bussiness_Sector/three_dots.svg";
 import { businessSectors } from "../../../data/businessSector";
 import { useState, useEffect } from "react";
+import Pagination from "../../pagination/pagination";
 
 const InnerTable = () => {
   const [paginationNum, setPaginationNum] = useState(0);
@@ -15,7 +16,7 @@ const InnerTable = () => {
     }
     setPaginationNum(paginationNum - 1);
     console.log(paginationNum);
-  };
+  };  
 
   const nextPage = (e) => {
     if (paginationNum === businessSectors.length - 1) {
@@ -30,7 +31,7 @@ const InnerTable = () => {
   }, [paginationNum]);
 
   return (
-    <div className="w-full font-manrope p-1">
+    <div className="w-full font-manrope p-1 mt-[15px]">
       <table className="w-full flex flex-col">
         <thead className="text-[#4C4C4C] text-[14px] grid bg-[#F7F7F7] p-[10px]">
           <tr className=" grid grid-cols-2">
@@ -56,52 +57,8 @@ const InnerTable = () => {
         </tbody>
       </table>
 
-      {/* Pagnation */}
-      <div className="p-2 mt-3 flex font-manrope">
-        <ul className="flex gap-4">
-          <button
-            className={`${
-              sectorSection === businessSectors[0]
-                ? "disabled text-[14px] text-[#74737371]"
-                : "text-[14px]"
-            }`}
-            onClick={sectorSection === businessSectors[0] ? null : prevPage}
-            name="prevPage"
-            disabled={sectorSection === businessSectors[0]}
-          >
-            Previous Page
-          </button>
-
-          {businessSectors.map((sector) => (
-            <button
-              className={`${
-                sectorSection === sector
-                  ? "border w-[30px] h-[30px] rounded-full flex place-content-center items-center bg-tax-blue text-white"
-                  : "border w-[30px] h-[30px] rounded-full flex place-content-center items-center"
-              }`}
-            >
-              <li
-                className="font-semibold text-[14px]"
-                id="sectorId"
-                currentSector={sector.id + 1}
-              >
-                {sector.id + 1}
-              </li>
-            </button>
-          ))}
-
-          {/* Next Page */}
-          <button
-            className="text-[14px]"
-            onClick={nextPage}
-            name="nextPage"
-          >
-            Next Page
-          </button>
-          {/* Next Page */}
-        </ul>
-      </div>
-      {/* Pagnation */}
+      <Pagination prevPage={prevPage} nextPage={nextPage} paginationArray={businessSectors} paginationSection={sectorSection} />
+      
     </div>
   );
 };
