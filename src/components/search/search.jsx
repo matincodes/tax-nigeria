@@ -7,7 +7,7 @@ const Search = () => {
         <img
           src={search}
           alt='search'
-          class='w-4 h-4 text-gray-500'
+          className='w-4 h-4 text-gray-500'
         />
       </div>
       <input
