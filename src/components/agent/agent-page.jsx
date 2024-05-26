@@ -1,7 +1,7 @@
 import Button from "../button/button"
 import InnerTable from "./inner-section/inner-table";
 
-const ConsultantPage = () => {
+const AgentPage = () => {
     return ( 
         <div className="w-full font-manrope p-[30px]">
       {/* Top Part */}
@@ -9,6 +9,7 @@ const ConsultantPage = () => {
         <b className="text-[20px] text-[#4C4C4C]">Consultants</b>
         <Button text="Add New" iconposition="left" icon="+" />
         <Button text="Export Members (CSV)"/>
+        <Button text="Export Members (Excel)"/>
       </div>
       {/* Top Part */}
 
@@ -19,4 +20,4 @@ const ConsultantPage = () => {
      );
 }
  
-export default ConsultantPage;
+export default AgentPage;

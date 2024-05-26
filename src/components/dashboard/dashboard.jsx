@@ -3,8 +3,14 @@ import { inventoryData } from "../../data/inventoryData";
 import LineChart from "./linechart/linechart";
 import TaxInflow from "./tax-inflow/tax-inflow";
 import { AiOutlinePlus } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+
+  const addAgent = () => {
+    navigate("/taxagent-registration")
+  }
   return (
     <div className="p-4 w-full font-manrope">
       <h2 className="font-normal font-manrope text-2xl mb-4">Welcome back, <span className="font-semibold">Idris</span> ☀️</h2>
@@ -32,7 +38,6 @@ const Dashboard = () => {
               {
                 inventoryData.slice(-2).map(({title, numbers, imageSrc}, index) => (
                   <Inventories key={index} title={title} metric={numbers} image={imageSrc
-
                   }/>
                 ))
               }
@@ -43,7 +48,9 @@ const Dashboard = () => {
               <AiOutlinePlus className="text-2xl" />
               <p className="text-sm">Add New Consultant</p>
             </button>
-            <button className="w-[80%] text-white rounded-full gap-x-2 bg-tax-blue flex items-center justify-center px-5 py-3 ">
+            <button 
+              className="w-[80%] text-white rounded-full gap-x-2 bg-tax-blue flex items-center justify-center px-5 py-3"
+              onClick={addAgent}>
               <AiOutlinePlus className="text-2xl" />
               <p className="text-sm">Add New Tax Agent</p>
             </button>
