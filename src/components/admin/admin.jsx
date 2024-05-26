@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import DashNav from "../../routes/dashnav/dashnav";
 import Dashboard from "../dashboard/dashboard";
 import BusinessSector from "../business-sector-page/business-sector-page"
+import TaskCardManagement from "../task-card-management/task-card-management";
 
 const Admin = () => {
     return ( 
@@ -10,6 +11,7 @@ const Admin = () => {
                 <Route path="/" element={<DashNav />}>
                     <Route index element={<Dashboard/> }/>
                     <Route path='business' element={<BusinessSector />} />
+                    <Route path='taxcard' element={<TaskCardManagement />} />
                 </Route>
             </Routes>
         </div>
