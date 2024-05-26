@@ -1,6 +1,6 @@
 import Inventories from "./inventories/inventories";
 import { inventoryData } from "../../data/inventoryData";
-import LineChart from "./linechart/linechart";
+import LineChart from "./lineChart/lineChart";
 import TaxInflow from "./tax-inflow/tax-inflow";
 import { AiOutlinePlus } from "react-icons/ai";
 
