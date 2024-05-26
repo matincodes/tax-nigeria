@@ -1,16 +1,12 @@
 import { HiOutlineDownload } from "react-icons/hi";
-import { IoFilter } from "react-icons/io5";
+import { taxinflowData } from "../../../data/taxinflowData";
 
 const TaxInflow = () => {
   return (
-    <div className="w-full p-4 col-span-full  rounded-xl border shadow">
-      <div className="w-full flex items-center mb-4 justify-between">
-        <p className="font-semibold mb-4">Tax Inflow</p>
+    <div className="w-full py-4 pr-4 col-span-full  rounded-xl border shadow">
+      <div className="w-full flex items-center mb-4 justify-between px-10">
+        <p className="font-bold mb-4 font-poppins text-base">Tax Inflow</p>
         <div className="flex items-center gap-x-3">
-          <button className="flex items-center gap-x-2 border p-1 text-xs">
-            <IoFilter className="text-lg" />
-            <p>Filter</p>
-          </button>
           <button className="bg-[#4E72D1] text-white p-2 flex items-center gap-x-2 rounded-lg text-sm">
             <HiOutlineDownload className="text-xl" />
             <p> Download</p>
@@ -18,15 +14,26 @@ const TaxInflow = () => {
         </div>
       </div>
 
-      <div className="w-full   pb-3">
-        <div className="font-semibold border-b mb-2 grid border-gray-400 text-sm w-full grid-cols-6 p-2 gap-2 ">
+      <div className="w-full pb-3">
+        <div className="font-semibold border-b-2 mb-2 grid border-gray-[#808080] text-sm w-full grid-cols-5 p-2 pl-10 gap-2 font-poppins">
+          <p>Tax ID</p>
+          <p>Agent</p>
           <p>Date</p>
-          <p>TaxID</p>
-          <p className="col-span-2">Agent</p>
-          <p>In. Amount</p>
-          <p>Status</p>
+          <p>Invoiced Amount</p>
+          <p className="pl-16">Status</p>
         </div>
-        {[1, 2, 3, 4].map((_, index) => (
+          {
+            taxinflowData.map((tax, index) => (
+              <div key={index} className="border-b-2 border-gray-[#808080] mb-1 text-sm grid w-full grid-cols-5 p-2 gap-2 pl-10">
+                <p>{tax.taxId}</p>
+                <p>{tax.agent}</p>
+                <p>{tax.date}</p>
+                <p>{tax.amount}</p>
+                <p className={`text-green-600 pl-16 ${tax.status === "Pending" ? "text-[#AF790E]" : ""}`}>{tax.status}</p>
+              </div>
+            ))
+          }
+        {/*[1, 2, 3, 4].map((_, index) => (
           <div
             key={_}
             className=" border-b border-gray-300 mb-1 text-sm grid w-full grid-cols-6 p-2 gap-2 "
@@ -45,7 +52,7 @@ const TaxInflow = () => {
               {index === 1 ? "Pending" : "Cleared"}
             </p>
           </div>
-        ))}
+        ))*/}
       </div>
     </div>
   );
