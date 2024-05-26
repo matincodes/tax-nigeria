@@ -11,7 +11,7 @@ const Admin = () => {
                 <Route path="/" element={<DashNav />}>
                     <Route index element={<Dashboard/> }/>
                     <Route path='business' element={<BusinessSector />} />
-                    <Route path='taskcard' element={<TaskCardManagement />} />
+                    <Route path='taxcard' element={<TaskCardManagement />} />
                 </Route>
             </Routes>
         </div>

@@ -1,6 +1,8 @@
 const TaskCardManagement = () => {
   return (
-    <div>TaskCardManagement</div>
+    <div>
+      <h1>Task Card Management</h1>
+    </div>
   )
 }
 
