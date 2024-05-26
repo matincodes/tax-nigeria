@@ -43,7 +43,7 @@ const TaxAgentReg = () => {
                             </label>
                             <input 
                              type="date"
-                             className="border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded"/>
+                             className="border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-400 rounded"/>
                         </div>
                         <div className="w-full flex flex-col">
                             <label>
@@ -52,26 +52,49 @@ const TaxAgentReg = () => {
                             <input 
                             type="tel" 
                             placeholder="Enter Phone Number"
-                            className="border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded"/>
+                            className="border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-400 rounded"/>
                         </div>
                     </div>
-                    <div className="w-full flex gap-16">
+                    <div className="w-full flex gap-16 pb-5">
                         <div className="w-full flex flex-col">
                             <label>
                                 Tax Agent ID 
                             </label>
                             <p className="border-2 border-tax-blue py-4 px-5 outline-none text-gray-300 rounded">
-                                Enter Tax Agent ID
+                                Tax Agent ID
                              </p>
                         </div>
                         <div className="w-full flex flex-col">
                             <label>
                                 Tax Station
                             </label>
-                            <select className="border-2 border-tax-blue py-4 px-5 outline-none rounded text-gray-300 bg-white">
+                            <select className="border-2 border-tax-blue py-4 px-5 outline-none rounded text-gray-400 bg-white">
                                 <option value="Select Tax Station" key="select">Select Tax Station</option>
                             </select>
                         </div>
+                    </div>
+                    <div className="w-full flex gap-16">
+                        <div className="w-full flex flex-col">
+                            <label>
+                                Consultant ID
+                            </label>
+                            <select className="border-2 border-tax-blue py-4 px-5 outline-none rounded text-gray-400 bg-white">
+                                <option value="Select Tax Station" key="select">Select Tax Station</option>
+                            </select>
+                        </div>
+                        <div className="w-full flex flex-col pb-10">
+                            <label>
+                                Consultant Name
+                            </label>
+                            <select className="border-2 border-tax-blue py-4 px-5 outline-none rounded text-gray-400 bg-white">
+                                <option value="Select Tax Station" key="select">Select Tax Station</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="w-full pb-5">
+                        <button className="bg-tax-blue w-full py-3 text-white rounded-md text-2xl">
+                            Next
+                        </button>
                     </div>
                 </form>
             </div>
