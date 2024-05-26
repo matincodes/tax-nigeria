@@ -16,6 +16,8 @@ const Admin = () => {
                     <Route path='consultant' element={<ConsultantPage />} />
                     <Route path='agent' element={<AgentPage />} />
                     <Route path='taxcard' element={<TaskCardManagement />} />
+                    <Route path="agent-profile" element={<AgentProfile />} />
+                    <Route path="consultant-profile" element={<ConsultantProfile />} />
                 </Route>
             </Routes>
         </div>
