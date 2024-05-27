@@ -7,11 +7,11 @@ import PayerCard from "./payercard/payercard";
 
 const ConsultantProfile = () => {
   return (
-    <div className="w-full p-6  h-full space-y-6">
-      <div className="w-full bg-[#F6F6F6] grid  grid-cols-8 p-6">
+    <div className="w-full p-6 h-full space-y-6">
+      <div className="w-full bg-[#F6F6F6] grid grid-cols-10 p-6">
         <img src={userprofile} alt="" className="col-span-2" />
-        <div className="w-full flex items-start justify-between h-full col-span-6">
-          <div className="text-[#4C4C4C] flex flex-col gap-y-10 items-start justify-start border-r p-2">
+        <div className="w-full flex items-center justify-around h-full col-span-8">
+          <div className="text-[#4C4C4C] flex flex-col gap-y-10 items-start justify-start border-r p-2 pr-14">
             <div className="flex flex-col items-start justify-start gap-y-1">
               <p className="font-medium text-lg">Abdulmatin Abdulrasak</p>
               <p className="text-base">Consultant</p>
@@ -27,7 +27,7 @@ const ConsultantProfile = () => {
               </p>
             </div>
           </div>
-          <div className="text-[#4C4C4C] flex flex-col gap-y-10 items-start justify-start border-r p-2">
+          <div className="text-[#4C4C4C] flex flex-col gap-y-10 items-start justify-start border-r p-2 pr-24">
             <div className="flex flex-col items-start justify-start gap-y-1">
               <p className="font-medium text-lg">Date of Birth</p>
               <p className="text-base">19/05/1996</p>

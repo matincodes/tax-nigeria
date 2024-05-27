@@ -5,6 +5,8 @@ import BusinessSector from "../business-sector-page/business-sector-page"
 import ConsultantPage from "../consultant-page/consultant-page"
 import AgentPage from "../agent/agent-page";
 import TaskCardManagement from "../task-card-management/task-card-management";
+import AgentProfile from "../profile/agentprofile";
+import ConsultantProfile from "../profile/consultantprofile";
 
 const Admin = () => {
     return ( 

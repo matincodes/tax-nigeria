@@ -8,22 +8,38 @@ const LineChart = () => {
       zoom: {
         enabled: false,
       },
+      background: "#F7F7F7"
     },
     dataLabels: {
       enabled: false,
     },
     stroke: {
-      curve: "straight",
+      curve: "smooth",
     },
     title: {
-      text: "Tax",
+      text: "Taxes",
       align: "left",
+      style: {
+        fontFamily: "Poppins",
+        fontWeight: "bold"
+      }
     },
     grid: {
+      xaxis: {
+        lines: {
+            show: true
+        }
+    },   
+    yaxis: {
+        lines: {
+            show: true
+        }
+    },  
       row: {
-        colors: ["#f3f3f3", "transparent"],
+        colors: ["transparent"],
         opacity: 0.5,
       },
+      
     },
     xaxis: {
       categories: [
@@ -36,14 +52,29 @@ const LineChart = () => {
         "Jul",
         "Aug",
         "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
       ],
     },
+    fill: {
+      type: 'gradient',
+      gradient: {
+        shade: 'dark',
+        gradientToColors: [ '#845ED7', '#6B8AEB'],
+        shadeIntensity: 1,
+        type: 'horizontal',
+        opacityFrom: 1,
+        opacityTo: 1,
+        stops: [0, 100, 100, 100]
+      },
+    }
   };
 
   let series = [
     {
       name: "",
-      data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
+      data: [10, 18, 10, 2, 0, 10, 40, 30, 60, 30, 35, 45],
     },
   ];
 

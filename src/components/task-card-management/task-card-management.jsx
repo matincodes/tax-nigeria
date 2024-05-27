@@ -1,4 +1,4 @@
-import Button from '../business-sector-page/button/button'
+import Button from '../button/button'
 import Search from '../search/search'
 import Inventories from '../dashboard/inventories/inventories'
 

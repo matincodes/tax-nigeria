@@ -3,8 +3,10 @@ import { consultants } from "../../../data/consultants";
 import Button from "../../button/button";
 import ProgressBar from "../../progress-bar/progress-bar";
 import Pagination from "../../pagination/pagination";
+import { useNavigate } from "react-router-dom";
 
 const InnerTable = () => {
+  const navigate = useNavigate();
   const [paginationNum, setPaginationNum] = useState(0);
   const [consultantSection, setConsultantSection] = useState(
     consultants[paginationNum]
@@ -29,6 +31,11 @@ const InnerTable = () => {
   useEffect(()=>{
     setConsultantSection(consultants[paginationNum])
   }, [paginationNum])
+
+  const handleButton = (e) => {
+      e.preventDefault()
+      navigate("/dashboard/consultant-profile")
+  }
 
   return (
     <div className="w-full font-manrope p-1 mt-[15px]">
@@ -74,7 +81,7 @@ const InnerTable = () => {
                 </td>
                 <td className="flex place-content-center">
                   
-                  <Button text="Profile" />
+                  <Button text="Profile" handleButton={handleButton}/>
                 </td>
               </div>
             </tr>
