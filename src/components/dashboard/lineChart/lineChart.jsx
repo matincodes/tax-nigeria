@@ -70,7 +70,6 @@ const LineChart = () => {
       },
     }
   };
-
   let series = [
     {
       name: "",
