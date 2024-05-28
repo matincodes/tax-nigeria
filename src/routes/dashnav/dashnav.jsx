@@ -33,13 +33,13 @@ const DashNav = () => {
                             ))
                         }
                     </ul>
-                    <ul className="pt-16">
+                    <ul className="pt-10">
                         {
                             navData.slice(-2).map((items, index) =>(
                                 <li key={index} className={`py-3 pl-2 w-[90%] rounded-md ${isNavActive(items.path) ? "bg-tax-lime" : "bg-none"}`}>
                                     <Link to={items.path} className="flex items-center">
                                         <img src={items.icon} alt={items.label} />
-                                        <p className="ml-3 text-base text-text-gray">
+                                        <p className={`ml-3 text-base ${items.label === "Logout" ? "text-[#A65959]" : "text-text-gray"}`} >
                                             {items.label}
                                         </p> 
                                     </Link>
