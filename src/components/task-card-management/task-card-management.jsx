@@ -2,7 +2,7 @@ import Button from '../button/button'
 import Search from '../search/search'
 import Inventories from '../dashboard/inventories/inventories'
 
-import { taskCardData } from '../../data/taskCardData'
+import { taskCardData } from '../../data/taxCardData'
 import Cloud from '../../assets/img/download-cloud-02.svg'
 import Filter from '../../assets/img/filter-lines.svg'
 import DataTable from '../data-table/data-table'
