@@ -11,6 +11,8 @@ import TaxPayerOnboardingTwo from "./routes/taxpayer-reg/taxpayer-onboarding-two
 import TaxPayerOnboardingThree from "./routes/taxpayer-reg/taxpayer-onboarding-three/taxpayer-onboarding-three"
 import TaxPayerOnboardingFour from "./routes/taxpayer-reg/taxpayer-onboarding-four/taxpayer-onboarding-four"
 import TaxPayerOnboardingFive from "./routes/taxpayer-reg/taxpayer-onboarding-five/taxpayer-onboarding-five"
+import TaxpayerID from "./routes/taxpayer-reg/taxpayer-id/taxpayer-id";
+import TaxpayerForm from "./routes/taxpayer-reg/taxpayer-form/taxpayer-form";
 
 
 const App = () => {
@@ -21,6 +23,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard/*" element={<Admin />} />
           <Route path="/taxagent-registration" element={<TaxAgentReg/>}/>
+          <Route path="/taxpayer" element={<TaxpayerForm/>}/>
           <Route path="/taxpayer-one" element={<TaxPayerOne/>}/>
           <Route path="/taxpayer-two" element={<TaxPayerTwo/>}/>
           <Route path="/taxpayer-onboarding-one" element={<TaxPayerOnboardingOne/>}/>

@@ -12,6 +12,10 @@ const Dashboard = () => {
   const addAgent = () => {
     navigate("/taxagent-registration")
   }
+
+  const addTaxpayer = () => {
+    navigate("/taxpayer-registration")
+  }
   return (
     <div className="p-4 w-full font-manrope">
       <h2 className="font-normal font-manrope text-2xl mb-4">Welcome back, <span className="font-semibold">Idris</span> ☀️</h2>
@@ -55,7 +59,7 @@ const Dashboard = () => {
               <AiOutlinePlus className="text-2xl" />
               <p className="text-sm">Add New Tax Agent</p>
             </button>
-            <button className="w-[80%] text-white rounded-full gap-x-2 bg-tax-blue flex items-center justify-center px-5 py-3">
+            <button className="w-[80%] text-white rounded-full gap-x-2 bg-tax-blue flex items-center justify-center px-5 py-3" onClick={addTaxpayer}>
               <AiOutlinePlus className="text-2xl" />
               <p className="text-sm">Add New Tax Payer</p>
             </button>
