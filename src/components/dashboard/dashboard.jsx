@@ -1,6 +1,6 @@
 import Inventories from "./inventories/inventories";
 import { inventoryData } from "../../data/inventoryData";
-import LineChart from "./lineChart/lineChart.jsx";
+import LineChart from "./lineChart/line-chart.jsx";
 import TaxInflow from "./tax-inflow/tax-inflow";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";

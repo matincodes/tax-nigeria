@@ -13,7 +13,7 @@ const BusinessSectorPage = () => {
       <div className="flex justify-between items-center p-[10px]">
         <b className="text-[20px] text-[#4C4C4C]">Business Sector Management</b>
         <Button
-        handleButton={() => navigate("business/add-business-sector")}
+        handleButton={() => navigate("/dashboard/business/add-business-sector")}
         text="Add New" iconposition="right" icon="+" />
 
       </div>
