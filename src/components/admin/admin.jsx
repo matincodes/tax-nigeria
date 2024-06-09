@@ -1,13 +1,20 @@
 import { Routes, Route } from "react-router-dom";
 import DashNav from "../../routes/dashnav/dashnav";
 import Dashboard from "../dashboard/dashboard";
-import BusinessSector from "../business-sector-page/business-sector-page"
-import ConsultantPage from "../consultant-page/consultant-page"
+import BusinessSector from "../business-sector-page/business-sector-page";
+import ConsultantPage from "../consultant-page/consultant-page";
 import AgentPage from "../agent/agent-page";
 import TaskCardManagement from "../task-card-management/task-card-management";
 import AgentProfile from "../profile/agentprofile";
 import ConsultantProfile from "../profile/consultantprofile";
+<<<<<<< HEAD
 import StationManagement from "../station-management/station-management";
+=======
+import ProfileSettings from "../profile-settings/profile-settings";
+import TaxPayerManagement from "../taxpayer/taxpayer-management";
+import AddBusinessSector from "../business-sector-page/add-business-sector";
+
+>>>>>>> a89c683e8fd014fb3ce4888270e6afab986ca708
 
 const Admin = () => {
     return ( 
@@ -21,11 +28,18 @@ const Admin = () => {
                     <Route path='taxcard' element={<TaskCardManagement />} />
                     <Route path="agent-profile" element={<AgentProfile />} />
                     <Route path="consultant-profile" element={<ConsultantProfile />} />
+<<<<<<< HEAD
                     <Route path="station" element={<StationManagement/>} />
+=======
+                    <Route path="taxpayer" element={<TaxPayerManagement />} />
+                    <Route path="business/add-business-sector" element={<AddBusinessSector />} />
+                    <Route path="settings" element={<ProfileSettings />} />
+>>>>>>> a89c683e8fd014fb3ce4888270e6afab986ca708
                 </Route>
             </Routes>
         </div>
      );
 }
- 
+
+
 export default Admin;
