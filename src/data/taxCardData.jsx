@@ -1,7 +1,7 @@
 import People from '../assets/img/people.svg'
 import PeopleRegular from '../assets/img/people-regular.svg'
 
-export const taxCardData = [
+export const taskCardData = [
   {
     title: 'Number of Registered Taxpayers',
     numbers: '20k',
