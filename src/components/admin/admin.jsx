@@ -7,6 +7,7 @@ import AgentPage from "../agent/agent-page";
 import TaskCardManagement from "../task-card-management/task-card-management";
 import AgentProfile from "../profile/agentprofile";
 import ConsultantProfile from "../profile/consultantprofile";
+import StationManagement from "../station-management/station-management";
 
 const Admin = () => {
     return ( 
@@ -20,6 +21,7 @@ const Admin = () => {
                     <Route path='taxcard' element={<TaskCardManagement />} />
                     <Route path="agent-profile" element={<AgentProfile />} />
                     <Route path="consultant-profile" element={<ConsultantProfile />} />
+                    <Route path="station" element={<StationManagement/>} />
                 </Route>
             </Routes>
         </div>

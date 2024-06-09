@@ -28,78 +28,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select';
-import { cardPeopleData } from '../../data/taxCardData';
 
 
-const columns = [
-  {
-    accessorKey: 'taxPayer',
-    header: 'Tax Payer',
-    cell: ({ row }) => (
-      <div className='font-medium text-nowrap text-black'>
-        {row.getValue('taxPayer')}
-      </div>
-    ),
-  },
-  {
-    accessorKey: 'businessType',
-    header: 'Business Type',
-  },
-  {
-    accessorKey: 'taxID',
-    header: 'Tax ID',
-  },
-  {
-    accessorKey: 'cardType',
-    header: 'Card Type',
-  },
-  {
-    accessorKey: 'status',
-    header: 'Status',
-    cell: ({ row }) => {
-      const status = row.getValue('status')
-      let statusClass = ''
-      let dotClass = ''
 
-      switch (status) {
-        case 'Collected':
-          statusClass = 'bg-emerald-50 text-emerald-700'
-          dotClass = 'bg-emerald-500'
-          break
-        case 'Eligible':
-          statusClass = 'bg-yellow-300 bg-opacity-50 text-lime-600'
-          dotClass = 'bg-lime-500'
-          break
-        case 'Not Eligible':
-          statusClass = 'bg-red-600 bg-opacity-75 text-white'
-          dotClass = 'bg-white'
-          break
-        default:
-          statusClass = 'bg-gray-100 text-gray-800'
-          break
-      }
-
-      return (
-        <div
-          className={`pl-1.5 pr-2 py-0.5 ${statusClass} rounded-2xl justify-center items-center gap-1.5 inline-flex`}
-        >
-          <div className='w-2 h-2 relative'>
-            <div
-              className={`w-1.5 h-1.5 left-[1px] top-[1px] absolute rounded-full ${dotClass}`}
-            />
-          </div>
-          <div className='text-center text-xs font-semibold leading-[18px]'>
-            {status}
-          </div>
-        </div>
-      )
-    },
-  },
-]
-
-const DataTable = () => {
+const DataTable = ({data, columns}) => {
   const table = useReactTable({
-    cardPeopleData,
+    data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
