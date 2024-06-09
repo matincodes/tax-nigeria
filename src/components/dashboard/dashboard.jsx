@@ -14,7 +14,7 @@ const Dashboard = () => {
   }
 
   const addTaxpayer = () => {
-    navigate("/taxpayer-registration")
+    navigate("/taxpayer")
   }
   return (
     <div className="p-4 w-full font-manrope">
