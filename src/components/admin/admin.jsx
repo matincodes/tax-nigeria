@@ -8,6 +8,7 @@ import TaskCardManagement from "../task-card-management/task-card-management";
 import AgentProfile from "../profile/agentprofile";
 import ConsultantProfile from "../profile/consultantprofile";
 import TaxPayerManagement from "../taxpayer/taxpayer-management";
+import AddBusinessSector from "../business-sector-page/add-business-sector";
 
 const Admin = () => {
   return (
@@ -22,6 +23,7 @@ const Admin = () => {
           <Route path="agent-profile" element={<AgentProfile />} />
           <Route path="consultant-profile" element={<ConsultantProfile />} />
           <Route path="taxpayer" element={<TaxPayerManagement />} />
+          <Route path="business/add-business-sector" element={<AddBusinessSector />} />
         </Route>
       </Routes>
     </div>

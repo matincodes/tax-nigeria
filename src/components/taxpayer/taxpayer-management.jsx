@@ -1,13 +1,11 @@
 import { AiOutlinePlus, AiOutlineCloudDownload } from "react-icons/ai";
 import { CiSearch } from "react-icons/ci";
 import {
-  ColumnDef,
-  RowSelectionState,
   flexRender,
   getCoreRowModel,
   useReactTable,
   getPaginationRowModel,
-  Row,
+
 } from "@tanstack/react-table";
 import dots from "../../assets/img/Bussiness_Sector/three_dots.svg";
 import { BsDot } from "react-icons/bs";
