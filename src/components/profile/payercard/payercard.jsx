@@ -34,9 +34,11 @@ const PayerCard = ({ name, status, station }) => {
 
 export default PayerCard;
 
-const DropDown = ({ close }) => {
+export const DropDown = ({ close, className }) => {
   return (
-    <div className="absolute top-5 right-[200px]">
+    <div
+      className={`absolute top-5 ${className ? className : " right-[200px]"}`}
+    >
       <button
         onClick={close}
         className="w-full z-20 h-full inset-0 fixed"
@@ -45,7 +47,7 @@ const DropDown = ({ close }) => {
         onClick={(e) => {
           e.stopPropagation();
         }}
-        className="bg-white z-50 relative w-[200px] h-fit "
+        className="bg-white z-50 shadow relative w-[200px] h-fit "
       >
         <div className="w-full border-b p-3 flex items-start justify-between">
           <div

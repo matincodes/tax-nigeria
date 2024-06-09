@@ -4,6 +4,7 @@ import LineChart from "./lineChart/lineChart.jsx";
 import TaxInflow from "./tax-inflow/tax-inflow";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import TimeAndDate from "../time-and-date/time-and-date";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ const Dashboard = () => {
           </div>
         </div>
         {/** 2 */}
-        <div className="w-full col-span-3 space-y-7">
+        <div className="w-full col-span-3 space-y-5">
               {
                 inventoryData.slice(-2).map(({title, numbers, imageSrc}, index) => (
                   <Inventories key={index} title={title} metric={numbers} image={imageSrc
@@ -58,6 +59,10 @@ const Dashboard = () => {
               <AiOutlinePlus className="text-2xl" />
               <p className="text-sm">Add New Tax Payer</p>
             </button>
+          </div>
+
+          <div>
+              <TimeAndDate />
           </div>
         </div>
       </div>

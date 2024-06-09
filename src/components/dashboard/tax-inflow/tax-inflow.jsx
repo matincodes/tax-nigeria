@@ -29,30 +29,10 @@ const TaxInflow = () => {
                 <p>{tax.agent}</p>
                 <p>{tax.date}</p>
                 <p>{tax.amount}</p>
-                <p className={`text-green-600 pl-16 ${tax.status === "Pending" ? "text-[#AF790E]" : ""}`}>{tax.status}</p>
+                <p className={`pl-16 ${tax.status === "Pending" ? "text-[#AF790E]" : "text-green-600"}`}>{tax.status}</p>
               </div>
             ))
           }
-        {/*[1, 2, 3, 4].map((_, index) => (
-          <div
-            key={_}
-            className=" border-b border-gray-300 mb-1 text-sm grid w-full grid-cols-6 p-2 gap-2 "
-          >
-            <p>10/02/2023</p>
-            <p>RTIE343WDN</p>
-            <p className="col-span-2 w-full text-ellipsis whitespace-nowrap overflow-hidden">
-              Chukuemeka Emmmanuel
-            </p>
-            <p>N45,000</p>
-            <p
-              className={` ${
-                index === 1 ? "text-yellow-600" : "text-green-600"
-              }`}
-            >
-              {index === 1 ? "Pending" : "Cleared"}
-            </p>
-          </div>
-        ))*/}
       </div>
     </div>
   );

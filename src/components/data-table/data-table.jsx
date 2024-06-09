@@ -3,7 +3,7 @@ import {
   getCoreRowModel,
   getPaginationRowModel,
   flexRender,
-} from '@tanstack/react-table'
+} from '@tanstack/react-table';
 import {
   Table,
   TableBody,
@@ -11,7 +11,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../ui/table'
+} from '../ui/table';
 import {
   Pagination,
   PaginationContent,
@@ -20,89 +20,16 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from '../ui/pagination'
+} from '../ui/pagination';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '../ui/select'
+} from '../ui/select';
+import { cardPeopleData } from '../../data/taxCardData';
 
-const data = [
-  {
-    taxPayer: 'Olorunshola Anuoluwaapo',
-    businessType: 'Trader',
-    taxID: 'RZ17308',
-    cardType: 'Physical',
-    status: 'Eligible',
-    id: 1,
-  },
-  {
-    taxPayer: 'Effiong Divine',
-    businessType: 'Manufacturer',
-    taxID: 'RZ17308',
-    cardType: 'Virtual',
-    status: 'Collected',
-    id: 2,
-  },
-  {
-    taxPayer: 'Olorunshola Anuoluwaapo',
-    businessType: 'Fashion Design',
-    taxID: 'RZ17308',
-    cardType: 'Virtual',
-    status: 'Not Eligible',
-    id: 3,
-  },
-  {
-    taxPayer: 'Effiong Divine',
-    businessType: 'Car Wash',
-    taxID: 'RZ17308',
-    cardType: 'Virtual',
-    status: 'Not Eligible',
-    id: 4,
-  },
-  {
-    taxPayer: 'Effiong Divine',
-    businessType: 'Event Management',
-    taxID: 'RZ17308',
-    cardType: 'Physical',
-    status: 'Not Eligible',
-    id: 5,
-  },
-  {
-    taxPayer: 'Olorunshola Anuoluwaapo',
-    businessType: 'Trader',
-    taxID: 'RZ17308',
-    cardType: 'Physical',
-    status: 'Eligible',
-    id: 6,
-  },
-  {
-    taxPayer: 'Effiong Divine',
-    businessType: 'Rental Services',
-    taxID: 'RZ17308',
-    cardType: 'Virtual',
-    status: 'Collected',
-    id: 7,
-  },
-  {
-    taxPayer: 'Olorunshola Anuoluwaapo',
-    businessType: 'Catering Service',
-    taxID: 'RZ17308',
-    cardType: 'Physical',
-    status: 'Not Eligible',
-    id: 8,
-  },
-  {
-    taxPayer: 'Olorunshola Anuoluwaapo',
-    businessType: 'Daycare Centre',
-    taxID: 'RZ17308',
-    cardType: 'Virtual',
-    status: 'Eligible',
-    id: 9,
-  },
-]
 
 const columns = [
   {
@@ -172,7 +99,7 @@ const columns = [
 
 const DataTable = () => {
   const table = useReactTable({
-    data,
+    cardPeopleData,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
