@@ -3,6 +3,7 @@ import "./App.css";
 import Home from "./components/home/home";
 import Login from "./routes/login/login";
 import Admin from "./components/admin/admin";
+import ProtectedRoute from "./components/protectedRoute/protectedRoute";
 import TaxAgentReg from "./routes/taxagent-reg/taxagent-reg";
 import TaxPayerOne from "./routes/taxpayer-reg/taxpayer-one/taxpayer-one";
 import TaxPayerTwo from "./routes/taxpayer-reg/taxpayer-two/taxpayer-two";
@@ -21,7 +22,11 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/dashboard/*" element={<Admin />} />
+          <Route path="/dashboard/*" element={
+            <ProtectedRoute>
+                <Admin />
+            </ProtectedRoute>
+            } />
           <Route path="/taxagent-registration" element={<TaxAgentReg/>}/>
           <Route path="/taxpayer" element={<TaxpayerForm/>}/>
           <Route path="/taxpayer-one" element={<TaxPayerOne/>}/>

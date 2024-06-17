@@ -1,6 +1,6 @@
 export const loginData = {
     name : "Olayinka Wasiu",
-    email: "",
-    password : "",
-    phoneNumber: ""
+    email: "admin@gmail.com",
+    password : "admin",
+    phoneNumber: "08033445566"
 }

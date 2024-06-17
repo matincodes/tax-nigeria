@@ -1,6 +1,8 @@
 import { useState } from "react";
 import LoginBG from "../../assets/img/login-bg.png";
 import EyeClose from "../../assets/img/invisible.svg";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -8,9 +10,20 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [load, setLoad] = useState(false);
 
+    const navigate = useNavigate();
+    const { login } = useAuth();
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword)
+    }
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        if(login(email, password)){
+            navigate("/dashboard");
+        }else {
+            alert("Invalid Credentials")
+        }
     }
 
 
@@ -44,7 +57,7 @@ const Login = () => {
                             <img src={EyeClose} alt="Eye Close" />
                         </span> 
                     </div>
-                    <button disabled={load} className={`mt-10 bg-tax-blue w-full py-3 text-white rounded-md text-2xl ${load ? "": "opacity-70"}`}>
+                    <button disabled={load} onClick={handleLogin} className={`mt-10 bg-tax-blue w-full py-3 text-white rounded-md text-2xl ${load ? "": "opacity-70"}`}>
                         Login
                     </button>
                     <p className="pt-3"><span className="font-medium">Forget Password? <span className="text-tax-blue">Password recovery</span></span></p>

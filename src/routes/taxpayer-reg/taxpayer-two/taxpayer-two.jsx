@@ -1,4 +1,4 @@
-const TaxPayerTwo = () => {
+const TaxPayerTwo = ({nextStep, prevStep}) => {
   return (
     <div className="font-montserrat flex flex-col items-center">
       <div className="flex flex-col text-center mt-16 mb-8">
@@ -110,10 +110,10 @@ const TaxPayerTwo = () => {
           </div>
 
           <div className="w-full pb-5 flex gap-12">
-            <a href='taxpayer-one' className="text-center bg-[#CED8F2] w-full py-3 text-tax-blue rounded-md text-2xl">
+            <button className="text-center bg-[#CED8F2] w-full py-3 text-tax-blue rounded-md text-2xl" onClick={prevStep}>
               Back
-            </a>
-            <button className="bg-tax-blue w-full py-3 text-white rounded-md text-2xl">
+            </button>
+            <button className="bg-tax-blue w-full py-3 text-white rounded-md text-2xl" onClick={nextStep}>
               Confirm
             </button>
           </div>

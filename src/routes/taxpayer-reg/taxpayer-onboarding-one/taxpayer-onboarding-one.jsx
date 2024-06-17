@@ -33,7 +33,7 @@ const TaxPayerOnboardingOne = () => {
             <div className="font-montserrat  text-right space-y-1">
               <h2 className="font-bold text-[20px] tracking-wide">Face Capture</h2>
               <p className="text-[21px]">Upload or take an image</p>
-            </div>
+            </div>  
             <div className="icon bg-[#F2F2F2] w-[70px] h-[70px] rounded-full grid place-content-center">
               <Smile className="w-10 h-10 text-[#4E72D1]" />
             </div>

@@ -6,7 +6,7 @@ import CheckCircle  from "../../../assets/img/CheckCircle.svg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const TaxpayerID = () => {
+const TaxpayerID = ({nextStep}) => {
 
     const [selectedID, setSelectedID] = useState(null)
     const handleIDChange = (id, event) => {
@@ -73,7 +73,7 @@ const TaxpayerID = () => {
                 <button className="bg-[#CED8F2] w-full py-3 text-tax-blue rounded-md text-xl">
                     Back
                 </button>
-                <button className="bg-tax-blue w-full py-3 text-white rounded-md text-xl">
+                <button className="bg-tax-blue w-full py-3 text-white rounded-md text-xl" onClick={nextStep}>
                     Continue
                 </button>
             </div>
