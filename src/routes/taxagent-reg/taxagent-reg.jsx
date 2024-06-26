@@ -93,7 +93,7 @@ const TaxAgentReg = () => {
                     </div>
                     <div className="w-full pb-5">
                         <button className="bg-tax-blue w-full py-3 text-white rounded-md text-2xl">
-                            Next
+                            Confirm
                         </button>
                     </div>
                 </form>

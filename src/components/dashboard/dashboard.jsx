@@ -18,7 +18,7 @@ const Dashboard = () => {
   }
   return (
     <div className="p-4 w-full font-manrope">
-      <h2 className="font-normal font-manrope text-2xl mb-4">Welcome back, <span className="font-semibold">Idris</span> ☀️</h2>
+      <h2 className="font-normal font-manrope text-2xl mb-4">Welcome back, <span className="font-semibold">Olayinka</span> ☀️</h2>
 
       <div className="w-full grid grid-cols-4 mb-3 items-center gap-6">
           {

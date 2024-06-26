@@ -61,7 +61,7 @@ const TaxPayerOne = ({nextStep, prevStep}) => {
                                  Address 
                              </label>
                              <input 
-                             type="tel" 
+                             type="text" 
                              placeholder="Enter Address"
                              className="border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-400 rounded"/>
                          </div>

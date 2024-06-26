@@ -4,7 +4,8 @@ import { businessSectors } from "../../../data/businessSector";
 import { useState, useEffect } from "react";
 import Pagination from "../../pagination/pagination";
 
-const InnerTable = () => {
+const InnerTable = ({sectorData}) => {
+  console.log(sectorData)
   const [paginationNum, setPaginationNum] = useState(0);
   const [sectorSection, setSectorSection] = useState(
     businessSectors[paginationNum]
@@ -41,12 +42,12 @@ const InnerTable = () => {
         </thead>
 
         <tbody className="text-[13px] divide-y divide-gray-200 bg-[#f7f7f7cb]">
-          {sectorSection.sectors.map((business) => (
+          {sectorData.map((business) => (
             <tr
               className="flex items-center justify-between w-full p-[10px]"
               key={business.id}
             >
-              <td className="py-[14px] text-left"> {business.sector} </td>
+              <td className="py-[14px] text-left"> {business.sectorName} </td>
               <td className="py-[14px] flex justify-end items-center">
                 <button type="button" className="w-full mr-4">
                   <img src={ThreeDotIcon} alt="" className="pr-3" />

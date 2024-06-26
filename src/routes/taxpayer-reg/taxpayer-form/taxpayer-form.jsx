@@ -7,6 +7,7 @@ import TaxPayerOnboardingOne from "../taxpayer-onboarding-one/taxpayer-onboardin
 import TaxPayerOnboardingFour from "../taxpayer-onboarding-four/taxpayer-onboarding-four";
 import TaxPayerOnboardingTwo from "../taxpayer-onboarding-two/taxpayer-onboarding-two";
 import TaxPayerOnboardingThree from "../taxpayer-onboarding-three/taxpayer-onboarding-three";
+import TaxPayerThree from "../taxpayer-three/taxpayer-three";
 
 const TaxpayerForm = () => {
     const [currentStep, setCurrentStep] = useState(1);
@@ -28,14 +29,16 @@ const TaxpayerForm = () => {
             case 3: 
                 return <TaxPayerTwo nextStep={nextStep} prevStep={prevStep}/>
             case 4:
-                return <TaxPayerOnboardingOne nextStep={nextStep} prevStep={prevStep} />
+                return <TaxPayerThree nextStep={nextStep} prevStep={prevStep} />
             case 5: 
-                return <TaxPayerOnboardingTwo nextStep={nextStep} prevStep={prevStep} />
+                return <TaxPayerOnboardingOne nextStep={nextStep} prevStep={prevStep} />
             case 6: 
-                return <TaxPayerOnboardingThree nextStep={nextStep} prevStep={prevStep} />
+                return <TaxPayerOnboardingTwo nextStep={nextStep} prevStep={prevStep} />
             case 7:
-                return <TaxPayerOnboardingFour nextStep={nextStep} prevStep={prevStep} />
+                return <TaxPayerOnboardingThree nextStep={nextStep} prevStep={prevStep} />
             case 8: 
+                return <TaxPayerOnboardingFour nextStep={nextStep} prevStep={prevStep} />
+            case 9:
                 return <TaxPayerOnboardingFive nextStep={nextStep} prevStep={prevStep} />
             default:
                 return <TaxpayerID nextStep={nextStep}/>

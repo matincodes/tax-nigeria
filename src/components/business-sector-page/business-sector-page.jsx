@@ -1,11 +1,27 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../button/button";
 import InnerTable from "./inner-section/inner-table";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const BusinessSectorPage = () => {
   const navigate = useNavigate()
+  
+  const [sectorData, setSectorData] = useState([]);
+
+  useEffect(() => {
+    const fetchSectors = async () => {
+      try {
+        const response = await axios.get("http://assettrack.com.ng/api/sector/");
+        setSectorData(response.data)
+      }catch (error){
+        console.error("Error fetching Business Sector Data")
+      }
+
+    }
+
+    fetchSectors()
+  }, []);
 
   return (
     <div className="w-full font-manrope p-[30px]">
@@ -19,7 +35,7 @@ const BusinessSectorPage = () => {
       </div>
       {/* Top Part */}
 
-      <InnerTable />
+      <InnerTable sectorData={sectorData}/>
     </div>
   );
 };

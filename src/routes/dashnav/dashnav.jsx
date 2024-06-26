@@ -64,7 +64,7 @@ const DashNav = () => {
                             <img src={ProfilePicture} alt="" className="w-[100%]"/>
                         </div>
                         <div className="ml-2 flex flex-col font-manrope">
-                            <h4 className="font-medium">Abdulmatin</h4>
+                            <h4 className="font-medium">Olayinka</h4>
                             <p className="text-gray-400">Admin</p>
                         </div>
                     </div> 
