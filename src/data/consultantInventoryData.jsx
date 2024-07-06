@@ -29,7 +29,7 @@ export const consultantInventoryData = [
     {
         title: "Bill Generated",
         numbers: "100",
-        imageSrc: PayersImage
+        imageSrc: BillImage
     },
     {
         title: "Number of Registered Tax Payers",

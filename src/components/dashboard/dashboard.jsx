@@ -44,7 +44,7 @@ const Dashboard = () => {
         {/** 2 */}
         <div className="w-full col-span-3 space-y-5">
               {
-                inventoryData.slice(-2).map(({title, numbers, imageSrc}, index) => (
+                (user.role === "admin" ? inventoryData : consultantInventoryData).slice(-2).map(({title, numbers, imageSrc}, index) => (
                   <Inventories key={index} title={title} metric={numbers} image={imageSrc
                   }/>
                 ))
