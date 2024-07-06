@@ -1,7 +1,26 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
+
 const TaxAgentReg = () => {
+
+    const [agentData, setAgentData] = useState({
+        companyName: "",
+        telephoneNo: "",
+        emailAddress: "",
+        address: "",
+        city: "",
+        lgaId: 0,
+        description: "",
+        agentName: "",
+        telephone: "",
+        consultantId: 0,
+    })
+
+  
+
     return ( 
         <div className="font-montserrat flex flex-col items-center">
-            <div className="flex flex-col text-center mt-16 mb-8">
+            <div className="flex flex-col text-center mt-6 mb-8">
                 <h2 className="font-bold text-3xl">Tax Agent Registration</h2>
                 <p className="font-normal text-2xl">This can be done in less than a minute!</p>
             </div>
@@ -10,20 +29,21 @@ const TaxAgentReg = () => {
                     <div className="w-full flex gap-16 pb-5">
                         <div className="w-full flex flex-col">
                             <label>
-                                First Name 
+                                Full Name
                             </label>
                             <input 
-                             type="text" 
-                             placeholder="Enter First Name"
+                             type="text"
+                             name="agentName" 
+                             placeholder="Enter Agent's Name"
                              className="border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded"/>
                         </div>
                         <div className="w-full flex flex-col">
                             <label>
-                                Last Name 
+                                Password
                             </label>
                             <input 
-                            type="text" 
-                            placeholder="Enter Last Name"
+                            type="password" 
+                            placeholder="Create Temporary Password"
                             className="border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded"/>
                         </div>
                     </div>
@@ -33,16 +53,17 @@ const TaxAgentReg = () => {
                         </label>
                         <input 
                             type="email" 
-                            placeholder="Enter Last Name"
+                            placeholder="Enter Email Address"
                             className="border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded"/>
                     </div>
                     <div className="w-full flex gap-16 pb-5">
                         <div className="w-full flex flex-col">
                             <label>
-                                Date of Birth
+                                Address
                             </label>
                             <input 
-                             type="date"
+                             type="text"
+                             placeholder="Enter Address"
                              className="border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-400 rounded"/>
                         </div>
                         <div className="w-full flex flex-col">
@@ -58,11 +79,12 @@ const TaxAgentReg = () => {
                     <div className="w-full flex gap-16 pb-5">
                         <div className="w-full flex flex-col">
                             <label>
-                                Tax Agent ID 
+                                City
                             </label>
-                            <p className="border-2 border-tax-blue py-4 px-5 outline-none text-gray-300 rounded">
-                                Tax Agent ID
-                             </p>
+                            <input 
+                            type="text"
+                            placeholder="Enter City Tax Station is Located"
+                            className="border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-400 rounded"/>
                         </div>
                         <div className="w-full flex flex-col">
                             <label>
@@ -73,23 +95,32 @@ const TaxAgentReg = () => {
                             </select>
                         </div>
                     </div>
-                    <div className="w-full flex gap-16">
+                    <div className="w-full flex gap-16 pb-5">
                         <div className="w-full flex flex-col">
                             <label>
-                                Consultant ID
+                                Mini Tax Station
                             </label>
                             <select className="border-2 border-tax-blue py-4 px-5 outline-none rounded text-gray-400 bg-white">
-                                <option value="Select Tax Station" key="select">Select Tax Station</option>
+                                <option value="Select Mini Tax Station" key="select">Select Mini Tax Station</option>
                             </select>
                         </div>
-                        <div className="w-full flex flex-col pb-10">
+                        <div className="w-full flex flex-col">
                             <label>
                                 Consultant Name
                             </label>
                             <select className="border-2 border-tax-blue py-4 px-5 outline-none rounded text-gray-400 bg-white">
-                                <option value="Select Tax Station" key="select">Select Tax Station</option>
+                                <option value="Select Tax Station" key="select">Select Consultant</option>
                             </select>
                         </div>
+                    </div>
+                    <div className="w-full flex flex-col pb-5">
+                        <label>
+                            Description
+                        </label>
+                        <input 
+                         type="text" 
+                         placeholder="Tax Agent"
+                         className="border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded"/>
                     </div>
                     <div className="w-full pb-5">
                         <button className="bg-tax-blue w-full py-3 text-white rounded-md text-2xl">

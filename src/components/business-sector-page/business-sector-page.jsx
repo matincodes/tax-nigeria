@@ -12,7 +12,7 @@ const BusinessSectorPage = () => {
   useEffect(() => {
     const fetchSectors = async () => {
       try {
-        const response = await axios.get("http://assettrack.com.ng/api/sector/");
+        const response = await axios.get("https://assettrack.com.ng/api/sector");
         setSectorData(response.data)
       }catch (error){
         console.error("Error fetching Business Sector Data")

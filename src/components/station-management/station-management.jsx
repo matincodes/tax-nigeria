@@ -28,7 +28,7 @@ const columns = [
       ),
     },
     {
-      accessorKey: 'stationName',
+      accessorKey: 'station',
       header: () => (
         <div className='flex items-center'>
             <span>Station Name</span>

@@ -3,6 +3,7 @@ import Logo from "../../assets/img/tax-logo.svg";
 import { navData } from "../../data/navData";
 import Notification  from "../../assets/img/notification.svg";
 import ProfilePicture from "../../assets/img/profile-pic.png";
+import DropDown from "../../assets/img/arrow-drop-down-line.svg"
 const DashNav = () => {
   const location = useLocation();
   const isNavActive = (path) => {
@@ -25,9 +26,10 @@ const DashNav = () => {
                                 <li key={index} className={`py-3 pl-2 w-[90%] rounded-md ${isNavActive(items.path) ? "bg-tax-lime" : "bg-none"}`}>
                                     <Link to={items.path} className="flex items-center">
                                         <img src={items.icon} alt={items.label} />
-                                        <p className="ml-3 text-base text-text-gray">
+                                        <p className="ml-3 pr-2 text-base text-text-gray">
                                             {items.label}
                                         </p>
+                                        {items.subsection ?  <img src={DropDown} alt="Drop Down"/> : ""} 
                                     </Link>
                                 </li>
                             ))

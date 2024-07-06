@@ -40,10 +40,10 @@ const TaxPayerManagement = () => {
             <AiOutlineCloudDownload className="text-[22px]" />
             <p>Export</p>
           </button>
-          <button className="text-white rounded-md px-2 h-11 flex items-center justify-center gap-x-2 w-fit  bg-[#4E72D1]">
+          {/*<button className="text-white rounded-md px-2 h-11 flex items-center justify-center gap-x-2 w-fit  bg-[#4E72D1]">
             <AiOutlinePlus className="text-[22px]" />
             <p>Add New Tax Payer</p>
-          </button>
+          </button>*/}
         </div>
       </div>
 
@@ -113,7 +113,7 @@ const columns = [
       return (
         <div
           className={`w-fit py-1 pr-1 rounded-md font-medium justify-center text-xs flex items-center ${
-            status === "verified"
+            status === "Verified"
               ? "bg-green-500/10 text-green-500"
               : "bg-gray-100 text-gray-600"
           }`}

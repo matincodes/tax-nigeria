@@ -5,11 +5,15 @@ import { loginData } from "../data/loginData";
 const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
-    const {email, password} = loginData;
+    // const {name, email, password, role} = loginData;
+    const [user, setUser] = useState({role : "", name: ""})
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     const login = (loginEmail, loginPassword) =>  {
-        if (loginEmail === email && loginPassword === password){
+        const findUser = loginData.find(user => user.email === loginEmail && user.password === loginPassword)
+
+        if (findUser){
+            setUser(findUser)
             setIsAuthenticated(true)
             return true;
         }else{
@@ -19,11 +23,12 @@ export const AuthProvider = ({children}) => {
     }
 
     const  logout = () => {
+        setUser({role: "", name: ""})
         setIsAuthenticated(false); 
     }
 
     return (
-        <AuthContext.Provider value={{isAuthenticated, login, logout}}>
+        <AuthContext.Provider value={{isAuthenticated, login, logout, user}}>
             {children}
         </AuthContext.Provider>
     )

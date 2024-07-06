@@ -10,6 +10,8 @@ const TaxPayerThree = ({nextStep, prevStep}) => {
         arithOrder: ""
     });
 
+    const [taxpayerId, setTaxpayerId] = useState('')
+
     const [isFormComplete, setIsFormComplete] = useState(false);
 
     const handleChange = (e) => {
@@ -32,9 +34,19 @@ const TaxPayerThree = ({nextStep, prevStep}) => {
 
     useEffect(() => {
         const getTaxpayerID = async() => {
-            const response = await axios.get(`http://assettrack.com.ng/api/Generator/NewTaxPayerId/${stationID},${consultantID},${stateID},${lgaID},${arithOrder}`)
+            try {
+                const response = await axios.get(`http://assettrack.com.ng/api/Generator/NewTaxPayerId/${stationID},${consultantID},${stateID},${lgaID},${arithOrder}`)
+                setTaxpayerId(response.data)
+            } catch (error) {
+                console.error("Error getting tax payer ID")
+            }
         }
-    })
+
+        if (isFormComplete) {
+            getTaxpayerID()
+        }
+        
+    },[isFormComplete])
     
 
     return ( 
@@ -69,7 +81,7 @@ const TaxPayerThree = ({nextStep, prevStep}) => {
                          placeholder="Enter Consultant ID"
                          className="border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded"/>
                     </div>
-                    <div className="w-full flex flex-col">
+                    <div className="w-full flex flex-col pb-5">
                         <label>
                             State ID
                         </label>
@@ -105,12 +117,12 @@ const TaxPayerThree = ({nextStep, prevStep}) => {
                         placeholder="Enter Arith Order"
                         className="border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-400 rounded"/>
                     </div>
-                    <div className="w-full flex flex-col">
+                    <div className="w-full flex flex-col  pb-10">
                         <label>
                             Tax Payer ID
                         </label>
                         <p className="border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-400 rounded">
-                            000934
+                            {taxpayerId ? taxpayerId : "0000000"}
                         </p>
                     </div>
                      <div className="w-full pb-5 flex gap-12">

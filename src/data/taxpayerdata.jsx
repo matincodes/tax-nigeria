@@ -7,7 +7,7 @@ export const taxpayerdata = [
         businessType: "Trader",
         taxAgent: "Mr Olorunshola",
         taxId: "RTJSEFDFD",
-        status: "verified",
+        status: "Verified",
         action:""
     },
     {
@@ -16,7 +16,7 @@ export const taxpayerdata = [
         businessType: "Trader",
         taxAgent: "Mr Olorunshola",
         taxId: "RTJSEFDFD",
-        status: "pending",
+        status: "Pending",
         action:""
     },
     {
@@ -25,7 +25,7 @@ export const taxpayerdata = [
         businessType: "Trader",
         taxAgent: "Mr Olorunshola",
         taxId: "RTJSEFDFD",
-        status: "verified",
+        status: "Verified",
         action:""
     },
     {
@@ -34,7 +34,7 @@ export const taxpayerdata = [
         businessType: "Trader",
         taxAgent: "Mr Olorunshola",
         taxId: "RTJSEFDFD",
-        status: "pending",
+        status: "Pending",
         action:""
     },
     {
@@ -43,7 +43,7 @@ export const taxpayerdata = [
         businessType: "Trader",
         taxAgent: "Mr Olorunshola",
         taxId: "RTJSEFDFD",
-        status: "verified",
+        status: "Verified",
         action:""
     },
     {
@@ -52,7 +52,7 @@ export const taxpayerdata = [
         businessType: "Trader",
         taxAgent: "Mr Olorunshola",
         taxId: "RTJSEFDFD",
-        status: "verified",
+        status: "Verified",
         action:""
     },
     {
@@ -61,7 +61,7 @@ export const taxpayerdata = [
         businessType: "Trader",
         taxAgent: "Mr Olorunshola",
         taxId: "RTJSEFDFD",
-        status: "verified",
+        status: "Verified",
         action:""
     },
 ]

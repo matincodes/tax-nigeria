@@ -14,6 +14,7 @@ import TaxPayerOnboardingFour from "./routes/taxpayer-reg/taxpayer-onboarding-fo
 import TaxPayerOnboardingFive from "./routes/taxpayer-reg/taxpayer-onboarding-five/taxpayer-onboarding-five"
 import TaxpayerID from "./routes/taxpayer-reg/taxpayer-id/taxpayer-id";
 import TaxpayerForm from "./routes/taxpayer-reg/taxpayer-form/taxpayer-form";
+import ConsultantReg from "./routes/consultant-reg/consultant-reg";
 
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
             </ProtectedRoute>
             } />
           <Route path="/taxagent-registration" element={<TaxAgentReg/>}/>
+          <Route path="/taxconsultant-registration" element={<ConsultantReg/>}/>
           <Route path="/taxpayer" element={<TaxpayerForm/>}/>
           <Route path="/taxpayer-one" element={<TaxPayerOne/>}/>
           <Route path="/taxpayer-two" element={<TaxPayerTwo/>}/>
