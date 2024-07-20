@@ -4,8 +4,11 @@ import { navData } from "../../data/navData";
 import Notification  from "../../assets/img/notification.svg";
 import ProfilePicture from "../../assets/img/profile-pic.png";
 import DropDown from "../../assets/img/arrow-drop-down-line.svg"
+import { useAuth } from "../../context/AuthContext";
 const DashNav = () => {
   const location = useLocation();
+
+  const { user } = useAuth();
   const isNavActive = (path) => {
     const currentpage = location.pathname.split("/").slice(-1)[0];
 
@@ -13,6 +16,9 @@ const DashNav = () => {
 
         return currentpage === navpath
     }
+
+    const filteredNavData = navData.filter(item => item.label !== "Consultant")
+
     return ( 
         <div className="flex">
             <div className="flex flex-col flex-start h-screen bg-tax-gray w-[16%] fixed">
@@ -22,7 +28,7 @@ const DashNav = () => {
                 <div className="pl-10">
                     <ul className="flex flex-col gap-3 font-manrope">
                         {
-                            navData.slice(0, -2).map((items, index) => (
+                            (user.role === "admin" ? navData : filteredNavData).slice(0, -2).map((items, index) => (
                                 <li key={index} className={`py-3 pl-2 w-[90%] rounded-md ${isNavActive(items.path) ? "bg-tax-lime" : "bg-none"}`}>
                                     <Link to={items.path} className="flex items-center">
                                         <img src={items.icon} alt={items.label} />
@@ -66,8 +72,8 @@ const DashNav = () => {
                             <img src={ProfilePicture} alt="" className="w-[100%]"/>
                         </div>
                         <div className="ml-2 flex flex-col font-manrope">
-                            <h4 className="font-medium">Olayinka</h4>
-                            <p className="text-gray-400">Admin</p>
+                            <h4 className="font-medium">{user.name.split(" ")[0]}</h4>
+                            <p className="text-gray-400">{user.role.charAt(0).toUpperCase() + user.role.slice(1)}</p>
                         </div>
                     </div> 
                 </div>

@@ -16,9 +16,6 @@ const Dashboard = () => {
     navigate(`/${reg}`)
   }
 
-  const addTaxpayer = () => {
-    navigate("/taxpayer")
-  }
   return (
     <div className="p-4 w-full font-manrope">
       <h2 className="font-normal font-manrope text-2xl mb-4">Welcome back, <span className="font-semibold">{user.name}</span> ☀️</h2>
@@ -52,12 +49,22 @@ const Dashboard = () => {
           
 
           <div className="w-full rounded-xl space-y-5 shadow p-4 flex flex-col justify-center items-center">
-            <button
-             className="w-[80%] text-white rounded-full gap-x-2 bg-tax-blue flex items-center justify-center px-5 py-3 my-16"
-             onClick={() => addReg("taxconsultant-registration")}>
-              <AiOutlinePlus className="text-2xl" />
-              <p className="text-sm">Add New Consultant</p>
-            </button>
+            { user.role === "admin" && (
+              <button
+              className="w-[80%] text-white rounded-full gap-x-2 bg-tax-blue flex items-center justify-center px-5 py-3 my-16"
+              onClick={() => addReg("taxconsultant-registration")}>
+                <AiOutlinePlus className="text-2xl" />
+                <p className="text-sm">Add New Consultant</p>
+              </button>
+            )}
+            { user.role === "consultant" && (
+              <button
+              className="w-[80%] text-white rounded-full gap-x-2 bg-tax-blue flex items-center justify-center px-5 py-3 my-16"
+              onClick={() => addReg("taxagent-registration")}>
+                <AiOutlinePlus className="text-2xl" />
+                <p className="text-sm">Add New Agent</p>
+              </button>
+            )}
           </div>
 
           <div>
