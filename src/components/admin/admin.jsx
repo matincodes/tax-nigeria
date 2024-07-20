@@ -11,28 +11,38 @@ import StationManagement from "../station-management/station-management";
 import ProfileSettings from "../profile-settings/profile-settings";
 import TaxPayerManagement from "../taxpayer/taxpayer-management";
 import AddBusinessSector from "../business-sector-page/add-business-sector";
+import TaxAgentReg from "../../routes/taxagent-reg/taxagent-reg";
+import ConsultantReg from "../../routes/consultant-reg/consultant-reg";
 
 
 const Admin = () => {
-    return ( 
-        <div>
-            <Routes>
-                <Route path="/" element={<DashNav />}>
-                    <Route index element={<Dashboard/> }/>
-                    <Route path='business' element={<BusinessSector />} />
-                    <Route path='consultant' element={<ConsultantPage />} />
-                    <Route path='agent' element={<AgentPage />} />
-                    <Route path='taxcard' element={<TaskCardManagement />} />
-                    <Route path="agent-profile" element={<AgentProfile />} />
-                    <Route path="consultant-profile" element={<ConsultantProfile />} />
-                    <Route path="station" element={<StationManagement/>} />
-                    <Route path="taxpayer" element={<TaxPayerManagement />} />
-                    <Route path="business/add-business-sector" element={<AddBusinessSector />} />
-                    <Route path="settings" element={<ProfileSettings />} />
-                </Route>
-            </Routes>
-        </div>
-     );
+    return (
+      <div>
+        <Routes>
+          <Route path='/' element={<DashNav />}>
+            <Route index element={<Dashboard />} />
+            <Route path='business' element={<BusinessSector />} />
+            <Route path='consultant' element={<ConsultantPage />} />
+            <Route path='agent' element={<AgentPage />} />
+            <Route path='taxcard' element={<TaskCardManagement />} />
+            <Route path='agent-profile' element={<AgentProfile />} />
+            <Route path='consultant-profile' element={<ConsultantProfile />} />
+            <Route path='station' element={<StationManagement />} />
+            <Route path='taxpayer' element={<TaxPayerManagement />} />
+            <Route
+              path='business/add-business-sector'
+              element={<AddBusinessSector />}
+            />
+            <Route path='settings' element={<ProfileSettings />} />
+            <Route path='taxagent-registration' element={<TaxAgentReg />} />
+            <Route
+              path='taxconsultant-registration'
+              element={<ConsultantReg />}
+            />
+          </Route>
+        </Routes>
+      </div>
+    )
 }
 
 
