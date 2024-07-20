@@ -12,11 +12,65 @@ const TaxAgentReg = () => {
         lgaId: 0,
         description: "",
         agentName: "",
-        telephone: "",
+        telephone: "",  
         consultantId: 0,
+        stateId: 0,
+        wallletId: 1,
+        wallet: null,
+        maxCap: 50000.00,
+        miniTaxStationId: 1,
+        miniTaxStation: null
     })
 
+    const [stateData, setStateData] = useState([]);
+    const [lgaData, setLgaData]  =  useState([]);
+    const [selectedState, setSelectedState] = useState("")
+    const [filteredLgaData, setFilteredLgaData] = useState([])
+    
+
+    useEffect(() => {
+        const fetchState = async() => {
+            try {
+                const response = await axios.get("https://assettrack.com.ng/api/State")
+                setStateData(response.data)
+            } catch (error) {
+                console.error("Error fetching State Data")
+            }
+            
+        } 
+
+        const fetchLga = async() => {
+            try {
+                const response = await axios.get("https://assettrack.com.ng/api/lgas")
+                setLgaData(response.data)
+            } catch (error) {
+                console.error("Error getting LGA Data")
+            }
+        }
+
+        fetchState()
+        fetchLga()
+
+    },[])
+
+    useEffect(() => {
+        if(selectedState){
+            const filteredLga = lgaData.filter(lga => lga.stateId === Number(selectedState))
+            setFilteredLgaData(filteredLga)
+        }else{
+            setFilteredLgaData([])
+        }
+    }, [selectedState, lgaData]);
+
   
+    const handleStateChange = (event) => {
+        setSelectedState(event.target.value);
+    };
+
+    const handleValueChange = (event) => {
+        const {name, value} = event.target
+        setAgentData((prevData) => ({...prevData, [name]: value}));
+    } 
 
     return ( 
         <div className="font-montserrat flex flex-col items-center">
@@ -34,6 +88,7 @@ const TaxAgentReg = () => {
                             <input 
                              type="text"
                              name="agentName" 
+                             value={agentData.agentName}
                              placeholder="Enter Agent's Name"
                              className="border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded"/>
                         </div>
@@ -53,6 +108,8 @@ const TaxAgentReg = () => {
                         </label>
                         <input 
                             type="email" 
+                            name="emailAddress"
+                            value={agentData.emailAddress}
                             placeholder="Enter Email Address"
                             className="border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded"/>
                     </div>
@@ -63,6 +120,8 @@ const TaxAgentReg = () => {
                             </label>
                             <input 
                              type="text"
+                             name="address"
+                             value={agentData.address}
                              placeholder="Enter Address"
                              className="border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-400 rounded"/>
                         </div>
@@ -71,7 +130,9 @@ const TaxAgentReg = () => {
                                 Phone Number 
                             </label>
                             <input 
-                            type="tel" 
+                            type="tel"
+                            name="telephoneNo" 
+                            value={agentData.telephoneNo}
                             placeholder="Enter Phone Number"
                             className="border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-400 rounded"/>
                         </div>
@@ -83,6 +144,8 @@ const TaxAgentReg = () => {
                             </label>
                             <input 
                             type="text"
+                            name="city"
+                            value={agentData.city}
                             placeholder="Enter City Tax Station is Located"
                             className="border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-400 rounded"/>
                         </div>
@@ -108,8 +171,36 @@ const TaxAgentReg = () => {
                             <label>
                                 Consultant Name
                             </label>
-                            <select className="border-2 border-tax-blue py-4 px-5 outline-none rounded text-gray-400 bg-white">
+                            <select name="companyName" value={agentData.companyName} className="border-2 border-tax-blue py-4 px-5 outline-none rounded text-gray-400 bg-white">
                                 <option value="Select Tax Station" key="select">Select Consultant</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="w-full flex gap-16 pb-5">
+                        <div className="w-full flex flex-col">
+                            <label>
+                                State
+                            </label>
+                            <select name="stateId" value={agentData.stateId} onClick={handleStateChange} className="border-2 border-tax-blue py-4 px-5 outline-none rounded text-gray-400 bg-white">
+                                <option value="" key="select">Select Mini Tax Station</option>
+                                {stateData.map(({stateId, stateName}) => (
+                                    <option className="text-black" value={stateId} key={stateId}>
+                                        {stateName}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="w-full flex flex-col">
+                            <label>
+                                LGA
+                            </label>
+                            <select name="LgaId" value={agentData.lgaId} disabled={!selectedState} className="border-2 border-tax-blue py-4 px-5 outline-none rounded text-gray-400 bg-white">
+                                <option value="" key="select">Select Consultant</option>
+                                {filteredLgaData.map(({lgaId, lgaName}) => (
+                                    <option value={lgaId} key={lgaId}>
+                                        {lgaName}
+                                    </option>
+                                ))}
                             </select>
                         </div>
                     </div>
@@ -119,6 +210,8 @@ const TaxAgentReg = () => {
                         </label>
                         <input 
                          type="text" 
+                         name="description"
+                         value={agentData.description}
                          placeholder="Tax Agent"
                          className="border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded"/>
                     </div>

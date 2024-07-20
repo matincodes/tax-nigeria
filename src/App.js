@@ -15,6 +15,7 @@ import TaxPayerOnboardingFive from "./routes/taxpayer-reg/taxpayer-onboarding-fi
 import TaxpayerID from "./routes/taxpayer-reg/taxpayer-id/taxpayer-id";
 import TaxpayerForm from "./routes/taxpayer-reg/taxpayer-form/taxpayer-form";
 import ConsultantReg from "./routes/consultant-reg/consultant-reg";
+import TaxCard from "./components/tax-card/tax-card";
 
 
 const App = () => {
@@ -30,14 +31,7 @@ const App = () => {
             } />
           {/* <Route path="/taxagent-registration" element={<TaxAgentReg/>}/>
           <Route path="/taxconsultant-registration" element={<ConsultantReg/>}/> */}
-          <Route path="/taxpayer" element={<TaxpayerForm/>}/>
-          <Route path="/taxpayer-one" element={<TaxPayerOne/>}/>
-          <Route path="/taxpayer-two" element={<TaxPayerTwo/>}/>
-          <Route path="/taxpayer-onboarding-one" element={<TaxPayerOnboardingOne/>}/>
-          <Route path="/taxpayer-onboarding-two" element={<TaxPayerOnboardingTwo/>}/>
-          <Route path="/taxpayer-onboarding-three" element={<TaxPayerOnboardingThree/>}/>
-          <Route path="/taxpayer-onboarding-four" element={<TaxPayerOnboardingFour/>}/>
-          <Route path="/taxpayer-onboarding-five" element={<TaxPayerOnboardingFive/>}/>
+          <Route path="/taxcard" element={<TaxCard/>}/>
         </Routes>
     </div>
   );

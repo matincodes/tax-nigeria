@@ -27,6 +27,7 @@ module.exports = {
         manrope: ['Manrope', 'sans-serif'],
         montserrat: ['Montserrat', 'sans-serif'],
         poppins: ['Poppins', 'sans-serif'],
+        rubik: ['Rubik Glitch Pop', 'system-ui']
       },
       keyframes: {
         'accordion-down': {
