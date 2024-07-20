@@ -28,8 +28,8 @@ const App = () => {
                 <Admin />
             </ProtectedRoute>
             } />
-          <Route path="/taxagent-registration" element={<TaxAgentReg/>}/>
-          <Route path="/taxconsultant-registration" element={<ConsultantReg/>}/>
+          {/* <Route path="/taxagent-registration" element={<TaxAgentReg/>}/>
+          <Route path="/taxconsultant-registration" element={<ConsultantReg/>}/> */}
           <Route path="/taxpayer" element={<TaxpayerForm/>}/>
           <Route path="/taxpayer-one" element={<TaxPayerOne/>}/>
           <Route path="/taxpayer-two" element={<TaxPayerTwo/>}/>

@@ -25,6 +25,7 @@ function pagination({paginationArray, paginationSection, prevPage, nextPage}) {
                   ? "w-[30px] h-[30px] rounded-full flex place-content-center items-center bg-tax-blue text-white"
                   : "w-[30px] h-[30px] rounded-full flex place-content-center items-center"
               }`}
+              key={sector.id}
             >
               <li
                 className="font-semibold text-[14px]"
