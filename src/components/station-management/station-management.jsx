@@ -9,6 +9,7 @@ import {
     DropdownMenuTrigger
   } from '../ui/dropdown-menu';
   import ThreeDotIcon from "../../assets/img/Bussiness_Sector/three_dots.svg";
+import { useNavigate } from 'react-router-dom';
 
 const columns = [
     {
@@ -113,20 +114,27 @@ const columns = [
   ]
 
 const StationManagement = () => {
-    return ( 
-        <div className='mt-10'>
-            <div className="flex gap-2 justify-end pr-5">
-                <button className='h-10 px-4 py-2.5 bg-white rounded-lg border border-gray-300 justify-center items-center gap-2 inline-flex'>
-                    <img src={Cloud} alt='export' className='w-5 h-5 relative' />
-                    <span className='text-slate-700 text-sm font-medium'>Export</span>
-                </button>
-                <Button text="Add New Station" iconposition="left" icon="+" />
-            </div>
-            <div className='pl-3'>
-                <DataTable data={taxStationsData} columns={columns}/>
-            </div>
+  const navigate = useNavigate();
+  
+    return (
+      <div className='mt-10'>
+        <div className='flex gap-2 justify-end pr-5'>
+          <button className='h-10 px-4 py-2.5 bg-white rounded-lg border border-gray-300 justify-center items-center gap-2 inline-flex'>
+            <img src={Cloud} alt='export' className='w-5 h-5 relative' />
+            <span className='text-slate-700 text-sm font-medium'>Export</span>
+          </button>
+          <Button
+            text='Add New Station'
+            iconposition='left'
+            icon='+'
+            handleButton={() => navigate('/taxstation-registration')}
+          />
         </div>
-     );
+        <div className='pl-3'>
+          <DataTable data={taxStationsData} columns={columns} />
+        </div>
+      </div>
+    )
 }
  
 export default StationManagement;
