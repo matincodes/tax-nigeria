@@ -4,10 +4,7 @@ import Home from "./components/home/home";
 import Login from "./routes/login/login";
 import Admin from "./components/admin/admin";
 import ProtectedRoute from "./components/protectedRoute/protectedRoute";
-import TaxAgentReg from "./routes/taxagent-reg/taxagent-reg";
-import ConsultantReg from "./routes/consultant-reg/consultant-reg";
 import TaxCard from "./components/tax-card/tax-card";
-import TaxStationReg from "./routes/taxstation-reg/taxstation-reg";
 
 
 const App = () => {
