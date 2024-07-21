@@ -36,17 +36,13 @@ export const AuthProvider = ({ children }) => {
         return false
       }
 
-      const data = (await response.json()).userDetail
+      const data = (await response.json()).usersRetDet
       const user = {
-        id: data.id,
-        role: data.rolesLst[0]?.toLowerCase(),
-        name: `${data.firstName} ${data.lastName}`,
-        email: data.email,
-        emailConfirmed: data.emailConfirmed,
-        isActive: data.isActive,
-        phoneNumber: data.phoneNumber,
-        phoneNumberConfirmed: data.phoneNumberConfirmed,
-        twoFactorEnabled: data.twoFactorEnabled,
+        userId: data?.userId,
+        role: data?.rolesLst[0]?.toLowerCase(),
+        name: `${data?.firstName} ${data?.lastName}`,
+        email: data?.email,
+        phoneNumber: data?.phoneNo,
       }
       setUser(user)
       setAccessToken(data.accessToken)
