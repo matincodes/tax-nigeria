@@ -45,7 +45,6 @@ const useFetchWithRetry = (
       }
     }
     if (dependencies?.every(dep => Boolean(dep) !== false)) {
-      console.log({ dependencies })
       fetchData()
     }
 
