@@ -15,9 +15,13 @@ const Login = () => {
   const navigate = useNavigate()
   const { login, isAuthenticated } = useAuth()
 
-  if (isAuthenticated) {
-    navigate('/dashboard')
-  }
+  
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate(-1)
+    }
+  }, [isAuthenticated, navigate])
+  
 
   useEffect(() => {
     setFailed(false)

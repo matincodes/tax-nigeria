@@ -8,16 +8,19 @@ const ConsultantReg = () => {
   const [consultantData, setConsultantData] = useState({
     firstName: '',
     lastName: '',
-    email: '',
-    phoneNumber: '',
+    emailAddress: '',
+    telephoneNo: '',
     address: '',
-    cacNumber: '',
-    taxStation: '',
+    cac: '',
+    taxStationId: '',
     companyName: '',
     amountDeposited: '',
     consultantCode: '',
     accessToken,
     sentByUserID: user.email,
+    consultantPics: '',
+    userpwd: 'password2$',
+    Kolapo: 'string',
   })
   const [failed, setFailed] = useState(false)
   const [disabled, setDisabled] = useState(true)
@@ -45,25 +48,27 @@ const ConsultantReg = () => {
     const {
       firstName,
       lastName,
-      email,
-      phoneNumber,
+      emailAddress,
+      telephoneNo,
       address,
-      cacNumber,
-      taxStation,
+      cac,
+      taxStationId,
       amountDeposited,
       consultantCode,
+      companyName,
     } = consultantData
     setDisabled(
       !(
         firstName &&
         lastName &&
-        email &&
-        phoneNumber &&
+        emailAddress &&
+        telephoneNo &&
         address &&
-        cacNumber &&
-        taxStation &&
+        cac &&
+        taxStationId &&
         amountDeposited &&
-        consultantCode
+        consultantCode &&
+        companyName
       ),
     )
     setFailed(false)
@@ -82,14 +87,14 @@ const ConsultantReg = () => {
     setLoading(true)
     try {
       await fetchWithRetry(
-        'https://assettrack.com.ng//api/Consultant/ConsultantWithCredent',
         {
           method: 'POST',
+          url: 'https://assettrack.com.ng/api/Consultant/ConsultantWithCredent',
           data: consultantData,
         },
       )
       setFailed(false)
-      navigate('/dashboard')
+      navigate(-1)
     } catch (error) {
       setFailed(true)
       console.error('Error creating Tax Station', error)
@@ -101,11 +106,11 @@ const ConsultantReg = () => {
   const {
     firstName,
     lastName,
-    email,
-    phoneNumber,
+    emailAddress,
+    telephoneNo,
     address,
-    cacNumber,
-    taxStation,
+    cac,
+    taxStationId,
     companyName,
     amountDeposited,
     consultantCode,
@@ -160,10 +165,10 @@ const ConsultantReg = () => {
             <label>Email</label>
             <input
               type='email'
-              name='email'
+              name='emailAddress'
               placeholder='Enter Company Email Address'
               className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
-              value={email}
+              value={emailAddress}
               onChange={handleChange}
             />
           </div>
@@ -172,10 +177,10 @@ const ConsultantReg = () => {
               <label>Phone Number</label>
               <input
                 type='tel'
-                name='phoneNumber'
+                name='telephoneNo'
                 placeholder='Enter Company Phone Number'
                 className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
-                value={phoneNumber}
+                value={telephoneNo}
                 onChange={handleChange}
               />
             </div>
@@ -220,18 +225,18 @@ const ConsultantReg = () => {
               <label>CAC Number</label>
               <input
                 type='text'
-                name='cacNumber'
+                name='cac'
                 placeholder='Enter Company CAC Number'
                 className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
-                value={cacNumber}
+                value={cac}
                 onChange={handleChange}
               />
             </div>
             <div className='w-full flex flex-col'>
               <label>Tax Stations</label>
               <select
-                name='taxStation'
-                value={taxStation}
+                name='taxStationId'
+                value={taxStationId}
                 onChange={handleChange}
                 className='border-2 border-tax-blue py-4 px-5 outline-none rounded text-gray-400 bg-white'
               >
