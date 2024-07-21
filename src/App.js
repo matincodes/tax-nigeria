@@ -24,9 +24,6 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        <Route path='/taxagent-registration' element={<TaxAgentReg />} />
-        <Route path='/taxconsultant-registration' element={<ConsultantReg />} />
-        <Route path='/taxstation-registration' element={<TaxStationReg />} />
         <Route path='/taxcard' element={<TaxCard />} />
       </Routes>
     </div>

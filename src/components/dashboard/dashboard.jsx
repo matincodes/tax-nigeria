@@ -13,7 +13,7 @@ const Dashboard = () => {
   const { user } = useAuth()
 
   const addReg = reg => {
-    navigate(`/${reg}`)
+    navigate(`/dashboard/${reg}`)
   }
 
   return (

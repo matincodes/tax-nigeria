@@ -6,7 +6,7 @@ const AgentPage = () => {
   const navigate = useNavigate()
 
   const addNewAgent = () => {
-    navigate("/taxagent-registration")
+    navigate("/dashboard/taxagent-registration")
   }
     return ( 
         <div className="w-full font-manrope p-[30px]">

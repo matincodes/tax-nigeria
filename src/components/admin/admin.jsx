@@ -11,6 +11,9 @@ import StationManagement from "../station-management/station-management";
 import ProfileSettings from "../profile-settings/profile-settings";
 import TaxPayerManagement from "../taxpayer/taxpayer-management";
 import AddBusinessSector from "../business-sector-page/add-business-sector";
+import ConsultantReg from "../../routes/consultant-reg/consultant-reg";
+import TaxStationReg from "../../routes/taxstation-reg/taxstation-reg";
+import TaxAgentReg from "../../routes/taxagent-reg/taxagent-reg";
 
 
 const Admin = () => {
@@ -32,6 +35,15 @@ const Admin = () => {
               element={<AddBusinessSector />}
             />
             <Route path='settings' element={<ProfileSettings />} />
+            <Route path='taxagent-registration' element={<TaxAgentReg />} />
+            <Route
+              path='taxconsultant-registration'
+              element={<ConsultantReg />}
+            />
+            <Route
+              path='taxstation-registration'
+              element={<TaxStationReg />}
+            />
           </Route>
         </Routes>
       </div>
