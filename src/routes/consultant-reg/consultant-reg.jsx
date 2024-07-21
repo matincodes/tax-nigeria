@@ -1,9 +1,104 @@
 import { useEffect, useState } from 'react'
-import useFetchWithRetry from '../../hooks/useFetchWithRetry'
 import { useNavigate } from 'react-router-dom'
+import fetchWithRetry from '../../lib/fetchData'
+import { useAuth } from '../../context/AuthContext'
 
-const handleSubmit =
-  (
+const ConsultantReg = () => {
+  const { user, accessToken } = useAuth()
+  const [consultantData, setConsultantData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    address: '',
+    cacNumber: '',
+    taxStation: '',
+    companyName: '',
+    amountDeposited: '',
+    consultantCode: '',
+    accessToken,
+    sentByUserID: user.email,
+  })
+  const [failed, setFailed] = useState(false)
+  const [disabled, setDisabled] = useState(true)
+  const [loading, setLoading] = useState(false)
+  const [taxStations, setTaxStations] = useState([])
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const fetchTaxStations = async () => {
+      try {
+        const stations = await fetchWithRetry(
+          'https://assettrack.com.ng/api/TaxStation',
+        )
+        setTaxStations(stations)
+      } catch (error) {
+        console.error('Error fetching tax stations', error)
+      }
+    }
+
+    fetchTaxStations()
+  }, [])
+
+  useEffect(() => {
+    const {
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      address,
+      cacNumber,
+      taxStation,
+      amountDeposited,
+      consultantCode,
+    } = consultantData
+    setDisabled(
+      !(
+        firstName &&
+        lastName &&
+        email &&
+        phoneNumber &&
+        address &&
+        cacNumber &&
+        taxStation &&
+        amountDeposited &&
+        consultantCode
+      ),
+    )
+    setFailed(false)
+  }, [consultantData])
+
+  const handleChange = e => {
+    const { name, value } = e.target
+    setConsultantData(prevState => ({
+      ...prevState,
+      [name]: value,
+    }))
+  }
+
+  const handleSubmit = async e => {
+    e.preventDefault()
+    setLoading(true)
+    try {
+      await fetchWithRetry(
+        'https://assettrack.com.ng//api/Consultant/ConsultantWithCredent',
+        {
+          method: 'POST',
+          data: consultantData,
+        },
+      )
+      setFailed(false)
+      navigate('/dashboard')
+    } catch (error) {
+      setFailed(true)
+      console.error('Error creating Tax Station', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const {
     firstName,
     lastName,
     email,
@@ -11,63 +106,10 @@ const handleSubmit =
     address,
     cacNumber,
     taxStation,
-    setFailed,
-    navigate,
-  ) =>
-  async e => {
-    e.preventDefault()
-    try {
-      // await axios.post('https://assettrack.com.ng/api/TaxStation', {
-      //   name: stationName,
-      //   address,
-      //   taxStationCode,
-      //   lgaID: lgaId,
-      // })
-      useFetchWithRetry('https://assettrack.com.ng/api/TaxStation', {
-        method: 'post',
-        data: {
-          firstName,
-          lastName,
-          email,
-          phoneNumber,
-          address,
-          cacNumber,
-          taxStation,
-        },
-      })
-      setFailed(false)
-
-      navigate('/dashboard')
-    } catch (error) {
-      setFailed(true)
-      console.error('Error creating Tax Station')
-    }
-  }
-
-const ConsultantReg = () => {
-  const [failed, setFailed] = useState(false)
-  const [disabled, setDisabled] = useState(true)
-  const [address, setAddress] = useState('')
-  const [phoneNumber, setPhoneNumber] = useState('')
-  const [email, setEmail] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [firstName, setFirstName] = useState('')
-  const [cacNumber, setCacNumber] = useState('')
-  const [taxStation, setTaxStation] = useState('')
-  const taxStations = useFetchWithRetry(
-    'https://assettrack.com.ng/api/TaxStation',
-  )
-
-    const navigate = useNavigate()
-    
-    useEffect(() => {
-        if (firstName && lastName && email && phoneNumber && address && cacNumber && taxStation) {
-            setDisabled(false)
-        } else {
-            setDisabled(true)
-        }
-    }, [firstName, lastName, email, phoneNumber, address, cacNumber, taxStation])
-    
+    companyName,
+    amountDeposited,
+    consultantCode,
+  } = consultantData
 
   return (
     <div className='font-montserrat flex flex-col items-center'>
@@ -88,7 +130,7 @@ const ConsultantReg = () => {
                 placeholder='First Name'
                 className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
                 value={firstName}
-                onChange={e => setFirstName(e.target.value)}
+                onChange={handleChange}
               />
             </div>
             <div className='flex flex-col w-full'>
@@ -99,18 +141,30 @@ const ConsultantReg = () => {
                 placeholder='Last Name'
                 className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
                 value={lastName}
-                onChange={e => setLastName(e.target.value)}
+                onChange={handleChange}
               />
             </div>
+          </div>
+          <div className='w-full flex flex-col pb-4'>
+            <label>Company Name</label>
+            <input
+              type='text'
+              name='companyName'
+              placeholder='Enter Company Name'
+              className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
+              value={companyName}
+              onChange={handleChange}
+            />
           </div>
           <div className='w-full flex flex-col pb-4'>
             <label>Email</label>
             <input
               type='email'
-              placeholder='Enter Contact Email Address'
+              name='email'
+              placeholder='Enter Company Email Address'
               className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
               value={email}
-              onChange={e => setEmail(e.target.value)}
+              onChange={handleChange}
             />
           </div>
           <div className='w-full flex gap-16 pb-4'>
@@ -118,20 +172,46 @@ const ConsultantReg = () => {
               <label>Phone Number</label>
               <input
                 type='tel'
-                placeholder='Enter Contact Phone Number'
+                name='phoneNumber'
+                placeholder='Enter Company Phone Number'
                 className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
                 value={phoneNumber}
-                onChange={e => setPhoneNumber(e.target.value)}
+                onChange={handleChange}
               />
             </div>
             <div className='w-full flex flex-col'>
               <label>Address</label>
               <input
                 type='text'
+                name='address'
                 placeholder='Enter Company Address'
                 className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
                 value={address}
-                onChange={e => setAddress(e.target.value)}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className='w-full flex gap-16 pb-4'>
+            <div className='w-full flex flex-col'>
+              <label>Amount Deposited</label>
+              <input
+                type='text'
+                name='amountDeposited'
+                placeholder='Enter Amount Deposited'
+                className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
+                value={amountDeposited}
+                onChange={handleChange}
+              />
+            </div>
+            <div className='w-full flex flex-col'>
+              <label>Consultant Code</label>
+              <input
+                type='text'
+                name='consultantCode'
+                placeholder='Enter Consultant Code'
+                className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
+                value={consultantCode}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -140,25 +220,26 @@ const ConsultantReg = () => {
               <label>CAC Number</label>
               <input
                 type='text'
+                name='cacNumber'
                 placeholder='Enter Company CAC Number'
                 className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
                 value={cacNumber}
-                onChange={e => setCacNumber(e.target.value)}
+                onChange={handleChange}
               />
             </div>
             <div className='w-full flex flex-col'>
               <label>Tax Stations</label>
               <select
-                name='TaxStations'
+                name='taxStation'
                 value={taxStation}
-                onChange={e => setTaxStation(e.target.value)}
+                onChange={handleChange}
                 className='border-2 border-tax-blue py-4 px-5 outline-none rounded text-gray-400 bg-white'
               >
                 <option value='' key='select'>
                   Select Tax Station
                 </option>
-                {taxStations?.map(({ name, lgaID }) => (
-                  <option value={lgaID} key={lgaID}>
+                {taxStations?.map(({ name, id }) => (
+                  <option value={id} key={id}>
                     {name}
                   </option>
                 ))}
@@ -171,25 +252,17 @@ const ConsultantReg = () => {
                 Error: Failed to create Tax Station
               </p>
             )}
-
             <button
+              type='submit'
               className={`bg-tax-blue w-full py-3 text-white rounded-md text-2xl ${
-                disabled ? 'opacity-70' : 'opacity-100 cursor-pointer'
+                disabled || loading
+                  ? 'opacity-70 cursor-not-allowed'
+                  : 'opacity-100 cursor-pointer'
               }`}
-              disabled={disabled}
-              onClick={handleSubmit(
-                firstName,
-                lastName,
-                email,
-                phoneNumber,
-                address,
-                cacNumber,
-                taxStation,
-                setFailed,
-                navigate,
-              )}
+              disabled={disabled || loading}
+              onClick={handleSubmit}
             >
-              Confirm
+              {loading ? 'Submitting...' : 'Confirm'}
             </button>
           </div>
         </form>
