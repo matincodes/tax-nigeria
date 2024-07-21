@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import useFetchWithRetry from '../../hooks/useFetchWithRetry'
 import { useNavigate } from 'react-router-dom'
 
@@ -59,7 +59,16 @@ const ConsultantReg = () => {
     'https://assettrack.com.ng/api/TaxStation',
   )
 
-  const navigate = useNavigate()
+    const navigate = useNavigate()
+    
+    useEffect(() => {
+        if (firstName && lastName && email && phoneNumber && address && cacNumber && taxStation) {
+            setDisabled(false)
+        } else {
+            setDisabled(true)
+        }
+    }, [firstName, lastName, email, phoneNumber, address, cacNumber, taxStation])
+    
 
   return (
     <div className='font-montserrat flex flex-col items-center'>
@@ -149,9 +158,9 @@ const ConsultantReg = () => {
                 <option value='' key='select'>
                   Select Tax Station
                 </option>
-                {taxStations?.map(({ taxStation, taxStationId }) => (
-                  <option value={taxStationId} key={taxStationId}>
-                    {taxStation}
+                {taxStations?.map(({ name, lgaID }) => (
+                  <option value={lgaID} key={lgaID}>
+                    {name}
                   </option>
                 ))}
               </select>
@@ -165,7 +174,9 @@ const ConsultantReg = () => {
             )}
 
             <button
-              className={`bg-tax-blue w-full py-3 text-white rounded-md text-2xl`}
+              className={`bg-tax-blue w-full py-3 text-white rounded-md text-2xl ${
+                disabled ? 'opacity-70' : 'opacity-100 cursor-pointer'
+              }`}
               disabled={disabled}
               onClick={handleSubmit(
                 firstName,
