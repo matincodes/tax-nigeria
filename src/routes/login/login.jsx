@@ -12,6 +12,13 @@ const Login = () => {
   const [submitting, setSubmitting] = useState(false)
   const [failed, setFailed] = useState(false)
 
+  const navigate = useNavigate()
+  const { login, isAuthenticated } = useAuth()
+
+  if (isAuthenticated) {
+    navigate('/dashboard')
+  }
+
   useEffect(() => {
     setFailed(false)
     if (email && password) {
@@ -20,9 +27,6 @@ const Login = () => {
       setDisable(true)
     }
   }, [email, password])
-
-  const navigate = useNavigate()
-  const { login, isAuthenticated } = useAuth()
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
