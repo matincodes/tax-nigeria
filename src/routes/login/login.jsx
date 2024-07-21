@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import LoginBG from '../../assets/img/login-bg.png'
 import EyeClose from '../../assets/img/invisible.svg'
 import { useNavigate } from 'react-router-dom'
@@ -8,7 +8,21 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [load, setLoad] = useState(true)
+  const [disable, setDisable] = useState(true)
+
+  useEffect(() => {
+    // use the ignore flag to ignore setDisable in the cleanup function
+    let ignore = false
+    if (email && password) {
+      !ignore && setDisable(false)
+    } else {
+      !ignore && setDisable(true)
+    }
+
+    return () => {
+      ignore = true
+    }
+  }, [email, password])
 
   const navigate = useNavigate()
   const { login, isAuthenticated } = useAuth()
@@ -40,14 +54,15 @@ const Login = () => {
         <h2 className='text-3xl font-montserrat font-semibold mb-10 w-[45%]'>
           Login to your account
         </h2>
-        <div className='w-[45%] font-poppins' >
+        <div className='w-[45%] font-poppins'>
           <div className='flex flex-col'>
             <label className='font-medium'>Email</label>
             <input
               type='email'
               placeholder='youremai@gmail.com'
               value={email}
-              onChange={e => setEmail(e.target.value)}
+              // onChange={e => setEmail(e.target.value)}
+              onInput={e => setEmail(e.target.value)}
               className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300'
             />
           </div>
@@ -57,7 +72,8 @@ const Login = () => {
               type={showPassword ? 'text' : 'password'}
               placeholder='Enter your password'
               value={password}
-              onChange={e => setPassword(e.target.value)}
+              // onChange={e => setPassword(e.target.value)}
+              onInput={e => setPassword(e.target.value)}
               className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300'
             />
             <span
@@ -69,8 +85,8 @@ const Login = () => {
           </div>
           <button
             className={`mt-10 bg-tax-blue w-full py-3 text-white rounded-md text-2xl ${
-              load ? '' : 'opacity-70'
-              }`}
+              disable ? 'opacity-70' : 'opacity-100'
+            }`}
             onClick={handleLogin}
           >
             Login
