@@ -9,18 +9,14 @@ const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [disable, setDisable] = useState(true)
+  const [submitting, setSubmitting] = useState(false)
+  const [failed, setFailed] = useState(false)
 
   useEffect(() => {
-    // use the ignore flag to ignore setDisable in the cleanup function
-    let ignore = false
     if (email && password) {
-      !ignore && setDisable(false)
+      setDisable(false)
     } else {
-      !ignore && setDisable(true)
-    }
-
-    return () => {
-      ignore = true
+      setDisable(true)
     }
   }, [email, password])
 
@@ -33,11 +29,13 @@ const Login = () => {
 
   const handleLogin = async e => {
     e.preventDefault()
+    setSubmitting(true)
     await login(email, password)
     if (isAuthenticated) {
       navigate('/dashboard')
     } else {
-      alert('Invalid Credentials')
+      setSubmitting(false)
+      setFailed(true)
     }
   }
 
@@ -83,13 +81,18 @@ const Login = () => {
               <img src={EyeClose} alt='Eye Close' />
             </span>
           </div>
+          {failed && (
+            <p className='text-red-500 text-sm pt-3'>
+              Invalid email or password
+            </p>
+          )}
           <button
             className={`mt-10 bg-tax-blue w-full py-3 text-white rounded-md text-2xl ${
               disable ? 'opacity-70' : 'opacity-100'
             }`}
             onClick={handleLogin}
           >
-            Login
+            {submitting ? 'Logging in...' : 'Login'}
           </button>
           <p className='pt-3'>
             <span className='font-medium'>
