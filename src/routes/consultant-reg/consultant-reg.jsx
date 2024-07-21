@@ -48,7 +48,6 @@ const ConsultantReg = () => {
   const [failed, setFailed] = useState(false)
   const [disabled, setDisabled] = useState(true)
   const [address, setAddress] = useState('')
-  const [taxStationCode, setTaxStationCode] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
   const [email, setEmail] = useState('')
   const [lastName, setLastName] = useState('')
