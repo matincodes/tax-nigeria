@@ -13,7 +13,7 @@ const ConsultantPage = () => {
           text='Add New'
           iconposition='left'
           icon='+'
-          handleButton={() => navigate('/dashboard/taxconsultant-registration')}
+          handleButton={() => navigate('/taxconsultant-registration')}
         />
         <Button text='Export Members (CSV)' />
       </div>
