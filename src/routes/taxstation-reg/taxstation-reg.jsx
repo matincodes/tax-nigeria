@@ -50,6 +50,7 @@ const TaxStationReg = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
+    setFailed(false)
     if (stationName && address && taxStationCode && lgaId) {
       setDisabled(false)
     } else {

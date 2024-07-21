@@ -13,6 +13,7 @@ const Login = () => {
   const [failed, setFailed] = useState(false)
 
   useEffect(() => {
+    setFailed(false)
     if (email && password) {
       setDisable(false)
     } else {
