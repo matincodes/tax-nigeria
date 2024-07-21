@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }) => {
     if (storedUser && storedAccessToken) {
       setUser(JSON.parse(storedUser))
       setAccessToken(storedAccessToken)
+      setIsAuthenticated(true)
     }
   }, [])
 
