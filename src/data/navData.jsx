@@ -53,6 +53,11 @@ export const navData = [
     path: '/dashboard/taxcard',
   },
   {
+    label: 'Debt Management',
+    icon: receipt,
+    path: '/dashboard/debt-management',
+  },
+  {
     label: 'Settings',
     icon: settings,
     path: '/dashboard/settings',
