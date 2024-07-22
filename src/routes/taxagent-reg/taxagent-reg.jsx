@@ -17,9 +17,9 @@ const TaxAgentReg = () => {
     lastName: '',
     telephone: '',
     consultantId: user.email,
-    wallletId: '1',
+    wallletId: '0',
     maxCap: '',
-    agentPics: '1',
+    agentPics: '0',
     userpwd: '',
   })
 
