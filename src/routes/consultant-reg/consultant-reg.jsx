@@ -19,7 +19,7 @@ const ConsultantReg = () => {
     accessToken,
     sentByUserID: user.email,
     consultantPics: '',
-    userpwd: 'password2$',
+    userpwd: '',
     Kolapo: 'string',
   })
   const [failed, setFailed] = useState(false)
@@ -56,6 +56,7 @@ const ConsultantReg = () => {
       amountDeposited,
       consultantCode,
       companyName,
+      userpwd,
     } = consultantData
     setDisabled(
       !(
@@ -68,7 +69,8 @@ const ConsultantReg = () => {
         taxStationId &&
         amountDeposited &&
         consultantCode &&
-        companyName
+        companyName &&
+        userpwd
       ),
     )
     setFailed(false)
@@ -86,13 +88,11 @@ const ConsultantReg = () => {
     e.preventDefault()
     setLoading(true)
     try {
-      await fetchWithRetry(
-        {
-          method: 'POST',
-          url: 'https://assettrack.com.ng/api/Consultant/ConsultantWithCredent',
-          data: consultantData,
-        },
-      )
+      await fetchWithRetry({
+        method: 'POST',
+        url: 'https://assettrack.com.ng/api/Consultant/ConsultantWithCredent',
+        data: consultantData,
+      })
       setFailed(false)
       navigate(-1)
     } catch (error) {
@@ -114,6 +114,7 @@ const ConsultantReg = () => {
     companyName,
     amountDeposited,
     consultantCode,
+    userpwd,
   } = consultantData
 
   return (
@@ -147,6 +148,19 @@ const ConsultantReg = () => {
                 className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
                 value={lastName}
                 onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className='w-full flex gap-16 pb-5'>
+            <div className='w-full flex flex-col'>
+              <label>Password</label>
+              <input
+                type='text'
+                placeholder='Create Temporary Password'
+                name='userpwd'
+                value={userpwd}
+                onChange={handleChange}
+                className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
               />
             </div>
           </div>
