@@ -40,6 +40,7 @@ const TaxStationReg = () => {
   const [stationName, setStationName] = useState('')
   const [disabled, setDisabled] = useState(true)
   const [failed, setFailed] = useState(false)
+  const [success, setSuccess] = useState(false)
   const stateData =
     useFetchWithRetry('https://assettrack.com.ng/api/State') || null
   const lgaData = useFetchWithRetry(
