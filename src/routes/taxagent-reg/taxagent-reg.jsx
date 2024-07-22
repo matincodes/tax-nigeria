@@ -6,7 +6,9 @@ import { MultiSelect } from 'react-multi-select-component'
 import { useAuth } from '../../context/AuthContext'
 
 const TaxAgentReg = () => {
-  const { user } = useAuth()
+  // const { user } = useAuth()
+  // get user from local storage
+  const user = JSON.parse(localStorage.getItem('user'))
   const [agentData, setAgentData] = useState({
     emailAddress: '',
     address: '',
@@ -26,6 +28,7 @@ const TaxAgentReg = () => {
   const [selectedState, setSelectedState] = useState('')
   const [disabled, setDisabled] = useState(true)
   const [failed, setFailed] = useState(false)
+  const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
   const [taxStations, setTaxStations] = useState(null)
   const [miniTaxStations, setMiniTaxStations] = useState([])
@@ -99,6 +102,7 @@ const TaxAgentReg = () => {
         url: 'https://assettrack.com.ng/api/MiniTaxStation',
       })
       setFailed(false)
+      setSuccess(true)
       navigate(-1)
     } catch (error) {
       setFailed(true)
@@ -305,6 +309,11 @@ const TaxAgentReg = () => {
             {failed && (
               <p className='text-red-500 text-center'>
                 Error: Failed to create Mini Tax Station
+              </p>
+            )}
+            {success && (
+              <p className='text-green-500 text-center'>
+                Successfully created Mini Tax Station
               </p>
             )}
 
