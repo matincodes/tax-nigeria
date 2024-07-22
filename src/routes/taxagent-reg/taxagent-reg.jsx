@@ -1,229 +1,330 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import fetchWithRetry from '../../lib/fetchData'
+import { MultiSelect } from 'react-multi-select-component'
+import { useAuth } from '../../context/AuthContext'
 
 const TaxAgentReg = () => {
+  const { user } = useAuth()
+  const [agentData, setAgentData] = useState({
+    emailAddress: '',
+    address: '',
+    city: '',
+    lgaId: '',
+    description: '',
+    firstName: '',
+    lastName: '',
+    telephone: '',
+    consultantId: user.email,
+    wallletId: '1',
+    maxCap: '',
+    agentPics: '1',
+    userpwd: '',
+  })
 
-    const [agentData, setAgentData] = useState({
-        companyName: "",
-        telephoneNo: "",
-        emailAddress: "",
-        address: "",
-        city: "",
-        lgaId: 0,
-        description: "",
-        agentName: "",
-        telephone: "",  
-        consultantId: 0,
-        stateId: 0,
-        wallletId: 1,
-        wallet: null,
-        maxCap: 50000.00,
-        miniTaxStationId: 1,
-        miniTaxStation: null
-    })
+  const [selectedState, setSelectedState] = useState('')
+  const [disabled, setDisabled] = useState(true)
+  const [failed, setFailed] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [taxStations, setTaxStations] = useState(null)
+  const [miniTaxStations, setMiniTaxStations] = useState([])
+  const [selectedMiniTaxStations, setSelectedMiniTaxStations] = useState([])
+  const [stateData, setStateData] = useState([])
+  const [lgaData, setLgaData] = useState([])
+  const navigate = useNavigate()
 
-    const [stateData, setStateData] = useState([]);
-    const [lgaData, setLgaData]  =  useState([]);
-    const [selectedState, setSelectedState] = useState("")
-    const [filteredLgaData, setFilteredLgaData] = useState([])
-    
+  useEffect(() => {
+    const fetchStateData = async () => {
+      try {
+        const data = await Promise.all([
+          axios('https://assettrack.com.ng/api/TaxStation'),
+          axios('https://assettrack.com.ng/api/MiniTaxStation'),
+          axios('https://assettrack.com.ng/api/State'),
+        ])
+        setTaxStations(data[0].data)
+        setMiniTaxStations(data[1].data)
+        setStateData(data[2].data)
+      } catch (error) {
+        console.error('Error fetching state data', error)
+      }
+    }
 
-    useEffect(() => {
-        const fetchState = async() => {
-            try {
-                const response = await axios.get("https://assettrack.com.ng/api/State")
-                setStateData(response.data)
-            } catch (error) {
-                console.error("Error fetching State Data")
-            }
-            
-        } 
+    fetchStateData()
+  }, [])
 
-        const fetchLga = async() => {
-            try {
-                const response = await axios.get("https://assettrack.com.ng/api/lgas")
-                setLgaData(response.data)
-            } catch (error) {
-                console.error("Error getting LGA Data")
-            }
-        }
+  useEffect(() => {
+    const fetchLgaData = async () => {
+      try {
+        const response = await axios.get(
+          `https://assettrack.com.ng/api/lgas/bystate/${selectedState}`,
+        )
+        setLgaData(response.data)
+      } catch (error) {
+        console.error('Error fetching LGA Data', error)
+      }
+    }
 
-        fetchState()
-        fetchLga()
+    fetchLgaData()
+  }, [selectedState])
 
-    },[])
+  useEffect(() => {
+    setDisabled(false)
+    for (const property in agentData) {
+      if (Boolean(agentData[property]) === false) {
+        setDisabled(true)
+        return
+      }
+    }
+  }, [agentData])
 
-    useEffect(() => {
-        if(selectedState){
-            const filteredLga = lgaData.filter(lga => lga.stateId === Number(selectedState))
-            setFilteredLgaData(filteredLga)
-        }else{
-            setFilteredLgaData([])
-        }
-    }, [selectedState, lgaData]);
+  const handleChange = e => {
+    const { name, value } = e.target
+    setAgentData(prevState => ({
+      ...prevState,
+      [name]: value,
+    }))
+  }
 
-  
-    const handleStateChange = (event) => {
-        setSelectedState(event.target.value);
-    };
+  const handleSubmit = async e => {
+    e.preventDefault()
+    setLoading(true)
+    try {
+      await fetchWithRetry({
+        method: 'POST',
+        data: {
+          ...agentData,
+          miniStationsIDs: selectedMiniTaxStations.map(({ value }) => value),
+        },
+        url: 'https://assettrack.com.ng/api/MiniTaxStation',
+      })
+      setFailed(false)
+      navigate(-1)
+    } catch (error) {
+      setFailed(true)
+      console.error('Error creating Tax Station', error)
+    } finally {
+      setLoading(false)
+    }
+  }
 
-    const handleValueChange = (event) => {
-        const {name, value} = event.target
-        setAgentData((prevData) => ({...prevData, [name]: value}));
-    } 
-
-    return ( 
-        <div className="font-montserrat flex flex-col items-center">
-            <div className="flex flex-col text-center mt-6 mb-8">
-                <h2 className="font-bold text-3xl">Tax Agent Registration</h2>
-                <p className="font-normal text-2xl">This can be done in less than a minute!</p>
+  return (
+    <div className='font-montserrat flex flex-col items-center'>
+      <div className='flex flex-col text-center mt-6 mb-8'>
+        <h2 className='font-bold text-3xl'>Tax Agent Registration</h2>
+        <p className='font-normal text-2xl'>
+          This can be done in less than a minute!
+        </p>
+      </div>
+      <div className='w-3/5'>
+        <form className='flex flex-col items-center'>
+          <div className='w-full flex gap-16 pb-4'>
+            <div className='flex flex-col w-full'>
+              <label>First Name</label>
+              <input
+                type='text'
+                name='firstName'
+                placeholder='First Name'
+                className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
+                value={agentData.firstName}
+                onChange={handleChange}
+              />
             </div>
-            <div className="w-3/5">
-                <form className="flex flex-col items-center">
-                    <div className="w-full flex gap-16 pb-5">
-                        <div className="w-full flex flex-col">
-                            <label>
-                                Full Name
-                            </label>
-                            <input 
-                             type="text"
-                             name="agentName" 
-                             value={agentData.agentName}
-                             placeholder="Enter Agent's Name"
-                             className="border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded"/>
-                        </div>
-                        <div className="w-full flex flex-col">
-                            <label>
-                                Password
-                            </label>
-                            <input 
-                            type="password" 
-                            placeholder="Create Temporary Password"
-                            className="border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded"/>
-                        </div>
-                    </div>
-                    <div className="w-full flex flex-col pb-5">
-                        <label>
-                            Email
-                        </label>
-                        <input 
-                            type="email" 
-                            name="emailAddress"
-                            value={agentData.emailAddress}
-                            placeholder="Enter Email Address"
-                            className="border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded"/>
-                    </div>
-                    <div className="w-full flex gap-16 pb-5">
-                        <div className="w-full flex flex-col">
-                            <label>
-                                Address
-                            </label>
-                            <input 
-                             type="text"
-                             name="address"
-                             value={agentData.address}
-                             placeholder="Enter Address"
-                             className="border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-400 rounded"/>
-                        </div>
-                        <div className="w-full flex flex-col">
-                            <label>
-                                Phone Number 
-                            </label>
-                            <input 
-                            type="tel"
-                            name="telephoneNo" 
-                            value={agentData.telephoneNo}
-                            placeholder="Enter Phone Number"
-                            className="border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-400 rounded"/>
-                        </div>
-                    </div>
-                    <div className="w-full flex gap-16 pb-5">
-                        <div className="w-full flex flex-col">
-                            <label>
-                                City
-                            </label>
-                            <input 
-                            type="text"
-                            name="city"
-                            value={agentData.city}
-                            placeholder="Enter City Tax Station is Located"
-                            className="border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-400 rounded"/>
-                        </div>
-                        <div className="w-full flex flex-col">
-                            <label>
-                                Tax Station
-                            </label>
-                            <select className="border-2 border-tax-blue py-4 px-5 outline-none rounded text-gray-400 bg-white">
-                                <option value="Select Tax Station" key="select">Select Tax Station</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div className="w-full flex gap-16 pb-5">
-                        <div className="w-full flex flex-col">
-                            <label>
-                                Mini Tax Station
-                            </label>
-                            <select className="border-2 border-tax-blue py-4 px-5 outline-none rounded text-gray-400 bg-white">
-                                <option value="Select Mini Tax Station" key="select">Select Mini Tax Station</option>
-                            </select>
-                        </div>
-                        <div className="w-full flex flex-col">
-                            <label>
-                                Consultant Name
-                            </label>
-                            <select name="companyName" value={agentData.companyName} className="border-2 border-tax-blue py-4 px-5 outline-none rounded text-gray-400 bg-white">
-                                <option value="Select Tax Station" key="select">Select Consultant</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div className="w-full flex gap-16 pb-5">
-                        <div className="w-full flex flex-col">
-                            <label>
-                                State
-                            </label>
-                            <select name="stateId" value={agentData.stateId} onClick={handleStateChange} className="border-2 border-tax-blue py-4 px-5 outline-none rounded text-gray-400 bg-white">
-                                <option value="" key="select">Select Mini Tax Station</option>
-                                {stateData.map(({stateId, stateName}) => (
-                                    <option className="text-black" value={stateId} key={stateId}>
-                                        {stateName}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                        <div className="w-full flex flex-col">
-                            <label>
-                                LGA
-                            </label>
-                            <select name="LgaId" value={agentData.lgaId} disabled={!selectedState} className="border-2 border-tax-blue py-4 px-5 outline-none rounded text-gray-400 bg-white">
-                                <option value="" key="select">Select Consultant</option>
-                                {filteredLgaData.map(({lgaId, lgaName}) => (
-                                    <option value={lgaId} key={lgaId}>
-                                        {lgaName}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                    </div>
-                    <div className="w-full flex flex-col pb-5">
-                        <label>
-                            Description
-                        </label>
-                        <input 
-                         type="text" 
-                         name="description"
-                         value={agentData.description}
-                         placeholder="Tax Agent"
-                         className="border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded"/>
-                    </div>
-                    <div className="w-full pb-5">
-                        <button className="bg-tax-blue w-full py-3 text-white rounded-md text-2xl">
-                            Confirm
-                        </button>
-                    </div>
-                </form>
+            <div className='flex flex-col w-full'>
+              <label>Last Name</label>
+              <input
+                type='text'
+                name='lastName'
+                placeholder='Last Name'
+                className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
+                value={agentData.lastName}
+                onChange={handleChange}
+              />
             </div>
-        </div>
-     );
+          </div>
+          <div className='w-full flex gap-16 pb-5'>
+            <div className='w-full flex flex-col pb-5'>
+              <label>Email</label>
+              <input
+                type='email'
+                name='emailAddress'
+                value={agentData.emailAddress}
+                placeholder='Enter Email Address'
+                onChange={handleChange}
+                className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
+              />
+            </div>
+            <div className='w-full flex flex-col'>
+              <label>Password</label>
+              <input
+                type='text'
+                placeholder='Create Temporary Password'
+                name='userpwd'
+                value={agentData.userpwd}
+                onChange={handleChange}
+                className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
+              />
+            </div>
+          </div>
+          <div className='w-full flex gap-16 pb-5'>
+            <div className='w-full flex flex-col'>
+              <label>Address</label>
+              <input
+                type='text'
+                name='address'
+                value={agentData.address}
+                placeholder='Enter Address'
+                onChange={handleChange}
+                className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-400 rounded'
+              />
+            </div>
+            <div className='w-full flex flex-col'>
+              <label>Phone Number</label>
+              <input
+                type='tel'
+                name='telephone'
+                value={agentData.telephone}
+                placeholder='Enter Phone Number'
+                onChange={handleChange}
+                className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-400 rounded'
+              />
+            </div>
+          </div>
+          <div className='w-full flex gap-16 pb-5'>
+            <div className='w-full flex flex-col'>
+              <label>City</label>
+              <input
+                type='text'
+                name='city'
+                value={agentData.city}
+                placeholder='Enter City Tax Station is Located'
+                onChange={handleChange}
+                className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-400 rounded'
+              />
+            </div>
+            <div className='w-full flex flex-col'>
+              <label>Tax Station</label>
+              <select
+                name='taxStationId'
+                value={agentData.taxStationId}
+                onChange={handleChange}
+                className='border-2 border-tax-blue py-4 px-5 outline-none rounded text-gray-400 bg-white'
+                disabled={!taxStations}
+              >
+                <option value='' key='select'>
+                  Select Tax Station
+                </option>
+                {taxStations?.map(({ id, name }) => (
+                  <option className='text-black' value={id} key={id}>
+                    {name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div className='w-full flex gap-16 pb-5'>
+            <div className='w-full flex flex-col bg-white'>
+              <label>Mini Tax Station</label>
+              <MultiSelect
+                options={miniTaxStations.map(({ name, id }) => ({
+                  label: name,
+                  value: id,
+                }))}
+                value={selectedMiniTaxStations}
+                onChange={setSelectedMiniTaxStations}
+                labelledBy='Select'
+                className='border-2 border-tax-blue py-4 px-5 outline-none rounded text-gray-400 bg-white'
+              />
+            </div>
+          </div>
+          <div className='w-full flex gap-16 pb-5'>
+            <div className='w-full flex flex-col'>
+              <label>State</label>
+              <select
+                name='stateId'
+                value={selectedState}
+                onChange={e => setSelectedState(e.target.value)}
+                className='border-2 border-tax-blue py-4 px-5 outline-none rounded text-gray-400 bg-white'
+                disabled={!stateData}
+              >
+                <option value='' key='select'>
+                  Select State
+                </option>
+                {stateData?.map(({ stateId, stateName }) => (
+                  <option className='text-black' value={stateId} key={stateId}>
+                    {stateName}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className='w-full flex flex-col'>
+              <label>LGA</label>
+              <select
+                name='lgaId'
+                value={agentData.lgaId}
+                onChange={handleChange}
+                disabled={!selectedState}
+                className='border-2 border-tax-blue py-4 px-5 outline-none rounded text-gray-400 bg-white'
+              >
+                <option value='' key='select'>
+                  Select LGA
+                </option>
+                {lgaData?.map(({ lgaId, lgaName }) => (
+                  <option value={lgaId} key={lgaId}>
+                    {lgaName}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div className='w-full flex gap-16 pb-4'>
+            <div className='w-full flex flex-col'>
+              <label>Amount Deposited</label>
+              <input
+                type='text'
+                name='maxCap'
+                placeholder='Enter Amount Deposited'
+                className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
+                value={agentData.maxCap}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className='w-full flex flex-col pb-5'>
+            <label>Description</label>
+            <input
+              type='text'
+              name='description'
+              value={agentData.description}
+              onChange={handleChange}
+              placeholder='Description'
+              className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
+            />
+          </div>
+          <div className='w-full pb-5 flex flex-col'>
+            {failed && (
+              <p className='text-red-500 text-center'>
+                Error: Failed to create Mini Tax Station
+              </p>
+            )}
+
+            <button
+              type='submit'
+              className={`bg-tax-blue w-full py-3 text-white rounded-md text-2xl ${
+                disabled || loading
+                  ? 'opacity-70 cursor-not-allowed'
+                  : 'opacity-100 cursor-pointer'
+              }`}
+              disabled={disabled || loading}
+              onClick={handleSubmit}
+            >
+              {loading ? 'Submitting...' : 'Confirm'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  )
 }
- 
-export default TaxAgentReg;
+
+export default TaxAgentReg
