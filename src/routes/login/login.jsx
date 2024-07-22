@@ -66,7 +66,7 @@ const Login = () => {
             <label className='font-medium'>Email</label>
             <input
               type='email'
-              placeholder='youremai@gmail.com'
+              placeholder='youremail@gmail.com'
               value={email}
               // onChange={e => setEmail(e.target.value)}
               onInput={e => setEmail(e.target.value)}
