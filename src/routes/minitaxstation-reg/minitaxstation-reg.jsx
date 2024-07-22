@@ -12,6 +12,7 @@ const MiniTaxStationReg = () => {
   })
   const [disabled, setDisabled] = useState(true)
   const [failed, setFailed] = useState(false)
+  const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
   const [taxStations, setTaxStations] = useState(null)
   const navigate = useNavigate()
@@ -54,6 +55,7 @@ const MiniTaxStationReg = () => {
         url: 'https://assettrack.com.ng/api/MiniTaxStation',
       })
       setFailed(false)
+      
       navigate(-1)
     } catch (error) {
       setFailed(true)
