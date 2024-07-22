@@ -30,7 +30,7 @@ const fetchWithRetry = async (config, initialDelay = 10000, maxRetries = 5) => {
     } catch (error) {
       const status = error.response ? error.response.status : null
       const shouldRetry =
-        status === null || (status >= 500 && status < 600) || status === 429
+        status === null || (status > 500 && status < 600) || status === 429
 
       if (shouldRetry && retryCount < maxRetries) {
         retryCount++
