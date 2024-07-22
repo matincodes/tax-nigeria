@@ -34,9 +34,9 @@ const handleSubmit =
 
 const TaxStationReg = () => {
   const [selectedState, setSelectedState] = useState('')
+  const [lgaId, setLgaId] = useState('')
   const [address, setAddress] = useState('')
   const [taxStationCode, setTaxStationCode] = useState('')
-  const [lgaId, setLgaId] = useState('')
   const [stationName, setStationName] = useState('')
   const [disabled, setDisabled] = useState(true)
   const [failed, setFailed] = useState(false)
