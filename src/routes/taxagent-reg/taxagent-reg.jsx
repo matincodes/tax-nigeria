@@ -10,6 +10,7 @@ const TaxAgentReg = () => {
   // get user from local storage
   const user = JSON.parse(localStorage.getItem('user'))
   const [agentData, setAgentData] = useState({
+    id: '0',
     emailAddress: '',
     address: '',
     city: '',
@@ -18,7 +19,8 @@ const TaxAgentReg = () => {
     firstName: '',
     lastName: '',
     telephone: '',
-    consultantId: user.email,
+    consultantId: '0',
+    senderUserId: user.email,
     wallletId: '0',
     maxCap: '',
     agentPics: '0',
@@ -92,6 +94,10 @@ const TaxAgentReg = () => {
   const handleSubmit = async e => {
     e.preventDefault()
     setLoading(true)
+    console.log('agentData', {
+      ...agentData,
+      miniStationsIDs: selectedMiniTaxStations.map(({ value }) => value),
+    })
     try {
       await fetchWithRetry({
         method: 'POST',
@@ -99,7 +105,7 @@ const TaxAgentReg = () => {
           ...agentData,
           miniStationsIDs: selectedMiniTaxStations.map(({ value }) => value),
         },
-        url: 'https://assettrack.com.ng/api/MiniTaxStation',
+        url: 'https://assettrack.com.ng/api/Agent/WithCredentials',
       })
       setFailed(false)
       setSuccess(true)
@@ -283,11 +289,11 @@ const TaxAgentReg = () => {
           </div>
           <div className='w-full flex gap-16 pb-4'>
             <div className='w-full flex flex-col'>
-              <label>Amount Deposited</label>
+              <label>Maximum Cap</label>
               <input
                 type='text'
                 name='maxCap'
-                placeholder='Enter Amount Deposited'
+                placeholder='Enter Maximum Cap'
                 className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
                 value={agentData.maxCap}
                 onChange={handleChange}
@@ -308,12 +314,12 @@ const TaxAgentReg = () => {
           <div className='w-full pb-5 flex flex-col'>
             {failed && (
               <p className='text-red-500 text-center'>
-                Error: Failed to create Mini Tax Station
+                Error: Failed to create Tax Agent
               </p>
             )}
             {success && (
               <p className='text-green-500 text-center'>
-                Successfully created Mini Tax Station
+                Successfully created Tax Agent
               </p>
             )}
 
