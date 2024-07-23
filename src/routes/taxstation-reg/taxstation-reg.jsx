@@ -52,11 +52,7 @@ const TaxStationReg = () => {
 
   useEffect(() => {
     setFailed(false)
-    if (stationName && address && taxStationCode && lgaId) {
-      setDisabled(false)
-    } else {
-      setDisabled(true)
-    }
+    setDisabled(!(stationName && address && taxStationCode && lgaId))
   }, [stationName, address, taxStationCode, lgaId])
 
   return (
