@@ -25,13 +25,16 @@ const TaxPayerOne = ({ nextStep, prevStep, setOnboardingData }) => {
 
   const handleNextStep = (e) => {
     e.preventDefault()
-    setOnboardingData(prevData => ({
-      ...prevData,
-      ...taxpayerData,
-      otherName: '',
-    }))
-    if (isFormComplete) nextStep()
-    else setShowError(true)
+    if (isFormComplete) {
+      setOnboardingData(prevData => ({
+        ...prevData,
+        ...taxpayerData,
+        otherName: '',
+      }))
+      nextStep()
+    } else {
+      setShowError(true)
+    }
   }
 
   useEffect(() => {
