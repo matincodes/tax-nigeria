@@ -1,8 +1,10 @@
+import { useAuth } from "../../context/AuthContext";
 import Button from "../button/button"
 import InnerTable from "./inner-section/inner-table";
 import { useNavigate } from "react-router-dom";
 
 const AgentPage = () => {
+  const {user} = useAuth()
   const navigate = useNavigate()
 
   const addNewAgent = () => {
