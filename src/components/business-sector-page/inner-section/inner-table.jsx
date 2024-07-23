@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import Pagination from "../../pagination/pagination";
 
 const InnerTable = ({sectorData}) => {
-  console.log(sectorData)
   const [paginationNum, setPaginationNum] = useState(0);
   const [sectorSection, setSectorSection] = useState(
     businessSectors[paginationNum]
@@ -16,7 +15,6 @@ const InnerTable = ({sectorData}) => {
       return;
     }
     setPaginationNum(paginationNum - 1);
-    console.log(paginationNum);
   };  
 
   const nextPage = (e) => {
@@ -24,7 +22,6 @@ const InnerTable = ({sectorData}) => {
       return;
     }
     setPaginationNum(paginationNum + 1);
-    console.log(paginationNum);
   };
 
   useEffect(() => {

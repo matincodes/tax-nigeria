@@ -17,7 +17,6 @@ const InnerTable = () => {
       return;
     }
     setPaginationNum(paginationNum - 1);
-    console.log(paginationNum);
   };
 
   const nextPage = (e) => {
@@ -25,7 +24,6 @@ const InnerTable = () => {
       return;
     }
     setPaginationNum(paginationNum + 1);
-    console.log(paginationNum);
   };
 
   useEffect(()=>{
