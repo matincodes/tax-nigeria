@@ -16,6 +16,7 @@ import TaxStationReg from '../../routes/taxstation-reg/taxstation-reg'
 import TaxAgentReg from '../../routes/taxagent-reg/taxagent-reg'
 import MiniTaxStationReg from '../../routes/minitaxstation-reg/minitaxstation-reg'
 import DebtManagement from '../debt-management/debt-management'
+import TaxpayerForm from '../../routes/taxpayer-reg/taxpayer-form/taxpayer-form'
 
 const Admin = () => {
   return (
@@ -46,10 +47,8 @@ const Admin = () => {
             path='minitaxstation-registration'
             element={<MiniTaxStationReg />}
           />
-          <Route
-            path='debt-management'
-            element={<DebtManagement />}
-          />
+          <Route path='debt-management' element={<DebtManagement />} />
+          <Route path='onboarding' element={<TaxpayerForm />} />
         </Route>
       </Routes>
     </div>
