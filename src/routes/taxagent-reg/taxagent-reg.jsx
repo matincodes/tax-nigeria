@@ -10,7 +10,6 @@ const TaxAgentReg = () => {
   // get user from local storage
   const user = JSON.parse(localStorage.getItem('user'))
   const [agentData, setAgentData] = useState({
-    id: '0',
     emailAddress: '',
     address: '',
     city: '',
@@ -19,11 +18,7 @@ const TaxAgentReg = () => {
     firstName: '',
     lastName: '',
     telephone: '',
-    consultantId: '0',
-    senderUserId: user.email,
-    wallletId: '0',
     maxCap: '',
-    agentPics: '0',
     userpwd: '',
   })
 
@@ -74,13 +69,10 @@ const TaxAgentReg = () => {
   }, [selectedState])
 
   useEffect(() => {
-    setDisabled(false)
-    for (const property in agentData) {
-      if (Boolean(agentData[property]) === false) {
-        setDisabled(true)
-        return
-      }
-    }
+    const isComplete = Object.values(agentData).every(
+      value => value.trim() !== '',
+    )
+    setDisabled(isComplete)
   }, [agentData])
 
   const handleChange = e => {
@@ -94,21 +86,22 @@ const TaxAgentReg = () => {
   const handleSubmit = async e => {
     e.preventDefault()
     setLoading(true)
-    console.log('agentData', {
-      ...agentData,
-      miniStationsIDs: selectedMiniTaxStations.map(({ value }) => value),
-    })
     try {
       await fetchWithRetry({
         method: 'POST',
         data: {
           ...agentData,
+          id: '',
+          consultantId: '',
+          wallletId: '',
+          agentPics: '',
           miniStationsIDs: selectedMiniTaxStations.map(({ value }) => value),
         },
         url: 'https://assettrack.com.ng/api/Agent/WithCredentials',
       })
       setFailed(false)
       setSuccess(true)
+      alert('Successfully created Tax Agent')
       navigate(-1)
     } catch (error) {
       setFailed(true)
