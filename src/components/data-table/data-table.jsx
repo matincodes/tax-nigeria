@@ -87,7 +87,7 @@ const DataTable = ({data, columns}) => {
         </Table>
       </div>
       <div className='mt-4 flex justify-between items-center w-full'>
-        <Pagination className='cursor-pointer'>
+        <Pagination className='cursor-pointer p-2 mt-3 flex font-manrope'>
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious
