@@ -258,7 +258,7 @@ const ConsultantReg = () => {
                   Select Tax Station
                 </option>
                 {taxStations?.map(({ name, id }) => (
-                  <option value={id} key={id}>
+                  <option className='text-black' value={id} key={id}>
                     {name}
                   </option>
                 ))}
