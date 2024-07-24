@@ -2,12 +2,8 @@ import { useState } from 'react'
 import TaxpayerID from '../taxpayer-id/taxpayer-id'
 import TaxPayerOne from '../taxpayer-one/taxpayer-one'
 import TaxPayerTwo from '../taxpayer-two/taxpayer-two'
-import TaxPayerOnboardingFive from '../taxpayer-onboarding-five/taxpayer-onboarding-five'
-import TaxPayerOnboardingOne from '../taxpayer-onboarding-one/taxpayer-onboarding-one'
-import TaxPayerOnboardingFour from '../taxpayer-onboarding-four/taxpayer-onboarding-four'
-import TaxPayerOnboardingTwo from '../taxpayer-onboarding-two/taxpayer-onboarding-two'
-import TaxPayerOnboardingThree from '../taxpayer-onboarding-three/taxpayer-onboarding-three'
 import TaxPayerThree from '../taxpayer-three/taxpayer-three'
+import TaxPayerFour from '../../taxpayer-four/taxpayer-four'
 
 const TaxpayerForm = () => {
   const [currentStep, setCurrentStep] = useState(1)
@@ -60,43 +56,7 @@ const TaxpayerForm = () => {
         )
       case 5:
         return (
-          <TaxPayerOnboardingOne
-            nextStep={nextStep}
-            prevStep={prevStep}
-            onboardingData={onboardingData}
-            setOnboardingData={setOnboardingData}
-          />
-        )
-      case 6:
-        return (
-          <TaxPayerOnboardingTwo
-            nextStep={nextStep}
-            prevStep={prevStep}
-            onboardingData={onboardingData}
-            setOnboardingData={setOnboardingData}
-          />
-        )
-      case 7:
-        return (
-          <TaxPayerOnboardingThree
-            nextStep={nextStep}
-            prevStep={prevStep}
-            onboardingData={onboardingData}
-            setOnboardingData={setOnboardingData}
-          />
-        )
-      case 8:
-        return (
-          <TaxPayerOnboardingFour
-            nextStep={nextStep}
-            prevStep={prevStep}
-            onboardingData={onboardingData}
-            setOnboardingData={setOnboardingData}
-          />
-        )
-      case 9:
-        return (
-          <TaxPayerOnboardingFive
+          <TaxPayerFour
             nextStep={nextStep}
             prevStep={prevStep}
             onboardingData={onboardingData}
