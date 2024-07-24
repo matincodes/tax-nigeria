@@ -7,7 +7,7 @@ const TaxPayerThree = ({ nextStep, prevStep, setOnboardingData }) => {
     miniStationId: '',
     stateID: '',
     localGovernmentId: '',
-    taxId: '',
+    taxPayerId: '',
   })
 
   const [isFormComplete, setIsFormComplete] = useState(false)
@@ -82,7 +82,7 @@ const TaxPayerThree = ({ nextStep, prevStep, setOnboardingData }) => {
     }
   }
 
-  const { miniStationId, stateID, localGovernmentId, taxId } = taxpayerData
+  const { miniStationId, stateID, localGovernmentId, taxPayerId } = taxpayerData
 
   useEffect(() => {
     const getTaxpayerID = async () => {
@@ -94,7 +94,7 @@ const TaxPayerThree = ({ nextStep, prevStep, setOnboardingData }) => {
         )
         setTaxpayerData(prevData => ({
           ...prevData,
-          taxId: response.data?.taxId,
+          taxPayerId: response.data?.taxId,
         }))
       } catch (error) {
         console.error('Error getting tax payer ID')
@@ -182,7 +182,7 @@ const TaxPayerThree = ({ nextStep, prevStep, setOnboardingData }) => {
           <div className='w-full flex flex-col  pb-10'>
             <label>Tax Payer ID</label>
             <p className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-400 rounded'>
-              {taxId ? taxId : '0000000'}
+              {taxPayerId ? taxPayerId : '0000000'}
             </p>
           </div>
           {showError && (
