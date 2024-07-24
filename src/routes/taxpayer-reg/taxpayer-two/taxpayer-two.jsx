@@ -32,7 +32,8 @@ const TaxPayerTwo = ({ nextStep, prevStep, setOnboardingData }) => {
       setOnboardingData(prevData => ({
         ...prevData,
         ...taxpayerData,
-        agentId: user.email,
+        agentUserId: user.email,
+        agentId: 0,
       }))
       nextStep()
     } else {
@@ -44,9 +45,7 @@ const TaxPayerTwo = ({ nextStep, prevStep, setOnboardingData }) => {
     const fetchData = async () => {
       try {
         const data = await Promise.all([
-          axios(
-            'https://assettrack.com.ng/api/associations/AssociationNamesOnly',
-          ),
+          axios('https://assettrack.com.ng/api/associations'),
           axios(
             'https://assettrack.com.ng/api/businessTypes/BusinessTypesOnly',
           ),
@@ -188,7 +187,7 @@ const TaxPayerTwo = ({ nextStep, prevStep, setOnboardingData }) => {
               className='bg-tax-blue w-full py-3 text-white rounded-md text-2xl'
               onClick={handleNextStep}
             >
-              Confirm
+              Next
             </button>
           </div>
         </form>
