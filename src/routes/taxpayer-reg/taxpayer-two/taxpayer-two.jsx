@@ -44,7 +44,9 @@ const TaxPayerTwo = ({ nextStep, prevStep, setOnboardingData }) => {
     const fetchData = async () => {
       try {
         const data = await Promise.all([
-          axios('https://assettrack.com.ng/api/associations'),
+          axios(
+            'https://assettrack.com.ng/api/associations/AssociationNamesOnly',
+          ),
           axios(
             'https://assettrack.com.ng/api/businessTypes/BusinessTypesOnly',
           ),
