@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useReducer } from 'react'
 
-const TaxPayerOne = ({ nextStep, prevStep, setOnboardingData }) => {
-  const [taxpayerData, setTaxpayerData] = useState({
+const initialState = {
+  taxpayerData: {
     firstName: '',
     lastName: '',
     email: '',
@@ -9,46 +9,99 @@ const TaxPayerOne = ({ nextStep, prevStep, setOnboardingData }) => {
     phoneNumber: '',
     address: '',
     gender: '',
-  })
+  },
+  isFormComplete: false,
+  showError: false,
+  errorMessages: [],
+}
 
-  const [isFormComplete, setIsFormComplete] = useState(false)
-  const [showError, setShowError] = useState(false)
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'UPDATE_FIELD':
+      return {
+        ...state,
+        taxpayerData: {
+          ...state.taxpayerData,
+          [action.field]: action.value,
+        },
+        showError: false,
+        errorMessages: [],
+      }
+    case 'CHECK_FORM_COMPLETE':
+      return {
+        ...state,
+        isFormComplete: Object.values(state.taxpayerData).every(
+          value => value.trim() !== '',
+        ),
+      }
+    case 'SHOW_ERROR':
+      return {
+        ...state,
+        showError: true,
+        errorMessages: action.errorMessages,
+      }
+    case 'HIDE_ERROR':
+      return {
+        ...state,
+        showError: false,
+        errorMessages: [],
+      }
+    default:
+      return state
+  }
+}
+
+const validateInput = data => {
+  const errors = []
+
+  if (!data.firstName.trim()) errors.push('First Name is required')
+  if (!data.lastName.trim()) errors.push('Last Name is required')
+  if (!data.email.trim() || !/\S+@\S+\.\S+/.test(data.email))
+    errors.push('A valid Email is required')
+  if (!data.dob.trim()) errors.push('Date of Birth is required')
+  if (!data.phoneNumber.trim() || !/^\d+$/.test(data.phoneNumber))
+    errors.push('A valid Phone Number is required')
+  if (!data.address.trim()) errors.push('Address is required')
+  if (!data.gender.trim()) errors.push('Gender is required')
+
+  return errors
+}
+
+const useTaxpayerForm = initialState => {
+  const [state, dispatch] = useReducer(reducer, initialState)
 
   const handleChange = e => {
     const { name, value } = e.target
-    setTaxpayerData(prevData => ({
-      ...prevData,
-      [name]: value,
-    }))
-    setShowError(false)
+    dispatch({ type: 'UPDATE_FIELD', field: name, value })
   }
 
-  const handleNextStep = (e) => {
+  const handleNextStep = (e, nextStep, setOnboardingData) => {
     e.preventDefault()
-    if (isFormComplete) {
+    const errors = validateInput(state.taxpayerData)
+
+    if (errors.length === 0 && state.isFormComplete) {
       setOnboardingData(prevData => ({
         ...prevData,
-        ...taxpayerData,
+        ...state.taxpayerData,
         otherName: '',
       }))
       nextStep()
     } else {
-      setShowError(true)
+      dispatch({ type: 'SHOW_ERROR', errorMessages: errors })
     }
   }
 
   useEffect(() => {
-    const checkFormComplete = () => {
-      const isComplete = Object.values(taxpayerData).every(
-        value => value.trim() !== '',
-      )
-      setIsFormComplete(isComplete)
-    }
+    dispatch({ type: 'CHECK_FORM_COMPLETE' })
+  }, [state.taxpayerData])
 
-    checkFormComplete()
-  }, [taxpayerData])
+  return { state, handleChange, handleNextStep }
+}
 
-  // destructure taxpayerData
+const TaxPayerOne = ({ nextStep, prevStep, setOnboardingData }) => {
+  const { state, handleChange, handleNextStep } = useTaxpayerForm(initialState)
+  const { taxpayerData, showError, errorMessages } = state
+
   const { firstName, lastName, email, dob, phoneNumber, address, gender } =
     taxpayerData
 
@@ -64,22 +117,24 @@ const TaxPayerOne = ({ nextStep, prevStep, setOnboardingData }) => {
         <form className='flex flex-col items-center'>
           <div className='w-full flex gap-16 pb-5'>
             <div className='w-full flex flex-col'>
-              <label>First Name</label>
+              <label htmlFor='firstName'>First Name</label>
               <input
                 type='text'
                 placeholder='Enter First Name'
                 name='firstName'
+                id='firstName'
                 value={firstName}
                 onChange={handleChange}
                 className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
               />
             </div>
             <div className='w-full flex flex-col'>
-              <label>Last Name</label>
+              <label htmlFor='lastName'>Last Name</label>
               <input
                 type='text'
                 placeholder='Enter Last Name'
                 name='lastName'
+                id='lastName'
                 value={lastName}
                 onChange={handleChange}
                 className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
@@ -87,11 +142,12 @@ const TaxPayerOne = ({ nextStep, prevStep, setOnboardingData }) => {
             </div>
           </div>
           <div className='w-full flex flex-col pb-5'>
-            <label>Email</label>
+            <label htmlFor='email'>Email</label>
             <input
               type='email'
-              placeholder='Enter Last Name'
+              placeholder='Enter Email'
               name='email'
+              id='email'
               value={email}
               onChange={handleChange}
               className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
@@ -99,21 +155,23 @@ const TaxPayerOne = ({ nextStep, prevStep, setOnboardingData }) => {
           </div>
           <div className='w-full flex gap-16 pb-5'>
             <div className='w-full flex flex-col'>
-              <label>Date of Birth</label>
+              <label htmlFor='dob'>Date of Birth</label>
               <input
                 type='date'
                 name='dob'
+                id='dob'
                 value={dob}
                 onChange={handleChange}
                 className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-400 rounded'
               />
             </div>
             <div className='w-full flex flex-col'>
-              <label>Phone Number</label>
+              <label htmlFor='phoneNumber'>Phone Number</label>
               <input
                 type='tel'
                 placeholder='Enter Phone Number'
                 name='phoneNumber'
+                id='phoneNumber'
                 value={phoneNumber}
                 onChange={handleChange}
                 className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-400 rounded'
@@ -122,29 +180,31 @@ const TaxPayerOne = ({ nextStep, prevStep, setOnboardingData }) => {
           </div>
           <div className='w-full flex gap-16 pb-5'>
             <div className='w-full flex flex-col'>
-              <label>Address</label>
+              <label htmlFor='address'>Address</label>
               <input
                 type='text'
                 placeholder='Enter Address'
                 name='address'
+                id='address'
                 value={address}
                 onChange={handleChange}
                 className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-400 rounded'
               />
             </div>
             <div className='w-full flex flex-col pb-10'>
-              <label> Gender </label>
+              <label htmlFor='gender'>Gender</label>
               <select
                 className='border-2 border-tax-blue py-4 px-5 outline-none rounded text-gray-400 bg-white'
                 name='gender'
+                id='gender'
                 value={gender}
                 onChange={handleChange}
               >
                 <option value='' key='select'>
                   Select Gender
                 </option>
-                {[`Male`, `Female`].map((value, index) => (
-                  <option className='text-black' value={value} key={index}>
+                {['male', 'female'].map((value, index) => (
+                  <option className='text-black capitalize' value={value} key={index}>
                     {value}
                   </option>
                 ))}
@@ -152,20 +212,24 @@ const TaxPayerOne = ({ nextStep, prevStep, setOnboardingData }) => {
             </div>
           </div>
           {showError && (
-            <p className='text-red-500 text-sm text-center'>
-              Please fill all fields
-            </p>
+            <div className='text-red-500 text-sm text-center'>
+              {errorMessages.map((msg, index) => (
+                <p key={index}>{msg}</p>
+              ))}
+            </div>
           )}
           <div className='w-full pb-5 flex gap-12'>
             <button
+              type='button'
               className='bg-[#CED8F2] w-full py-3 text-tax-blue rounded-md text-2xl'
               onClick={prevStep}
             >
               Back
             </button>
             <button
+              type='submit'
               className='bg-tax-blue w-full py-3 text-white rounded-md text-2xl'
-              onClick={handleNextStep}
+              onClick={e => handleNextStep(e, nextStep, setOnboardingData)}
             >
               Next
             </button>
