@@ -205,7 +205,7 @@ const TaxpayerID = ({ nextStep, setOnboardingData }) => {
           onClick={handleNextStep}
           disabled={!selectedID}
         >
-          Continue
+          Next
         </button>
       </div>
     </div>
