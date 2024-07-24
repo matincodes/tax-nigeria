@@ -1,26 +1,28 @@
-import { Smile } from 'lucide-react'
-import { PlusCircle } from 'lucide-react'
-import { useState } from 'react'
+import { Smile, PlusCircle } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
-const TaxPayerFour = ({
-  prevStep,
-  setOnboardingData,
-  onboardingData,
-}) => {
+const TaxPayerFour = ({ prevStep, setOnboardingData, onboardingData }) => {
   const [selectedImage, setSelectedImage] = useState(null)
   const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const onImageSelect = e => {
     const file = e.target.files[0]
 
     if (!file) return
 
+    setSelectedImage(URL.createObjectURL(file))
     const reader = new FileReader()
     reader.onload = function (e) {
       const base64String = e.target.result
-      console.log({ base64String })
-      setSelectedImage(base64String)
       setError(false)
+      setOnboardingData(prevData => ({
+        ...prevData,
+        payerPics: base64String,
+        identityPics: '',
+        id: 0,
+      }))
     }
     reader.onerror = function () {
       setError(true)
@@ -28,11 +30,26 @@ const TaxPayerFour = ({
     reader.readAsDataURL(file)
   }
 
-  const handleNextStep = () => {
-    setOnboardingData(prevData => ({
-      ...prevData,
-      faceCapture: selectedImage,
-    }))
+
+  const handleSubmit = async e => {
+    e.preventDefault()
+    setLoading(true)
+    try {
+      const res = await axios({
+        method: 'POST',
+        url: 'https://assettrack.com.ng/api/TaxPayer',
+        data: onboardingData,
+      })
+      setError(false)
+      console.log('Tax Station created', res.data)
+      console.log('response status', res.status)
+    } catch (error) {
+      setError(true)
+      console.error('Error creating Tax Station', error)
+    } finally {
+      setLoading(false)
+      console.log('Onboarding Data', onboardingData)
+    }
   }
 
   return (
@@ -42,15 +59,15 @@ const TaxPayerFour = ({
         <div className='font-montserrat text-center'>
           <h2 className='font-bold text-3xl'>Taxpayer Onboarding</h2>
           <p className='font-normal text-2xl'>
-            Follow the 5 steps to complete your Onboarding
+            Complete your Onboarding
           </p>
         </div>
         {/* Heading */}
 
-        <div className='p-4 h-full  relative justify-center text-center'>
-          {/* first  */}
+        <div className='p-4 h-full relative justify-center text-center'>
+          {/* first */}
           <div className='flex items-center space-x-9 justify-center text-center'>
-            <div className='font-montserrat  text-center space-y-1'>
+            <div className='font-montserrat text-center space-y-1'>
               <h2 className='font-bold text-[20px] tracking-wide'>
                 Face Capture
               </h2>
@@ -60,25 +77,25 @@ const TaxPayerFour = ({
               <Smile className='w-10 h-10 text-[#4E72D1]' />
             </div>
           </div>
-          {/* first  */}
+          {/* first */}
         </div>
       </div>
 
-      {/*  */}
+      {/* */}
       <div className='flex flex-col justify-center items-center space-y-4 mb-5'>
         <input
           type='file'
-          accept='image/'
+          accept='image/*'
           name='imageUpload'
           id='imageUpload'
           onChange={onImageSelect}
-          className='hidden '
+          className='hidden'
         />
         <label
           htmlFor='imageUpload'
-          className='w-6/12 h-96 bg-[#D9D9D9] relative cursor-pointer grid  text-center place-content-center items-center '
+          className='w-6/12 h-96 bg-[#D9D9D9] relative cursor-pointer grid text-center place-content-center items-center'
         >
-          <PlusCircle className='w-12 h-12 text-tax-blue ' />
+          <PlusCircle className='w-12 h-12 text-tax-blue' />
           {selectedImage && (
             <img
               src={selectedImage}
@@ -89,13 +106,13 @@ const TaxPayerFour = ({
         </label>
         <button
           className='bg-tax-blue w-6/12 py-3 text-white rounded-md text-2xl text-center'
-          onChange={handleNextStep}
+          onClick={handleSubmit}
         >
-          Confirm
+          {loading ? 'Submitting...' : 'Submit'}
         </button>
         {error && (
           <p className='text-red-500 text-sm text-center'>
-            An error occured. Please try again
+            An error occurred. Please try again.
           </p>
         )}
       </div>
