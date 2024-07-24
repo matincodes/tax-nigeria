@@ -3,7 +3,7 @@ import TaxpayerID from '../taxpayer-id/taxpayer-id'
 import TaxPayerOne from '../taxpayer-one/taxpayer-one'
 import TaxPayerTwo from '../taxpayer-two/taxpayer-two'
 import TaxPayerThree from '../taxpayer-three/taxpayer-three'
-import TaxPayerFour from '../../taxpayer-four/taxpayer-four'
+import TaxPayerFour from '../taxpayer-four/taxpayer-four'
 
 const TaxpayerForm = () => {
   const [currentStep, setCurrentStep] = useState(1)
