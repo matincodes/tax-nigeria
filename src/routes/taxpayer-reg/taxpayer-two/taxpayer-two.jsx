@@ -2,14 +2,13 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 
 const TaxPayerTwo = ({ nextStep, prevStep, setOnboardingData }) => {
+  const user = JSON.parse(localStorage.getItem('user'))
   const [taxpayerData, setTaxpayerData] = useState({
     cac: '',
     businessTypeId: '',
     annualTurnover: '',
     associationId: '',
     numberOfShops: '',
-    agentId: '',
-    // taxAgent: '',
   })
 
   const [associations, setAssociations] = useState(null)
@@ -33,6 +32,7 @@ const TaxPayerTwo = ({ nextStep, prevStep, setOnboardingData }) => {
       setOnboardingData(prevData => ({
         ...prevData,
         ...taxpayerData,
+        agentId: user.email,
       }))
       nextStep()
     } else {
@@ -71,15 +71,8 @@ const TaxPayerTwo = ({ nextStep, prevStep, setOnboardingData }) => {
   }, [taxpayerData])
 
   // destructure taxpayerData
-  const {
-    cac,
-    businessTypeId,
-    annualTurnover,
-    associationId,
-    numberOfShops,
-    agentId,
-    // taxAgent,
-  } = taxpayerData
+  const { cac, businessTypeId, annualTurnover, associationId, numberOfShops } =
+    taxpayerData
 
   return (
     <div className='font-montserrat flex flex-col items-center'>
@@ -129,18 +122,32 @@ const TaxPayerTwo = ({ nextStep, prevStep, setOnboardingData }) => {
             {/*  */}
             <div className='w-full flex flex-col pb-5'>
               <label> Annual Turnover </label>
-              <select
-                className='border-2 border-tax-blue py-4 px-5 outline-none rounded text-gray-400 bg-white'
+              <input
+                className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
+                type='text'
+                placeholder='Enter Annual Turnover'
                 name='annualTurnover'
                 value={annualTurnover}
                 onChange={handleChange}
-              >
-                <option value='' key='select'>
-                  Select Annual Turnover
-                </option>
-              </select>
+              />
             </div>
             {/*  */}
+            {/*  */}
+            <div className='w-full flex flex-col pb-5'>
+              <label> Number of Shops </label>
+              <input
+                type='text'
+                placeholder='Enter Number of Shops'
+                name='numberOfShops'
+                value={numberOfShops}
+                onChange={handleChange}
+                className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
+              />
+            </div>
+            {/*  */}
+          </div>
+
+          <div className='w-full flex gap-16 pb-0'>
             {/*  */}
             <div className='w-full flex flex-col pb-5'>
               <label> Trade Association </label>
@@ -163,36 +170,6 @@ const TaxPayerTwo = ({ nextStep, prevStep, setOnboardingData }) => {
             {/*  */}
           </div>
 
-          <div className='w-full flex gap-16 pb-0'>
-            {/*  */}
-            <div className='w-full flex flex-col pb-5'>
-              <label> Number of Shops </label>
-              <input
-                type='text'
-                placeholder='Enter Number of Shops'
-                name='numberOfShops'
-                value={numberOfShops}
-                onChange={handleChange}
-                className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
-              />
-            </div>
-            {/*  */}
-          </div>
-
-          <div className='w-full flex gap-16 pb-0'>
-            {/*  */}
-            <div className='w-full flex flex-col pb-5'>
-              <label> Tax Agent ID </label>
-              <input
-                type='text'
-                placeholder='Enter Tax Agent ID'
-                name='agentId'
-                value={agentId ? agentId : '0000000'}
-                className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
-              />
-            </div>
-            {/*  */}
-          </div>
           {showError && (
             <p className='text-red-500 text-sm text-center'>
               Please fill all fields
