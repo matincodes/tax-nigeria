@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
 
 const TaxpayerID = ({ nextStep, setOnboardingData }) => {
   const [taxpayerData, setTaxpayerData] = useState({
-    NIN: '',
+    nin: '',
     identificationNumber: '',
   })
   const [selectedID, setSelectedID] = useState('')
@@ -54,7 +54,7 @@ const TaxpayerID = ({ nextStep, setOnboardingData }) => {
   }, [selectedID, taxpayerData])
 
   // destructure taxpayerData
-  const { NIN, identificationNumber } = taxpayerData
+  const { nin, identificationNumber } = taxpayerData
 
   return (
     <div className='font-montserrat flex flex-col justify-center items-center mb-9'>
@@ -101,8 +101,8 @@ const TaxpayerID = ({ nextStep, setOnboardingData }) => {
             <label>Input NIN Number</label>
             <input
               type='text'
-              name='NIN'
-              value={NIN}
+              name='nin'
+              value={nin}
               onChange={handleChange}
               className='pt-8 bg-transparent border-black border-b-2 outline-none'
             />
