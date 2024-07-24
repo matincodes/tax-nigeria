@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { useEffect, useState } from 'react'
 
 const TaxPayerTwo = ({ nextStep, prevStep, setOnboardingData }) => {
@@ -10,6 +11,9 @@ const TaxPayerTwo = ({ nextStep, prevStep, setOnboardingData }) => {
     agentId: '',
     // taxAgent: '',
   })
+
+  const [associations, setAssociations] = useState(null)
+  const [businessTypes, setBusinessTypes] = useState(null)
 
   const [isFormComplete, setIsFormComplete] = useState(false)
   const [showError, setShowError] = useState(false)
@@ -35,6 +39,25 @@ const TaxPayerTwo = ({ nextStep, prevStep, setOnboardingData }) => {
       setShowError(true)
     }
   }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await Promise.all([
+          axios('https://assettrack.com.ng/api/associations'),
+          axios(
+            'https://assettrack.com.ng/api/businessTypes/BusinessTypesOnly',
+          ),
+        ])
+        setAssociations(data[0].data)
+        setBusinessTypes(data[1].data)
+      } catch (error) {
+        console.error('Error fetching data', error)
+      }
+    }
+
+    fetchData()
+  }, [])
 
   useEffect(() => {
     const checkFormComplete = () => {
@@ -92,6 +115,11 @@ const TaxPayerTwo = ({ nextStep, prevStep, setOnboardingData }) => {
                 <option value='' key='select'>
                   Select Business Type
                 </option>
+                {businessTypes?.map(({ id, name }) => (
+                  <option className='text-black' value={id} key={id}>
+                    {name}
+                  </option>
+                ))}
               </select>
             </div>
             {/*  */}
@@ -125,6 +153,11 @@ const TaxPayerTwo = ({ nextStep, prevStep, setOnboardingData }) => {
                 <option value='' key='select'>
                   Select Trade Association
                 </option>
+                {associations?.map(({ id, name }) => (
+                  <option className='text-black' value={id} key={id}>
+                    {name}
+                  </option>
+                ))}
               </select>
             </div>
             {/*  */}
