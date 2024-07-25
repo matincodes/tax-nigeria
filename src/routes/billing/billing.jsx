@@ -94,7 +94,7 @@ const Billing = () => {
   })
 
   return (
-    <div className='max-w-[84%] p-6 h-full space-y-6'>
+    <div className='w-full p-6 h-full space-y-6'>
       <div className='w-full flex items-center justify-between'>
         <h2 className='font-semibold text-xl'>Billing</h2>
         <div className='flex items-center gap-x-2'>
