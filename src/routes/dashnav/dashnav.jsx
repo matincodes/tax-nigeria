@@ -22,7 +22,7 @@ const DashNav = () => {
 
   return (
     <div className='flex'>
-      <div className='flex flex-col flex-start h-screen bg-tax-gray w-[16%] fixed'>
+      <div className='flex flex-col flex-start h-screen bg-tax-gray w-[16%] fixed z-[100]'>
         <a href='/dashboard' className='px-10 py-12'>
           <img src={Logo} alt='Logo' />
         </a>
