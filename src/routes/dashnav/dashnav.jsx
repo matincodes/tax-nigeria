@@ -23,10 +23,10 @@ const DashNav = () => {
   return (
     <div className='flex'>
       <div className='flex flex-col flex-start h-screen bg-tax-gray w-[16%] fixed'>
-        <div className='px-10 py-12'>
+        <a href='/dashboard' className='px-10 py-12'>
           <img src={Logo} alt='Logo' />
-        </div>
-        <div className='pl-10'>
+        </a>
+        <div className='pl-10 overflow-y-scroll'>
           <ul className='flex flex-col gap-3 font-manrope'>
             {filteredNavData.slice(0, -2).map((items, index) => (
               <li
@@ -49,7 +49,7 @@ const DashNav = () => {
               </li>
             ))}
           </ul>
-          <ul className='pt-10'>
+          <ul className='py-10'>
             {navData.slice(-2).map((items, index) => (
               <li
                 key={index}
@@ -95,7 +95,9 @@ const DashNav = () => {
               <img src={ProfilePicture} alt='' className='w-[100%]' />
             </div>
             <div className='ml-2 flex flex-col font-manrope'>
-              <h4 className='font-medium capitalize'>{user?.name.split(' ')[0]}</h4>
+              <h4 className='font-medium capitalize'>
+                {user?.name.split(' ')[0]}
+              </h4>
               <p className='text-gray-400 capitalize'>{user?.role}</p>
             </div>
           </div>
