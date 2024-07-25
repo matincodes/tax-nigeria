@@ -5,6 +5,7 @@ import axios from 'axios'
 const TaxPayerFour = ({ prevStep, setOnboardingData, onboardingData }) => {
   const [selectedImage, setSelectedImage] = useState(null)
   const [error, setError] = useState(false)
+  const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
 
   const onImageSelect = e => {
@@ -41,6 +42,7 @@ const TaxPayerFour = ({ prevStep, setOnboardingData, onboardingData }) => {
         data: onboardingData,
       })
       setError(false)
+      setSuccess(true)
       console.log('Tax Station created', res.data)
       console.log('response status', res.status)
     } catch (error) {
@@ -113,6 +115,11 @@ const TaxPayerFour = ({ prevStep, setOnboardingData, onboardingData }) => {
         {error && (
           <p className='text-red-500 text-sm text-center'>
             An error occurred. Please try again.
+          </p>
+        )}
+        {success && (
+          <p className='text-green-500 text-sm text-center'>
+            Taxpayer created successfully.
           </p>
         )}
       </div>
