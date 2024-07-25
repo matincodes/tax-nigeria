@@ -21,12 +21,12 @@ function profile_settings() {
             {/* img */}
             <div className="w-[90%] flex items-center space-x-3">
               <div className="rounded-full w-[100px] h-[100px] border-2 border-dashed border-[#00000067] grid place-content-center relative">
-                <img src={Userprofile} alt="" srcset="" className="w-[100px] h-[100px] rounded-full object-cover object-center p-2 " />
+                <img src={Userprofile} alt="" srcSet="" className="w-[100px] h-[100px] rounded-full object-cover object-center p-2 " />
               </div>
 
-              <label for="file-upload" class="relative cursor-pointer border border-[#D0D5DD] focus:border-2 pt-2 pb-2 pl-5 pr-5 mb-1 rounded-xl font-semibold">
+              <label htmlFor="file-upload" className="relative cursor-pointer border border-[#D0D5DD] focus:border-2 pt-2 pb-2 pl-5 pr-5 mb-1 rounded-xl font-semibold">
                   <span className="flex items-center"><img src={UploadBtn} alt="" className="mr-2" /> Upload</span>
-                  <input id="file-upload" name="file-upload" type="file" class="sr-only" />
+                  <input id="file-upload" name="file-upload" type="file" className="sr-only" />
               </label>
             </div>
             {/* img */}
