@@ -60,12 +60,6 @@ export const navData = [
     visible: ['admin', 'consultant'],
   },
   {
-    label: 'Debt Management',
-    icon: receipt,
-    path: '/dashboard/debt-management',
-    visible: ['admin', 'consultant'],
-  },
-  {
     label: 'Onbarding',
     icon: receipt,
     path: '/dashboard/onboarding',
