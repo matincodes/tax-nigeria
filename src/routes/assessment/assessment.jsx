@@ -19,6 +19,9 @@ const initialState = {
   showError: false,
   showNotFound: false,
   errorMessages: [],
+  submitting: false,
+  showSuccess: false,
+  successData: '',
 }
 
 const reducer = (state, action) => {
@@ -63,7 +66,22 @@ const reducer = (state, action) => {
     case 'TAX_PAYER_NOT_FOUND':
       return {
         ...state,
-        showNotFound: true,
+        showNotFound: action.showNotFound,
+      }
+    case 'SET_SUBMITTING':
+      return {
+        ...state,
+        submitting: action.submitting,
+      }
+    case 'SHOW_SUCCESS':
+      return {
+        ...state,
+        showSuccess: action.showSuccess,
+      }
+    case 'SET_SUCCESS_DATA':
+      return {
+        ...state,
+        successData: action.data,
       }
     default:
       return state
@@ -83,21 +101,46 @@ const validateInput = data => {
 const useTaxAssessmentForm = initialState => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
+  const closePopup = () => {
+    dispatch({ type: 'SHOW_SUCCESS', showSuccess: false })
+  }
+
   const handleChange = e => {
     const { name, value } = e.target
     dispatch({ type: 'UPDATE_FIELD', field: name, value })
   }
 
-  const handleNextStep = (e, nextStep, setOnboardingData) => {
+  const handleSubmit = async e => {
     e.preventDefault()
+    dispatch({ type: 'SET_SUBMITTING', submitting: true })
     const errors = validateInput(state.taxpayerData)
 
     if (errors.length === 0 && state.isFormComplete) {
-      setOnboardingData(prevData => ({
-        ...prevData,
-        ...state.taxpayerData,
-      }))
-      nextStep()
+      try {
+        const response = await axios.post(
+          'https://assettrack.com.ng/api/TaxPayerAssessment/CreateAssess',
+          {
+            amount: state.taxpayerData.amount,
+            taxPayerId: state.taxpayerData.taxpayerId,
+            income: state.taxpayerData.income,
+            assets: state.taxpayerData.assets,
+          },
+        )
+
+        dispatch({
+          type: 'SET_SUCCESS_DATA',
+          data: response.data?.assessmentRef,
+        })
+        dispatch({ type: 'SHOW_SUCCESS', showSuccess: true })
+      } catch (error) {
+        console.error('Error creating Tax Assessment', error)
+        dispatch({
+          type: 'SHOW_ERROR',
+          errorMessages: ['Error creating Tax Assessment'],
+        })
+      } finally {
+        dispatch({ type: 'SET_SUBMITTING', submitting: false })
+      }
     } else {
       dispatch({ type: 'SHOW_ERROR', errorMessages: errors })
     }
@@ -105,6 +148,10 @@ const useTaxAssessmentForm = initialState => {
 
   useEffect(() => {
     if (state.taxpayerData.taxpayerId?.trim() !== '') {
+      dispatch({
+        type: 'TAX_PAYER_NOT_FOUND',
+        showNotFound: false,
+      })
       const fetchTaxpayerData = async () => {
         try {
           const response = await axios.get(
@@ -129,6 +176,7 @@ const useTaxAssessmentForm = initialState => {
           if (status === 404) {
             dispatch({
               type: 'TAX_PAYER_NOT_FOUND',
+              showNotFound: true,
             })
             return
           }
@@ -144,13 +192,38 @@ const useTaxAssessmentForm = initialState => {
     dispatch({ type: 'CHECK_FORM_COMPLETE' })
   }, [state.taxpayerData])
 
-  return { state, handleChange, handleNextStep }
+  return { state, handleChange, handleSubmit, closePopup }
 }
 
-const TaxAssessment = ({ nextStep, prevStep, setOnboardingData }) => {
-  const { state, handleChange, handleNextStep } =
+const SuccessPopup = ({ messages, onClose }) => (
+  <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50'>
+    <div className='bg-tax-gray p-6 rounded shadow-lg text-center font-montserrat'>
+      <h2 className='text-green-500 text-2xl mb-4'>Success!</h2>
+      {messages.map(message => (
+        <p className='mb-4'>{message}</p>
+      ))}
+      <button
+        onClick={onClose}
+        className='bg-tax-blue py-2 px-4 text-white rounded'
+      >
+        Close
+      </button>
+    </div>
+  </div>
+)
+
+const TaxAssessment = () => {
+  const { state, handleChange, handleSubmit, closePopup } =
     useTaxAssessmentForm(initialState)
-  const { taxpayerData, showError, errorMessages, showNotFound } = state
+  const {
+    taxpayerData,
+    showError,
+    errorMessages,
+    showNotFound,
+    submitting,
+    showSuccess,
+    successData,
+  } = state
 
   const {
     taxpayerId,
@@ -195,7 +268,7 @@ const TaxAssessment = ({ nextStep, prevStep, setOnboardingData }) => {
                 <p className='text-red-500 text-sm text-center'>
                   Taxpayer not found
                 </p>
-                  )}
+              )}
             </div>
             <div className='w-full flex flex-col pb-5'>
               <label>Amount</label>
@@ -307,6 +380,15 @@ const TaxAssessment = ({ nextStep, prevStep, setOnboardingData }) => {
               />
             </div>
           </div>
+          {showSuccess && (
+            <SuccessPopup
+              messages={[
+                'Tax Assessment created successfully',
+                `Assessment Reference: ${successData}`,
+              ]}
+              onClose={closePopup}
+            />
+          )}
           {showError && (
             <div className='text-red-500 text-sm text-center'>
               {errorMessages.map((msg, index) => (
@@ -316,16 +398,10 @@ const TaxAssessment = ({ nextStep, prevStep, setOnboardingData }) => {
           )}
           <div className='w-full pb-5 flex gap-12'>
             <button
-              className='text-center bg-[#CED8F2] w-full py-3 text-tax-blue rounded-md text-2xl'
-              onClick={prevStep}
-            >
-              Back
-            </button>
-            <button
               className='bg-tax-blue w-full py-3 text-white rounded-md text-2xl'
-              onClick={e => handleNextStep(e, nextStep, setOnboardingData)}
+              onClick={handleSubmit}
             >
-              Next
+              {submitting ? 'Submitting...' : 'Submit'}
             </button>
           </div>
         </form>
