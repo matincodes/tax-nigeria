@@ -18,6 +18,7 @@ import MiniTaxStationReg from '../../routes/minitaxstation-reg/minitaxstation-re
 import DebtManagement from '../debt-management/debt-management'
 import TaxpayerForm from '../../routes/taxpayer-reg/taxpayer-form/taxpayer-form'
 import Assessment from '../../routes/assessment/assessment'
+import Billing from '../../routes/billing/billing'
 
 const Admin = () => {
   return (
@@ -51,6 +52,7 @@ const Admin = () => {
           <Route path='debt-management' element={<DebtManagement />} />
           <Route path='onboarding' element={<TaxpayerForm />} />
           <Route path='assessment' element={<Assessment />} />
+          <Route path='billing' element={<Billing />} />
         </Route>
       </Routes>
     </div>
