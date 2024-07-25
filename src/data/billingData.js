@@ -1,0 +1,36 @@
+// Mock billing data
+export const mockBillingData = [
+  {
+    id: 1,
+    year: 2024,
+    taxPayerId: 'TP001',
+    payerFirstName: 'John',
+    payerLastName: 'Doe',
+    agentId: 101,
+    agentFirstName: 'Jane',
+    agentLastName: 'Smith',
+    miniTaxStation: 'Station A',
+    amount: 1500.75,
+    billReference: 'BR123456',
+    assessmentRef: 'AR654321',
+    date: new Date('2024-01-15'),
+    generatedByEmailID: 'jane.smith@example.com',
+  },
+  {
+    id: 2,
+    year: 2024,
+    taxPayerId: 'TP002',
+    payerFirstName: 'Alice',
+    payerLastName: 'Johnson',
+    agentId: 102,
+    agentFirstName: 'Bob',
+    agentLastName: 'Brown',
+    miniTaxStation: 'Station B',
+    amount: 2000.5,
+    billReference: 'BR789012',
+    assessmentRef: 'AR210987',
+    date: new Date('2024-02-20'),
+    generatedByEmailID: 'bob.brown@example.com',
+  },
+  // Add more mock data as needed
+]
