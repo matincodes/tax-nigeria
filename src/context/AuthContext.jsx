@@ -1,22 +1,11 @@
-import React, { createContext, useState, useEffect, useContext } from 'react'
+import React, { createContext, useState, useContext } from 'react'
 
 const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null)
-  const [accessToken, setAccessToken] = useState(null)
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-
-  useEffect(() => {
-    // Check if the user is already logged in
-    const storedUser = localStorage.getItem('user')
-    const storedAccessToken = localStorage.getItem('accessToken')
-    if (storedUser && storedAccessToken) {
-      setUser(JSON.parse(storedUser))
-      setAccessToken(storedAccessToken)
-      setIsAuthenticated(true)
-    }
-  }, [])
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
+  const [accessToken, setAccessToken] = useState(localStorage.getItem('accessToken'))
+  const [isAuthenticated, setIsAuthenticated] = useState(!!user)
 
   const login = async (email, password) => {
     try {
@@ -32,7 +21,6 @@ export const AuthProvider = ({ children }) => {
       )
 
       if (!response.ok) {
-        // throw new Error('Login failed')
         setIsAuthenticated(false)
         return false
       }
