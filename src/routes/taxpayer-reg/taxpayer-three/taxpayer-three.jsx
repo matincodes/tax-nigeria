@@ -69,7 +69,7 @@ const TaxPayerThree = ({ nextStep, prevStep, setOnboardingData }) => {
     checkFormComplete()
   }, [taxpayerData])
 
-  const handleNextStep = (e) => {
+  const handleNextStep = e => {
     e.preventDefault()
     if (isFormComplete) {
       setOnboardingData(prevData => ({
@@ -90,7 +90,9 @@ const TaxPayerThree = ({ nextStep, prevStep, setOnboardingData }) => {
         const response = await axios.get(
           `https://assettrack.com.ng/api/Generator/NewTaxPayerId/${miniStationId},${
             user.email
-          },${stateID},${localGovernmentId},${Math.floor(Math.random() * 5 + 1)}`,
+          },${stateID},${localGovernmentId},${Math.floor(
+            Math.random() * 5 + 1,
+          )}`,
         )
         setTaxpayerData(prevData => ({
           ...prevData,
@@ -101,7 +103,7 @@ const TaxPayerThree = ({ nextStep, prevStep, setOnboardingData }) => {
       }
     }
 
-    if ((miniStationId && stateID && localGovernmentId && user.email)) {
+    if (miniStationId && stateID && localGovernmentId && user.email) {
       getTaxpayerID()
     }
   }, [miniStationId, stateID, localGovernmentId, user.email])
@@ -181,9 +183,13 @@ const TaxPayerThree = ({ nextStep, prevStep, setOnboardingData }) => {
           </div>
           <div className='w-full flex flex-col  pb-10'>
             <label>Tax Payer ID</label>
-            <p className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-400 rounded'>
-              {taxPayerId ? taxPayerId : '0000000'}
-            </p>
+            <input
+              type='text'
+              readOnly
+              placeholder='0000000'
+              value={taxPayerId}
+              className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-400 rounded'
+            />
           </div>
           {showError && (
             <p className='text-red-500 text-sm text-center'>
