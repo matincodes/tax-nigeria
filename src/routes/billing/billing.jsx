@@ -94,7 +94,7 @@ const Billing = () => {
   })
 
   return (
-    <div className='w-full p-6 h-full space-y-6'>
+    <div className='max-w-[84%] p-6 h-full space-y-6'>
       <div className='w-full flex items-center justify-between'>
         <h2 className='font-semibold text-xl'>Billing</h2>
         <div className='flex items-center gap-x-2'>
@@ -149,20 +149,20 @@ function DataTable({ columns, data, rowStyle }) {
   })
 
   return (
-    <div className='rounded-md border min-w-max overflow-x-scroll'>
-      <Table className='min-w-max'>
+    <div className='rounded-md border min-w-full overflow-x-scroll'>
+      <Table className='min-w-full  divide-y divide-gray-200'>
         <TableHeader>
           {table.getHeaderGroups().map(headerGroup => (
             <TableRow
               style={rowStyle}
               key={headerGroup.id}
-              className='max-w-full gap-2 h-11 bg-gray-50'
+              className='h-11 bg-gray-50'
             >
               {headerGroup.headers.map(header => {
                 return (
                   <TableHead
                     key={header.id}
-                    className='text-gray-700 font-medium px-4 pt-2'
+                    className='px-4 pt-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
                   >
                     {header.isPlaceholder
                       ? null
