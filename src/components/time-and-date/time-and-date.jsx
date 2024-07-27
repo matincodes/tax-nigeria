@@ -26,10 +26,10 @@ const TimeAndDate = () => {
 
     const {strHours, strMinutes, ampm} = formatTime(currentTime)
     return (  
-        <div className="flex font-manrope items-center">
-            <div className="flex pr-6 justify-center items-center">
+        <div className="flex font-manrope items-center justify-start gap-4">
+            <div className="flex justify-center items-center">
                 <span className="border rounded-md p-3 mx-2">{strHours}</span>
-                <p className="flex flex-col justify-center items-stretch">
+                <div className="flex flex-col justify-center items-stretch">
                     <p className="pb-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="2" height="2" viewBox="0 0 2 2" fill="none">
                             <circle cx="1" cy="1" r="1" fill="#4C4C4C"/>
@@ -40,11 +40,11 @@ const TimeAndDate = () => {
                             <circle cx="1" cy="1" r="1" fill="#4C4C4C"/>
                         </svg>
                     </p>
-                </p>
+                </div>
                 <span className="border rounded-md p-3 mx-2">{strMinutes}</span>
                 <span className="bg-tax-lime rounded-md p-3">{ampm}</span>
             </div>
-            <div>
+            <div className="font-semibold text-lg">
                 {currentTime.toLocaleDateString()}
             </div>
         </div>

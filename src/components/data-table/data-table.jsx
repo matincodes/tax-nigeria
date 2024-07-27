@@ -21,13 +21,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '../ui/pagination';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '../ui/select';
+
 
 
 
@@ -93,22 +87,7 @@ const DataTable = ({data, columns}) => {
         </Table>
       </div>
       <div className='mt-4 flex justify-between items-center w-full'>
-        <Select
-          onValueChange={value => table.setPageSize(Number(value))}
-          value={table.getState().pagination.pageSize.toString()}
-        >
-          <SelectTrigger className='w-40'>
-            <SelectValue placeholder='Select page size' />
-          </SelectTrigger>
-          <SelectContent className='bg-white'>
-            {[5, 10, 20, 30, 40, 50].map(pageSize => (
-              <SelectItem key={pageSize} value={pageSize.toString()}>
-                Show {pageSize}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        <Pagination className=''>
+        <Pagination className='cursor-pointer p-2 mt-3 flex font-manrope'>
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious
@@ -132,6 +111,7 @@ const DataTable = ({data, columns}) => {
             <PaginationItem>
               <PaginationNext
                 onClick={() => table.nextPage()}
+                // disabled={true}
                 disabled={!table.getCanNextPage()}
               />
             </PaginationItem>
