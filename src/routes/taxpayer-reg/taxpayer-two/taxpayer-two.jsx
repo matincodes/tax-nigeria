@@ -1,8 +1,11 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { useAuth } from '../../../context/AuthContext'
 
 const TaxPayerTwo = ({ nextStep, prevStep, setOnboardingData }) => {
-  const user = JSON.parse(localStorage.getItem('user'))
+    const { user } = useAuth()
+
+  // const user = JSON.parse(localStorage.getItem('user'))
   const [taxpayerData, setTaxpayerData] = useState({
     cac: '',
     businessTypeId: '',

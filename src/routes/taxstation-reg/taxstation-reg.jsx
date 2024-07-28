@@ -14,7 +14,7 @@ const handleSubmit =
       //   taxStationCode,
       //   lgaID: lgaId,
       // })
-      useFetchWithRetry('https://assettrack.com.ng/api/TaxStation', {
+       await axios('https://assettrack.com.ng/api/TaxStation', {
         method: 'post',
         data: {
           name: stationName,
@@ -28,7 +28,7 @@ const handleSubmit =
       navigate('/dashboard')
     } catch (error) {
       setFailed(true)
-      console.error('Error creating Tax Station')
+      console.error('Error creating Tax Station', error)
     }
   }
 

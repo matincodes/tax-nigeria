@@ -6,9 +6,7 @@ import { MultiSelect } from 'react-multi-select-component'
 import { useAuth } from '../../context/AuthContext'
 
 const TaxAgentReg = () => {
-  // const { user } = useAuth()
-  // get user from local storage
-  const user = JSON.parse(localStorage.getItem('user'))
+  const { user } = useAuth()
   const [agentData, setAgentData] = useState({
     emailAddress: '',
     address: '',
@@ -54,6 +52,8 @@ const TaxAgentReg = () => {
   }, [])
 
   useEffect(() => {
+    if (!selectedState) return
+
     const fetchLgaData = async () => {
       try {
         const response = await axios.get(
@@ -72,7 +72,7 @@ const TaxAgentReg = () => {
     const isComplete = Object.values(agentData).every(
       value => value.trim() !== '',
     )
-    setDisabled(isComplete)
+    setDisabled(!isComplete)
   }, [agentData])
 
   const handleChange = e => {
@@ -87,14 +87,24 @@ const TaxAgentReg = () => {
     e.preventDefault()
     setLoading(true)
     try {
+      console.log('agent data', {
+        ...agentData,
+        id: 0,
+        consultantId: 0,
+        wallletId: 0,
+        agentPics: '',
+        userRole: 'Agent',
+        miniStationsIDs: selectedMiniTaxStations.map(({ value }) => value),
+      })
       await fetchWithRetry({
         method: 'POST',
         data: {
           ...agentData,
-          id: '',
-          consultantId: '',
-          wallletId: '',
+          id: 0,
+          consultantId: 0,
+          wallletId: 0,
           agentPics: '',
+          senderUserId: user.email,
           miniStationsIDs: selectedMiniTaxStations.map(({ value }) => value),
         },
         url: 'https://assettrack.com.ng/api/Agent/WithCredentials',
@@ -273,7 +283,7 @@ const TaxAgentReg = () => {
                   Select LGA
                 </option>
                 {lgaData?.map(({ lgaId, lgaName }) => (
-                  <option value={lgaId} key={lgaId}>
+                  <option className='text-black' value={lgaId} key={lgaId}>
                     {lgaName}
                   </option>
                 ))}
