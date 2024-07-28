@@ -6,7 +6,8 @@ import {
   useReactTable,
   getPaginationRowModel,
 } from '@tanstack/react-table'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 
 import {
   Table,
@@ -16,10 +17,10 @@ import {
   TableHeader,
   TableRow,
 } from '../../components/ui/table'
-import { mockBillingData } from '../../data/billingData'
 import dots from '../../assets/img/Bussiness_Sector/three_dots.svg'
 import { BsDot } from 'react-icons/bs'
 import { DropDown } from '../../components/profile/payercard/payercard'
+
 
 const billingColumns = [
   {
@@ -28,42 +29,47 @@ const billingColumns = [
     cell: ({ row }) => <p>{row.getValue('year')}</p>,
   },
   {
-    accessorKey: 'taxPayerId',
+    accessorKey: 'taxPayer_Id',
     header: 'Tax Payer ID',
-    cell: ({ row }) => <p>{row.getValue('taxPayerId')}</p>,
+    cell: ({ row }) => <p>{row.getValue('taxPayer_Id')}</p>,
   },
   {
     accessorKey: 'payerFullName',
     header: 'Payer Full Name',
     cell: ({ row }) => (
-      <p>{`${row.original.payerFirstName} ${row.original.payerLastName}`}</p>
+      <p>{`${row.original.txPayFName} ${row.original.txPayLName}`}</p>
     ),
   },
   {
-    accessorKey: 'miniTaxStation',
-    header: 'Mini Tax Station',
-    cell: ({ row }) => <p>{row.getValue('miniTaxStation')}</p>,
-  },
-  {
-    accessorKey: 'amount',
+    accessorKey: 'billAmount',
     header: 'Amount',
-    cell: ({ row }) => <p>${row.getValue('amount').toFixed(2)}</p>,
+    cell: ({ row }) => <p>${row.getValue('billAmount')?.toFixed(2)}</p>,
   },
   {
-    accessorKey: 'billReference',
+    accessorKey: 'totalAmountPaid',
+    header: 'Total Amount Paid',
+    cell: ({ row }) => <p>${row.getValue('totalAmountPaid')?.toFixed(2)}</p>,
+  },
+  {
+    accessorKey: 'billStatus',
+    header: 'Bill Status',
+    cell: ({ row }) => <p>{row.getValue('billStatus')}</p>,
+  },
+  {
+    accessorKey: 'billReferenceNo',
     header: 'Bill Reference',
-    cell: ({ row }) => <p>{row.getValue('billReference')}</p>,
+    cell: ({ row }) => <p>{row.getValue('billReferenceNo')}</p>,
   },
+  // {
+  //   accessorKey: 'assessmentRef',
+  //   header: 'Assessment Reference',
+  //   cell: ({ row }) => <p>{row.getValue('assessmentRef')}</p>,
+  // },
   {
-    accessorKey: 'assessmentRef',
-    header: 'Assessment Reference',
-    cell: ({ row }) => <p>{row.getValue('assessmentRef')}</p>,
-  },
-  {
-    accessorKey: 'date',
+    accessorKey: 'billDate',
     header: 'Date',
     cell: ({ row }) => (
-      <p>{new Date(row.getValue('date')).toLocaleDateString()}</p>
+      <p>{new Date(row.getValue('billDate')).toLocaleDateString()}</p>
     ),
   },
   {
@@ -75,19 +81,32 @@ const billingColumns = [
 
 const Billing = () => {
   const [searchQuery, setSearchQuery] = useState('')
+  const [billingData, setBillingData] = useState([])
 
-  const filteredData = mockBillingData.filter(item => {
-    const fullName =
-      `${item.payerFirstName} ${item.payerLastName}`.toLowerCase()
+  useEffect(() => {
+    axios
+      .get('https://assettrack.com.ng/api/BillGeneration')
+      .then(response => {
+        setBillingData(response.data)
+      })
+      .catch(error => {
+        console.error('Error fetching billing data:', error)
+      })
+  }, [])
+
+  const filteredData = billingData.filter(item => {
+    const fullName = `${item.txPayFName} ${item.txPayLName}`.toLowerCase()
     return (
       item.year.toString().includes(searchQuery.toLowerCase()) ||
-      item.taxPayerId.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.taxPayerId?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       fullName.includes(searchQuery.toLowerCase()) ||
-      item.miniTaxStation.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.amount.toString().includes(searchQuery.toLowerCase()) ||
-      item.billReference.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.assessmentRef.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      new Date(item.date)
+      item.miniTaxStation?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.billAmount.toString().includes(searchQuery.toLowerCase()) ||
+      item.totalAmountPaid.toString().includes(searchQuery.toLowerCase()) ||
+      item.billStatus.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.billReferenceNo.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.assessmentRef?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      new Date(item.billDate)
         .toLocaleDateString()
         .includes(searchQuery.toLowerCase())
     )
