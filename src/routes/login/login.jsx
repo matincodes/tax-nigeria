@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import LoginBG from '../../assets/img/login-bg.png'
 import EyeClose from '../../assets/img/invisible.svg'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 
 const Login = () => {
@@ -14,14 +14,6 @@ const Login = () => {
 
   const navigate = useNavigate()
   const { login, isAuthenticated } = useAuth()
-
-  
-  useEffect(() => {
-    if (isAuthenticated) {
-      // navigate('/dashboard')
-    }
-  }, [isAuthenticated, navigate])
-  
 
   useEffect(() => {
     setFailed(false)
@@ -39,14 +31,15 @@ const Login = () => {
   const handleLogin = async e => {
     e.preventDefault()
     setSubmitting(true)
-    await login(email, password)
-    if (isAuthenticated) {
+    if (await login(email, password)) {
       navigate('/dashboard')
     } else {
       setSubmitting(false)
       setFailed(true)
     }
   }
+
+  if (isAuthenticated) return <Navigate to='/dashboard' />
 
   return (
     <div className='flex'>
