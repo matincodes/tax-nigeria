@@ -127,7 +127,7 @@ const StationManagement = () => {
             text='Add New Station'
             iconposition='left'
             icon='+'
-            handleButton={() => navigate('/taxstation-registration')}
+            handleButton={() => navigate('/dashboard/taxstation-registration')}
           />
         </div>
         <div className='pl-3'>
