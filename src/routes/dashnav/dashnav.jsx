@@ -5,10 +5,18 @@ import Notification from '../../assets/img/notification.svg'
 import ProfilePicture from '../../assets/img/profile-pic.png'
 import DropDown from '../../assets/img/arrow-drop-down-line.svg'
 import { useAuth } from '../../context/AuthContext'
+import { useState } from 'react'
+
 const DashNav = () => {
   const location = useLocation()
-
   const { user } = useAuth()
+
+  const [dropdown, setDropdown] = useState(false)
+
+  const toggleDropdown = e => {
+    e.preventDefault()
+    setDropdown(!dropdown)
+  }
 
   const isNavActive = path => {
     const currentpage = location.pathname.split('/').slice(-1)[0]
@@ -18,7 +26,9 @@ const DashNav = () => {
     return currentpage === navpath
   }
 
-  const filteredNavData = navData.filter(item => item.visible.includes(user?.role))
+  const filteredNavData = navData.filter(item =>
+    item.visible.includes(user?.role),
+  )
 
   return (
     <div className='flex'>
@@ -29,23 +39,53 @@ const DashNav = () => {
         <div className='pl-10 overflow-y-scroll'>
           <ul className='flex flex-col gap-3 font-manrope'>
             {filteredNavData.slice(0, -2).map((items, index) => (
-              <li
-                key={index}
-                className={`py-3 pl-2 w-[90%] rounded-md ${
-                  isNavActive(items.path) ? 'bg-tax-lime' : 'bg-none'
-                }`}
-              >
-                <Link to={items.path} className='flex items-center'>
+              <li key={items.label.replace(/\s+/g, '_')}>
+                <Link
+                  className={`py-3 pl-2 w-[90%] rounded-md flex items-center ${
+                    isNavActive(items.path) ? 'bg-tax-lime' : 'bg-none'
+                  }`}
+                  to={items.path}
+                >
                   <img src={items.icon} alt={items.label} />
                   <p className='ml-3 pr-2 text-base text-text-gray'>
                     {items.label}
                   </p>
                   {items.subsection ? (
-                    <img src={DropDown} alt='Drop Down' />
+                    <img
+                      src={DropDown}
+                      alt='Drop Down'
+                      style={{
+                        transform: dropdown ? 'rotate(0deg)' : 'rotate(180deg)',
+                      }}
+                      onClick={toggleDropdown}
+                    />
                   ) : (
                     ''
                   )}
                 </Link>
+                {dropdown && (
+                  <ul
+                    key={`${items.label.replace(/\s+/g, '_')}${(
+                      Math.random() * 100
+                    ).toFixed(0)}-dropdown`}
+                  >
+                    {items.subsection?.map((subitem, index) => (
+                      <li
+                        key={subitem.label.replace(/\s+/g, '_')}
+                        className={`py-3 pl-2 w-[90%] rounded-md ${
+                          isNavActive(subitem.path) ? 'bg-tax-lime' : 'bg-none'
+                        }`}
+                      >
+                        <Link to={subitem.path} className='flex items-center'>
+                          <img src={subitem.icon} alt={subitem.label} />
+                          <p className='ml-3 text-base text-text-gray'>
+                            {subitem.label}
+                          </p>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
             ))}
           </ul>
