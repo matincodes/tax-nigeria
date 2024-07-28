@@ -103,7 +103,7 @@ const TaskCardManagement = () => {
       <Search />
 
       <div className='flex justify-between mt-5'>
-        <h2 className='font-semibold text-xl'>Task Card Management</h2>
+        <h2 className='font-semibold text-xl'>Tax Card Management</h2>
         <div className='flex gap-2'>
           <button className='h-10 px-4 py-2.5 bg-white rounded-lg justify-center items-center gap-2 inline-flex'>
             <img src={Filter} alt='filters' className='w-5 h-5 relative' />
