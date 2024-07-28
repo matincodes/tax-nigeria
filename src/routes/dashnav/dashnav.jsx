@@ -9,7 +9,7 @@ import { useState } from 'react'
 
 const DashNav = () => {
   const location = useLocation()
-  const { user } = useAuth()
+  const { user, logout } = useAuth()
 
   const [dropdown, setDropdown] = useState(false)
 
@@ -91,25 +91,48 @@ const DashNav = () => {
           </ul>
           <ul className='py-10'>
             {navData.slice(-2).map((items, index) => (
-              <li
-                key={index}
-                className={`py-3 pl-2 w-[90%] rounded-md ${
-                  isNavActive(items.path) ? 'bg-tax-lime' : 'bg-none'
-                }`}
-              >
-                <Link to={items.path} className='flex items-center'>
-                  <img src={items.icon} alt={items.label} />
-                  <p
-                    className={`ml-3 text-base ${
-                      items.label === 'Logout'
-                        ? 'text-[#A65959]'
-                        : 'text-text-gray'
-                    }`}
-                  >
-                    {items.label}
-                  </p>
-                </Link>
-              </li>
+              items.label === 'Logout' ? (
+                <li
+                  key={index}
+                  className={`py-3 pl-2 w-[90%] rounded-md cursor-pointer ${
+                    isNavActive(items.path) ? 'bg-tax-lime' : 'bg-none'
+                  }`}
+                  onClick={logout}
+                >
+                  <div  className='flex items-center'>
+                    <img src={items.icon} alt={items.label} />
+                    <p
+                      className={`ml-3 text-base ${
+                        items.label === 'Logout'
+                          ? 'text-[#A65959]'
+                          : 'text-text-gray'
+                      }`}
+                    >
+                      {items.label}
+                    </p>
+                  </div>
+                </li>
+              ) : (
+                <li
+                  key={index}
+                  className={`py-3 pl-2 w-[90%] rounded-md ${
+                    isNavActive(items.path) ? 'bg-tax-lime' : 'bg-none'
+                  }`}
+                >
+                  <Link to={items.path} className='flex items-center'>
+                    <img src={items.icon} alt={items.label} />
+                    <p
+                      className={`ml-3 text-base ${
+                        items.label === 'Logout'
+                          ? 'text-[#A65959]'
+                          : 'text-text-gray'
+                      }`}
+                    >
+                      {items.label}
+                    </p>
+                  </Link>
+                </li>
+              )
             ))}
           </ul>
         </div>
