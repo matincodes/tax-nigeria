@@ -39,7 +39,7 @@ const InnerTable = ({sectorData}) => {
         </thead>
 
         <tbody className="text-[13px] divide-y divide-gray-200 bg-[#f7f7f7cb]">
-          {sectorData.map((business) => (
+          {sectorData?.map((business) => (
             <tr
               className="flex items-center justify-between w-full p-[10px]"
               key={business.id}
