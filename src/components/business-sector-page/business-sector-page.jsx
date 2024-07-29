@@ -7,7 +7,7 @@ import axios from "axios";
 const BusinessSectorPage = () => {
   const navigate = useNavigate()
   
-  const [sectorData, setSectorData] = useState([]);
+  const [sectorData, setSectorData] = useState(null);
 
   useEffect(() => {
     const fetchSectors = async () => {
