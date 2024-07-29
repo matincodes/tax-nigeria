@@ -1,96 +1,108 @@
-import { useState, useEffect } from "react";
-import { consultants } from "../../../data/consultants";
-import Button from "../../button/button";
-import ProgressBar from "../../progress-bar/progress-bar";
-import Pagination from "../../pagination/pagination";
-import { useNavigate } from "react-router-dom";
+import React from 'react'
+import {
+  useReactTable,
+  getCoreRowModel,
+  getPaginationRowModel,
+  flexRender,
+} from '@tanstack/react-table'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '../../ui/table'
+import PaginationComponent from '../../paginationComponent/paginationComponent'
 
-const InnerTable = () => {
-  const navigate = useNavigate();
-  const [paginationNum, setPaginationNum] = useState(0);
-  const [consultantSection, setConsultantSection] = useState(
-    consultants[paginationNum]
-  );
-
-  const prevPage = (e) => {
-    if (paginationNum <= 0) {
-      return;
-    }
-    setPaginationNum(paginationNum - 1);
-  };
-
-  const nextPage = (e) => {
-    if (paginationNum === consultants.length - 1) {
-      return;
-    }
-    setPaginationNum(paginationNum + 1);
-  };
-
-  useEffect(()=>{
-    setConsultantSection(consultants[paginationNum])
-  }, [paginationNum])
-
-  const handleButton = (e) => {
-      e.preventDefault()
-      navigate("/dashboard/consultant-profile")
-  }
+const InnerTable = ({ data, columns, loading }) => {
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+  })
 
   return (
-    <div className="w-full font-manrope p-1 mt-[15px]">
-      <table className="w-full flex flex-col">
-        <thead className="text-[#4C4C4C] text-[14px] grid bg-[#F7F7F7] p-[10px]">
-          <tr className=" grid grid-cols-2">
-            <div className="left w-full flex">
-              <th className="text-left basis-[50%]">Conultants</th>
-              <th className="text-left basis-[50%]">Ratings</th>
-            </div>
-
-            <div className="right w-full flex justify-end">
-              <th className="text-left">Tax Station</th>
-              <th className="basis-[50%] text-right pr-7">Action</th>
-            </div>
-          </tr>
-        </thead>
-
-        <tbody className="text-[13px] bg-[#f7f7f7cb] p-[10px] space-y-3">
-          {consultantSection.consultants.map((consultant) => (
-            <tr className="flex">
-              <div className="left w-full flex items-center">
-                <td className="text-left basis-[50%] flex items-center gap-3">
-                  
-                  <img
-                    src={consultant.image}
-                    alt={consultant.name}
-                    className="w-[32px] h-[32px] grid place-content-center object-cover object-center rounded-full overflow-hidden"
-                  />
-                  {consultant.name}
-                </td>
-
-                <td className="text-left basis-[50%]  flex gap-2 items-center ">
-                 <ProgressBar progress={consultant.rating} max={100} />
-                  {consultant.rating}{"%"}
-                </td>
-              </div>
-
-              <div className="right w-full flex justify-end items-center">
-                <td className="text-left flex basis-[47.8%] ">
-                  
-                  {consultant.tax_station}
-                </td>
-                <td className="flex place-content-center">
-                  
-                  <Button text="Profile" handleButton={handleButton}/>
-                </td>
-              </div>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-          
-      <Pagination prevPage={prevPage} nextPage={nextPage} paginationArray={consultants} paginationSection={consultantSection} />
-      
+    <div className='mt-5 w-full font-manrope p-1'>
+      <div className='mt-5'>
+        <Table className='min-w-full'>
+          <TableHeader className='text-[#4C4C4C] text-[14px] bg-[#F7F7F7] p-[10px]'>
+            {table.getHeaderGroups().map(headerGroup => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map(header => (
+                  <TableHead
+                    key={header.id}
+                    className='text-left font-bold p-2'
+                  >
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
+                  </TableHead>
+                ))}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody className='text-[13px] bg-[#f7f7f7cb]'>
+            {loading ? (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className='h-18 text-center'
+                >
+                  Loading...
+                </TableCell>
+              </TableRow>
+            ) : table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map(row => (
+                <TableRow
+                  className='p-1 m-0 divide-none border-none space-x-7'
+                  key={row.id}
+                >
+                  {row.getVisibleCells().map(cell => (
+                    <TableCell
+                      key={cell.id}
+                      className='whitespace-nowrap text-sm p-2 pr-4'
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className='h-24 text-center'
+                >
+                  No results.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+      <div className='mt-4 flex justify-between items-center w-full'>
+        <PaginationComponent
+          canPreviousPage={table.getCanPreviousPage()}
+          previousPage={table.previousPage}
+          canNextPage={table.getCanNextPage()}
+          nextPage={table.nextPage}
+          pageIndex={table.getState().pagination.pageIndex}
+          pageCount={table.getPageCount()}
+          setPageIndex={table.setPageIndex}
+          pageOptions={table.getPageOptions()}
+          gotoPage={table.gotoPage}
+        />
+      </div>
     </div>
-  );
-};
+  )
+}
 
-export default InnerTable;
+export default InnerTable
