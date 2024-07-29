@@ -26,7 +26,7 @@ const Admin = () => {
       <Routes>
         <Route path='/' element={<DashNav />}>
           <Route index element={<Dashboard />} />
-          <Route path='business' element={<BusinessSector />} />
+          <Route path='business/*' element={<BusinessSector />} />
           <Route path='consultant' element={<ConsultantPage />} />
           <Route path='agent' element={<AgentPage />} />
           <Route path='taxcard' element={<TaskCardManagement />} />
