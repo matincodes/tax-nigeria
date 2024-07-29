@@ -4,10 +4,10 @@ import { businessSectors } from "../../../data/businessSector";
 import { useState, useEffect } from "react";
 import Pagination from "../../pagination/pagination";
 
-const InnerTable = ({sectorData}) => {
+const InnerTable = ({ sectorData }) => {
   const [paginationNum, setPaginationNum] = useState(0);
   const [sectorSection, setSectorSection] = useState(
-    businessSectors[paginationNum]
+    businessSectors[paginationNum],
   );
 
   const prevPage = (e) => {
@@ -15,7 +15,7 @@ const InnerTable = ({sectorData}) => {
       return;
     }
     setPaginationNum(paginationNum - 1);
-  };  
+  };
 
   const nextPage = (e) => {
     if (paginationNum === businessSectors.length - 1) {
@@ -39,7 +39,7 @@ const InnerTable = ({sectorData}) => {
         </thead>
 
         <tbody className="text-[13px] divide-y divide-gray-200 bg-[#f7f7f7cb]">
-          {sectorData.map((business) => (
+          {sectorData?.map((business) => (
             <tr
               className="flex items-center justify-between w-full p-[10px]"
               key={business.id}
@@ -55,8 +55,12 @@ const InnerTable = ({sectorData}) => {
         </tbody>
       </table>
 
-      <Pagination prevPage={prevPage} nextPage={nextPage} paginationArray={businessSectors} paginationSection={sectorSection} />
-      
+      <Pagination
+        prevPage={prevPage}
+        nextPage={nextPage}
+        paginationArray={businessSectors}
+        paginationSection={sectorSection}
+      />
     </div>
   );
 };

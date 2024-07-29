@@ -8,7 +8,7 @@ const LineChart = () => {
       zoom: {
         enabled: false,
       },
-      background: "#F7F7F7"
+      background: "#F7F7F7",
     },
     dataLabels: {
       enabled: false,
@@ -21,25 +21,24 @@ const LineChart = () => {
       align: "left",
       style: {
         fontFamily: "Poppins",
-        fontWeight: "bold"
-      }
+        fontWeight: "bold",
+      },
     },
     grid: {
       xaxis: {
         lines: {
-            show: true
-        }
-    },   
-    yaxis: {
+          show: true,
+        },
+      },
+      yaxis: {
         lines: {
-            show: true
-        }
-    },  
+          show: true,
+        },
+      },
       row: {
         colors: ["transparent"],
         opacity: 0.5,
       },
-      
     },
     xaxis: {
       categories: [
@@ -54,21 +53,21 @@ const LineChart = () => {
         "Sep",
         "Oct",
         "Nov",
-        "Dec"
+        "Dec",
       ],
     },
     fill: {
-      type: 'gradient',
+      type: "gradient",
       gradient: {
-        shade: 'dark',
-        gradientToColors: [ '#845ED7', '#6B8AEB'],
+        shade: "dark",
+        gradientToColors: ["#845ED7", "#6B8AEB"],
         shadeIntensity: 1,
-        type: 'horizontal',
+        type: "horizontal",
         opacityFrom: 1,
         opacityTo: 1,
-        stops: [0, 100, 100, 100]
+        stops: [0, 100, 100, 100],
       },
-    }
+    },
   };
   let series = [
     {

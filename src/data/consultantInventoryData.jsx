@@ -6,34 +6,34 @@ import PayersImage from "../assets/img/payers.png";
 import AgentImage from "../assets/img/agents.png";
 
 export const consultantInventoryData = [
-    {
-        title: "Tax Wallet",
-        numbers: "N 100,000",
-        imageSrc: BillImage
-    },
-    {
-        title: "Tax Expenses",
-        numbers: "N 3,900",
-        imageSrc: TaxImage
-    },
-    {
-        title: "Revenue",
-        numbers: "130k",
-        imageSrc: RevenueImage
-    },
-    {
-        title: "Registered Tax Agents",
-        numbers: "250",
-        imageSrc: AgentImage
-    },
-    {
-        title: "Bill Generated",
-        numbers: "100",
-        imageSrc: BillImage
-    },
-    {
-        title: "Number of Registered Tax Payers",
-        numbers: "50",
-        imageSrc: PayersImage
-    }
-]
+  {
+    title: "Tax Wallet",
+    accessor: "consultantWalletBalance",
+    imageSrc: BillImage,
+  },
+  {
+    title: "Tax Expenses",
+    accessor: "taxExpenses",
+    imageSrc: TaxImage,
+  },
+  {
+    title: "Revenue",
+    accessor: "revenue",
+    imageSrc: RevenueImage,
+  },
+  {
+    title: "Registered Tax Agents",
+    accessor: "numberOfMyRegisteredTaxAgents",
+    imageSrc: AgentImage,
+  },
+  {
+    title: "Bill Generated",
+    accessor: "billGenerated",
+    imageSrc: BillImage,
+  },
+  {
+    title: "Number of Registered Tax Payers",
+    accessor: "numberOfMyRegisteredTaxpayers",
+    imageSrc: PayersImage,
+  },
+];

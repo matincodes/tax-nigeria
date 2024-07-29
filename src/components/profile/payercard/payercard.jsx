@@ -27,7 +27,7 @@ const PayerCard = ({ name, status, station }) => {
       <button onClick={() => setShow(!isShow)} className="relative">
         <img src={dots} alt="" />
       </button>
-        {isShow && <DropDown close={() => setShow(!isShow)} />}
+      {isShow && <DropDown close={() => setShow(!isShow)} />}
     </div>
   );
 };

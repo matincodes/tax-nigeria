@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios'
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 /**
  * Custom hook to fetch data with retry logic and exponential backoff.
@@ -25,35 +25,35 @@ const useFetchWithRetry = (
   initialDelay = 10000,
   maxRetries = 5,
 ) => {
-  const [data, setData] = useState(null)
-  const [retryCount, setRetryCount] = useState(0)
-  const [delay, setDelay] = useState(initialDelay)
+  const [data, setData] = useState(null);
+  const [retryCount, setRetryCount] = useState(0);
+  const [delay, setDelay] = useState(initialDelay);
 
   useEffect(() => {
-    let ignore = false
+    let ignore = false;
     const fetchData = async () => {
       try {
-        const response = await axios(config)
-        !ignore && setData(response.data)
+        const response = await axios(config);
+        !ignore && setData(response.data);
       } catch (error) {
-        console.log('Error fetching data')
+        console.log("Error fetching data");
         if (retryCount < maxRetries) {
-          setRetryCount(prevCount => prevCount + 1)
-          setTimeout(fetchData, delay)
-          setDelay(prevDelay => prevDelay * 2) // Exponential backoff
+          setRetryCount((prevCount) => prevCount + 1);
+          setTimeout(fetchData, delay);
+          setDelay((prevDelay) => prevDelay * 2); // Exponential backoff
         }
       }
-    }
-    if (dependencies?.every(dep => Boolean(dep) !== false)) {
-      fetchData()
+    };
+    if (dependencies?.every((dep) => Boolean(dep) !== false)) {
+      fetchData();
     }
 
     return () => {
-      ignore = true
-    }
-  }, [delay, retryCount, maxRetries, ...dependencies])
+      ignore = true;
+    };
+  }, [delay, retryCount, maxRetries, ...dependencies]);
 
-  return data
-}
+  return data;
+};
 
-export default useFetchWithRetry
+export default useFetchWithRetry;

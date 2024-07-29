@@ -1,9 +1,11 @@
+// DataTable.jsx
+import React from "react";
 import {
   useReactTable,
   getCoreRowModel,
   getPaginationRowModel,
   flexRender,
-} from '@tanstack/react-table';
+} from "@tanstack/react-table";
 import {
   Table,
   TableBody,
@@ -11,39 +13,28 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../ui/table';
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from '../ui/pagination';
+} from "../ui/table";
+import PaginationComponent from "../paginationComponent/paginationComponent";
 
-
-
-
-const DataTable = ({data, columns}) => {
+const DataTable = ({ data, columns, loading }) => {
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-  })
+  });
 
   return (
-    <div className='mt-5'>
-      <div className='mt-5 rounded-xl border'>
-        <Table className='min-w-full divide-y divide-gray-200'>
-          <TableHeader className='h-11 bg-gray-50'>
-            {table.getHeaderGroups().map(headerGroup => (
+    <div className="mt-5">
+      <div className="mt-5 rounded-md border">
+        <Table className="min-w-full divide-y divide-gray-200">
+          <TableHeader className="h-11 bg-gray-50">
+            {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map(header => (
+                {headerGroup.headers.map((header) => (
                   <TableHead
                     key={header.id}
-                    className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
                     {header.isPlaceholder
                       ? null
@@ -56,14 +47,23 @@ const DataTable = ({data, columns}) => {
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody className='bg-white divide-y divide-gray-200'>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map(row => (
+          <TableBody className="bg-white divide-y divide-gray-200">
+            {loading ? (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  Loading...
+                </TableCell>
+              </TableRow>
+            ) : table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id}>
-                  {row.getVisibleCells().map(cell => (
+                  {row.getVisibleCells().map((cell) => (
                     <TableCell
                       key={cell.id}
-                      className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'
+                      className="px-4 py-4 whitespace-nowrap text-sm text-gray-500"
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
@@ -77,7 +77,7 @@ const DataTable = ({data, columns}) => {
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className='h-24 text-center'
+                  className="h-24 text-center"
                 >
                   No results.
                 </TableCell>
@@ -86,40 +86,21 @@ const DataTable = ({data, columns}) => {
           </TableBody>
         </Table>
       </div>
-      <div className='mt-4 flex justify-between items-center w-full'>
-        <Pagination className='cursor-pointer p-2 mt-3 flex font-manrope'>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious
-                onClick={() => table.previousPage()}
-                disabled={!table.getCanPreviousPage()}
-              />
-            </PaginationItem>
-            {table.getPageOptions().map((page, index) => (
-              <PaginationItem key={index}>
-                <PaginationLink
-                  onClick={() => table.setPageIndex(page)}
-                  isActive={table.getState().pagination.pageIndex === page}
-                >
-                  {page + 1}
-                </PaginationLink>
-              </PaginationItem>
-            ))}
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext
-                onClick={() => table.nextPage()}
-                // disabled={true}
-                disabled={!table.getCanNextPage()}
-              />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
+      <div className="mt-4 flex justify-between items-center w-full">
+        <PaginationComponent
+          canPreviousPage={table.getCanPreviousPage()}
+          previousPage={table.previousPage}
+          canNextPage={table.getCanNextPage()}
+          nextPage={table.nextPage}
+          pageIndex={table.getState().pagination.pageIndex}
+          pageCount={table.getPageCount()}
+          setPageIndex={table.setPageIndex}
+          pageOptions={table.getPageOptions()}
+          gotoPage={table.gotoPage}
+        />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DataTable
+export default DataTable;

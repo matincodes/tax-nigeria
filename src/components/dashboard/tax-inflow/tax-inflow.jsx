@@ -22,17 +22,22 @@ const TaxInflow = () => {
           <p>Invoiced Amount</p>
           <p className="pl-16">Status</p>
         </div>
-          {
-            taxinflowData.map((tax, index) => (
-              <div key={index} className="border-b-2 border-gray-[#808080] mb-1 text-sm grid w-full grid-cols-5 p-2 gap-2 pl-10">
-                <p>{tax.taxId}</p>
-                <p>{tax.agent}</p>
-                <p>{tax.date}</p>
-                <p>{tax.amount}</p>
-                <p className={`pl-16 ${tax.status === "Pending" ? "text-[#AF790E]" : "text-green-600"}`}>{tax.status}</p>
-              </div>
-            ))
-          }
+        {taxinflowData.map((tax, index) => (
+          <div
+            key={index}
+            className="border-b-2 border-gray-[#808080] mb-1 text-sm grid w-full grid-cols-5 p-2 gap-2 pl-10"
+          >
+            <p>{tax.taxId}</p>
+            <p>{tax.agent}</p>
+            <p>{tax.date}</p>
+            <p>{tax.amount}</p>
+            <p
+              className={`pl-16 ${tax.status === "Pending" ? "text-[#AF790E]" : "text-green-600"}`}
+            >
+              {tax.status}
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   );
