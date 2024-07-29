@@ -5,7 +5,6 @@ import {
   getCoreRowModel,
   useReactTable,
   getPaginationRowModel,
-
 } from "@tanstack/react-table";
 import dots from "../../assets/img/Bussiness_Sector/three_dots.svg";
 import { BsDot } from "react-icons/bs";
@@ -61,9 +60,7 @@ const ActionCell = ({ row }) => {
     setIsOpen(!isOpen);
   }
   return (
-    <button
-    onClick={onClose}
-    className="relative ">
+    <button onClick={onClose} className="relative ">
       <img src={dots} alt="" />
       {isOpen && <DropDown className={"right-0"} close={onClose} />}
     </button>
@@ -163,7 +160,7 @@ function DataTable({ columns, data, rowStyle }) {
                       ? null
                       : flexRender(
                           header.column.columnDef.header,
-                          header.getContext()
+                          header.getContext(),
                         )}
                   </TableHead>
                 );

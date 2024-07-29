@@ -4,7 +4,6 @@ import location from "../../assets/img/system-uicons_location.png";
 import { AiOutlinePlus } from "react-icons/ai";
 import PayerCard from "./payercard/payercard";
 
-
 const AgentProfile = () => {
   return (
     <div className="w-full p-6  h-full space-y-6">
@@ -87,4 +86,3 @@ const AgentProfile = () => {
 };
 
 export default AgentProfile;
-

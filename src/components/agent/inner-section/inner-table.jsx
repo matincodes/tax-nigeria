@@ -7,7 +7,7 @@ import Pagination from "../../pagination/pagination";
 const InnerTable = () => {
   const [paginationNum, setPaginationNum] = useState(0);
   const [consultantSection, setConsultantSection] = useState(
-    agents[paginationNum]
+    agents[paginationNum],
   );
 
   const prevPage = (e) => {
@@ -54,9 +54,7 @@ const InnerTable = () => {
                 {consultant.name}
               </td>
 
-              <td className="flex items-center">
-                {consultant.consultantName}
-              </td>
+              <td className="flex items-center">{consultant.consultantName}</td>
 
               <td className="text-left flex gap-2 items-center ">
                 <ProgressBar progress={consultant.rating} max={100} />

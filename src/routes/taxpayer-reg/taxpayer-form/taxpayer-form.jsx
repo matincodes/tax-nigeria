@@ -1,21 +1,21 @@
-import { useState } from 'react'
-import TaxpayerID from '../taxpayer-id/taxpayer-id'
-import TaxPayerOne from '../taxpayer-one/taxpayer-one'
-import TaxPayerTwo from '../taxpayer-two/taxpayer-two'
-import TaxPayerThree from '../taxpayer-three/taxpayer-three'
-import TaxPayerFour from '../taxpayer-four/taxpayer-four'
+import { useState } from "react";
+import TaxpayerID from "../taxpayer-id/taxpayer-id";
+import TaxPayerOne from "../taxpayer-one/taxpayer-one";
+import TaxPayerTwo from "../taxpayer-two/taxpayer-two";
+import TaxPayerThree from "../taxpayer-three/taxpayer-three";
+import TaxPayerFour from "../taxpayer-four/taxpayer-four";
 
 const TaxpayerForm = () => {
-  const [currentStep, setCurrentStep] = useState(1)
-  const [onboardingData, setOnboardingData] = useState()
+  const [currentStep, setCurrentStep] = useState(1);
+  const [onboardingData, setOnboardingData] = useState();
 
   const nextStep = () => {
-    setCurrentStep(prevStep => prevStep + 1)
-  }
+    setCurrentStep((prevStep) => prevStep + 1);
+  };
 
   const prevStep = () => {
-    setCurrentStep(prevStep => prevStep - 1)
-  }
+    setCurrentStep((prevStep) => prevStep - 1);
+  };
 
   const renderStep = () => {
     switch (currentStep) {
@@ -26,7 +26,7 @@ const TaxpayerForm = () => {
             onboardingData={onboardingData}
             setOnboardingData={setOnboardingData}
           />
-        )
+        );
       case 2:
         return (
           <TaxPayerOne
@@ -35,7 +35,7 @@ const TaxpayerForm = () => {
             onboardingData={onboardingData}
             setOnboardingData={setOnboardingData}
           />
-        )
+        );
       case 3:
         return (
           <TaxPayerTwo
@@ -44,7 +44,7 @@ const TaxpayerForm = () => {
             onboardingData={onboardingData}
             setOnboardingData={setOnboardingData}
           />
-        )
+        );
       case 4:
         return (
           <TaxPayerThree
@@ -53,7 +53,7 @@ const TaxpayerForm = () => {
             onboardingData={onboardingData}
             setOnboardingData={setOnboardingData}
           />
-        )
+        );
       case 5:
         return (
           <TaxPayerFour
@@ -62,7 +62,7 @@ const TaxpayerForm = () => {
             onboardingData={onboardingData}
             setOnboardingData={setOnboardingData}
           />
-        )
+        );
       default:
         return (
           <TaxpayerID
@@ -70,11 +70,11 @@ const TaxpayerForm = () => {
             onboardingData={onboardingData}
             setOnboardingData={setOnboardingData}
           />
-        )
+        );
     }
-  }
+  };
 
-  return <div>{renderStep()}</div>
-}
+  return <div>{renderStep()}</div>;
+};
 
-export default TaxpayerForm
+export default TaxpayerForm;

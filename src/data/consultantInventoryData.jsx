@@ -7,33 +7,33 @@ import AgentImage from "../assets/img/agents.png";
 
 export const consultantInventoryData = [
   {
-    title: 'Tax Wallet',
-    accessor: 'consultantWalletBalance',
+    title: "Tax Wallet",
+    accessor: "consultantWalletBalance",
     imageSrc: BillImage,
   },
   {
-    title: 'Tax Expenses',
-    accessor: 'taxExpenses',
+    title: "Tax Expenses",
+    accessor: "taxExpenses",
     imageSrc: TaxImage,
   },
   {
-    title: 'Revenue',
-    accessor: 'revenue',
+    title: "Revenue",
+    accessor: "revenue",
     imageSrc: RevenueImage,
   },
   {
-    title: 'Registered Tax Agents',
-    accessor: 'numberOfMyRegisteredTaxAgents',
+    title: "Registered Tax Agents",
+    accessor: "numberOfMyRegisteredTaxAgents",
     imageSrc: AgentImage,
   },
   {
-    title: 'Bill Generated',
-    accessor: 'billGenerated',
+    title: "Bill Generated",
+    accessor: "billGenerated",
     imageSrc: BillImage,
   },
   {
-    title: 'Number of Registered Tax Payers',
-    accessor: 'numberOfMyRegisteredTaxpayers',
+    title: "Number of Registered Tax Payers",
+    accessor: "numberOfMyRegisteredTaxpayers",
     imageSrc: PayersImage,
   },
-]
+];

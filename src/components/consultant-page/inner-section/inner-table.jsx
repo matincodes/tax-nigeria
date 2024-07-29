@@ -1,10 +1,10 @@
-import React from 'react'
+import React from "react";
 import {
   useReactTable,
   getCoreRowModel,
   getPaginationRowModel,
   flexRender,
-} from '@tanstack/react-table'
+} from "@tanstack/react-table";
 import {
   Table,
   TableBody,
@@ -12,8 +12,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../../ui/table'
-import PaginationComponent from '../../paginationComponent/paginationComponent'
+} from "../../ui/table";
+import PaginationComponent from "../../paginationComponent/paginationComponent";
 
 const InnerTable = ({ data, columns, loading }) => {
   const table = useReactTable({
@@ -21,19 +21,19 @@ const InnerTable = ({ data, columns, loading }) => {
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-  })
+  });
 
   return (
-    <div className='mt-5 w-full font-manrope p-1'>
-      <div className='mt-5'>
-        <Table className='min-w-full'>
-          <TableHeader className='text-[#4C4C4C] text-[14px] bg-[#F7F7F7] p-[10px]'>
-            {table.getHeaderGroups().map(headerGroup => (
+    <div className="mt-5 w-full font-manrope p-1">
+      <div className="mt-5">
+        <Table className="min-w-full">
+          <TableHeader className="text-[#4C4C4C] text-[14px] bg-[#F7F7F7] p-[10px]">
+            {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map(header => (
+                {headerGroup.headers.map((header) => (
                   <TableHead
                     key={header.id}
-                    className='text-left font-bold p-2'
+                    className="text-left font-bold p-2"
                   >
                     {header.isPlaceholder
                       ? null
@@ -46,26 +46,26 @@ const InnerTable = ({ data, columns, loading }) => {
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody className='text-[13px] bg-[#f7f7f7cb]'>
+          <TableBody className="text-[13px] bg-[#f7f7f7cb]">
             {loading ? (
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className='h-18 text-center'
+                  className="h-18 text-center"
                 >
                   Loading...
                 </TableCell>
               </TableRow>
             ) : table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map(row => (
+              table.getRowModel().rows.map((row) => (
                 <TableRow
-                  className='p-1 m-0 divide-none border-none space-x-7'
+                  className="p-1 m-0 divide-none border-none space-x-7"
                   key={row.id}
                 >
-                  {row.getVisibleCells().map(cell => (
+                  {row.getVisibleCells().map((cell) => (
                     <TableCell
                       key={cell.id}
-                      className='whitespace-nowrap text-sm p-2 pr-4'
+                      className="whitespace-nowrap text-sm p-2 pr-4"
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
@@ -79,7 +79,7 @@ const InnerTable = ({ data, columns, loading }) => {
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className='h-24 text-center'
+                  className="h-24 text-center"
                 >
                   No results.
                 </TableCell>
@@ -88,7 +88,7 @@ const InnerTable = ({ data, columns, loading }) => {
           </TableBody>
         </Table>
       </div>
-      <div className='mt-4 flex justify-between items-center w-full'>
+      <div className="mt-4 flex justify-between items-center w-full">
         <PaginationComponent
           canPreviousPage={table.getCanPreviousPage()}
           previousPage={table.previousPage}
@@ -102,7 +102,7 @@ const InnerTable = ({ data, columns, loading }) => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default InnerTable
+export default InnerTable;
