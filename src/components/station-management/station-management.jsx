@@ -10,6 +10,8 @@ import {
 } from '../ui/dropdown-menu'
 import ThreeDotIcon from '../../assets/img/Bussiness_Sector/three_dots.svg'
 import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 const columns = [
   {
@@ -27,9 +29,9 @@ const columns = [
           <path
             d='M6.00065 1.33325V10.6666M6.00065 10.6666L10.6673 5.99992M6.00065 10.6666L1.33398 5.99992'
             stroke='#667085'
-            stroke-width='1.33333'
-            stroke-linecap='round'
-            stroke-linejoin='round'
+            strokeWidth='1.33333'
+            strokeLinecap='round'
+            strokeLinejoin='round'
           />
         </svg>
       </div>
@@ -55,9 +57,9 @@ const columns = [
           <path
             d='M6.00065 1.33325V10.6666M6.00065 10.6666L10.6673 5.99992M6.00065 10.6666L1.33398 5.99992'
             stroke='#667085'
-            stroke-width='1.33333'
-            stroke-linecap='round'
-            stroke-linejoin='round'
+            strokeWidth='1.33333'
+            strokeLinecap='round'
+            strokeLinejoin='round'
           />
         </svg>
       </div>
@@ -78,9 +80,9 @@ const columns = [
           <path
             d='M6.00065 1.33325V10.6666M6.00065 10.6666L10.6673 5.99992M6.00065 10.6666L1.33398 5.99992'
             stroke='#667085'
-            stroke-width='1.33333'
-            stroke-linecap='round'
-            stroke-linejoin='round'
+            strokeWidth='1.33333'
+            strokeLinecap='round'
+            strokeLinejoin='round'
           />
         </svg>
       </div>
@@ -101,9 +103,9 @@ const columns = [
           <path
             d='M6.00065 1.33325V10.6666M6.00065 10.6666L10.6673 5.99992M6.00065 10.6666L1.33398 5.99992'
             stroke='#667085'
-            stroke-width='1.33333'
-            stroke-linecap='round'
-            stroke-linejoin='round'
+            strokeWidth='1.33333'
+            strokeLinecap='round'
+            strokeLinejoin='round'
           />
         </svg>
       </div>
@@ -153,7 +155,7 @@ const columns = [
     header: '',
     cell: ({ row }) => (
       <DropdownMenu>
-        <DropdownMenuTrigger>
+        <DropdownMenuTrigger className='w-full outline-none flex justify-center'>
           <img src={ThreeDotIcon} alt='' />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
@@ -179,10 +181,29 @@ const columns = [
 ]
 
 const StationManagement = () => {
+  const [loading, setLoading] = useState(true)
+  const [taxStaions, setTaxStaions] = useState(null)
   const navigate = useNavigate()
 
+  useEffect(() => {
+    async function fetchTaxStaions() {
+      try {
+        setLoading(true)
+        // fetch tax stations
+        const res = await axios.get('https://assettrack.com.ng/api/TaxStation')
+        setTaxStaions(res.data)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchTaxStaions()
+  }, [])
+
   return (
-    <div className='mt-10'>
+    <div className='mt-10 p-4'>
       <div className='flex gap-2 justify-end pr-5'>
         <button className='h-10 px-4 py-2.5 bg-white rounded-lg border border-gray-300 justify-center items-center gap-2 inline-flex'>
           <img src={Cloud} alt='export' className='w-5 h-5 relative' />
@@ -196,7 +217,7 @@ const StationManagement = () => {
         />
       </div>
       <div className='pl-3'>
-        <DataTable data={taxStationsData} columns={columns} />
+        <DataTable data={taxStationsData} columns={columns} loading={loading} />
       </div>
     </div>
   )
