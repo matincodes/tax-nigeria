@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom'
 import Button from '../button/button'
-import InnerTable from './inner-section/inner-table'
 import { useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
+import InnerTable from '../inner-table/inner-table'
 
 const ConsultantPage = () => {
   const [consultantData, setConsultantData] = useState([])
