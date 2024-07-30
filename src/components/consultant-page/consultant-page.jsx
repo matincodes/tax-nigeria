@@ -1,61 +1,61 @@
-import { useNavigate } from "react-router-dom";
-import Button from "../button/button";
-import InnerTable from "./inner-section/inner-table";
-import ProgressBar from "../progress-bar/progress-bar";
-import { consultants } from "../../data/consultants";
-import { useEffect, useMemo, useState } from "react";
-import axios from "axios";
-
-const data = consultants.flatMap((c) => c.consultants);
+import { useNavigate } from 'react-router-dom'
+import Button from '../button/button'
+import InnerTable from './inner-section/inner-table'
+import { useEffect, useMemo, useState } from 'react'
+import axios from 'axios'
 
 const ConsultantPage = () => {
-  const [consultantData, setConsultantData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+  const [consultantData, setConsultantData] = useState([])
+  const [loading, setLoading] = useState(true)
+  const navigate = useNavigate()
 
   const columns = useMemo(
     () => [
       {
-        header: "Consultants",
-        accessorKey: "name",
-        cell: ({ row }) => (
-          <div className="flex items-center gap-3">
-            <img
-              src={row.original.image}
-              alt={row.original.name}
-              className="w-[32px] h-[32px] grid place-content-center object-cover object-center rounded-full overflow-hidden"
-            />
-            {row.original.name}
-          </div>
-        ),
-      },
-      {
-        header: "Ratings",
-        accessorKey: "rating",
+        header: 'Company Name',
+        accessorKey: 'companyName',
         cell: ({ cell }) => (
-          <div className="flex gap-2 items-center">
-            <ProgressBar progress={cell.getValue()} max={100} />
-            {cell.getValue()}%
-          </div>
+          <div className='flex items-center gap-3'>{cell.getValue()}</div>
         ),
       },
       {
-        header: () => <div className="text-center">Tax Station</div>,
-        accessorKey: "tax_station",
+        header: 'Telephone Number',
+        accessorKey: 'telephoneNo',
         cell: ({ cell }) => (
-          <div className="text-center">{cell.getValue()}</div>
+          <div className='flex items-center gap-3'>{cell.getValue()}</div>
         ),
       },
       {
-        accessorKey: "action",
-        header: () => <div className="text-right pr-7">Action</div>,
+        header: 'Email Address',
+        accessorKey: 'emailAddress',
+        cell: ({ cell }) => (
+          <div className='flex items-center gap-3'>{cell.getValue()}</div>
+        ),
+      },
+      {
+        header: 'Amount Deposited',
+        accessorKey: 'amountDeposited',
+        cell: ({ cell }) => (
+          <div className='flex items-center gap-3'>{cell.getValue()}</div>
+        ),
+      },
+      {
+        header: 'Wallet Balance',
+        accessorKey: 'wallet.balance',
+        cell: ({ cell }) => (
+          <div className='flex items-center gap-3'>{cell.getValue()}</div>
+        ),
+      },
+      {
+        accessorKey: 'action',
+        header: () => <div className='text-right pr-7'>Action</div>,
         cell: () => (
-          <div className="flex place-content-end pr-4">
+          <div className='flex place-content-end pr-4'>
             <Button
-              text="Profile"
-              handleButton={(e) => {
-                e.preventDefault();
-                navigate("/dashboard/consultant-profile");
+              text='Profile'
+              handleButton={e => {
+                e.preventDefault()
+                navigate('/dashboard/consultant-profile')
               }}
             />
           </div>
@@ -63,43 +63,42 @@ const ConsultantPage = () => {
       },
     ],
     [navigate],
-  );
+  )
 
   useEffect(() => {
     async function fetchConsultantData() {
       try {
-        setLoading(true);
-        // fetch tax stations
-        const res = await axios.get("https://assettrack.com.ng/api/TaxStation");
-        setConsultantData(res.data);
+        setLoading(true)
+        const res = await axios.get('https://assettrack.com.ng/api/Consultant')
+        setConsultantData(res.data)
       } catch (error) {
-        console.log(error);
+        console.log(error)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
     }
 
-    fetchConsultantData();
-  }, []);
+    fetchConsultantData()
+  }, [])
 
   return (
-    <div className="w-full font-manrope p-[30px]">
+    <div className='w-full font-manrope p-[30px]'>
       {/* Top Part */}
-      <div className="flex gap-6 items-center p-[10px]">
-        <b className="text-[20px] text-[#4C4C4C]">Consultants</b>
+      <div className='flex gap-6 items-center p-[10px]'>
+        <b className='text-[20px] text-[#4C4C4C]'>Consultants</b>
         <Button
-          text="Add New"
-          iconposition="left"
-          icon="+"
-          handleButton={() => navigate("/dashboard/taxconsultant-registration")}
+          text='Add New'
+          iconposition='left'
+          icon='+'
+          handleButton={() => navigate('/dashboard/taxconsultant-registration')}
         />
-        <Button text="Export Members (CSV)" />
+        <Button text='Export Members (CSV)' />
       </div>
       {/* Top Part */}
 
-      <InnerTable data={data} columns={columns} loading={loading} />
+      <InnerTable data={consultantData} columns={columns} loading={loading} />
     </div>
-  );
-};
+  )
+}
 
-export default ConsultantPage;
+export default ConsultantPage
