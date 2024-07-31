@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { HiOutlineUserGroup } from 'react-icons/hi2'
 import { useNavigate } from 'react-router-dom'
 
@@ -10,6 +10,19 @@ const AddBusinessType = () => {
   const [submitting, setSubmitting] = useState(false)
 
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const fetchSectors = async () => {
+      try {
+        const response = await axios.get('https://assettrack.com.ng/api/sector')
+        setSectors(response.data)
+      } catch (error) {
+        console.error('Error fetching Business Sector Data')
+      }
+    }
+
+    fetchSectors()
+  }, [])
 
   const handleSubmit = async e => {
     e.preventDefault()
@@ -81,12 +94,12 @@ const AddBusinessType = () => {
 
             <button
               className={`h-11 text-white bg-[#4E72D1] rounded-md flex col-span-2 items-center justify-center ${
-                !type
+                !type && !selectedSector
                   ? 'opacity-70 cursor-not-allowed'
                   : 'opacity-100 cursor-pointer'
               }`}
               onClick={handleSubmit}
-              disabled={!type}
+              disabled={!type && !selectedSector}
             >
               <p>{submitting ? 'Adding...' : 'Add'}</p>
             </button>
