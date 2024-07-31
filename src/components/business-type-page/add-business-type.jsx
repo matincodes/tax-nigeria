@@ -17,12 +17,12 @@ const AddBusinessType = () => {
     try {
       await axios.post('https://assettrack.com.ng/api/businessTypes', {
         id: 0,
-        name: 'string',
+        name: type,
         description: '',
         requiresLicense: true,
         isInternational: true,
-        sectorId: 0,
-        sector: null,
+        sectorId: selectedSector?.id,
+        sector: selectedSector?.sectorName,
         isTaxRuleEnabled: true,
       })
       navigate('/dashboard/business')
@@ -51,17 +51,17 @@ const AddBusinessType = () => {
               <select
                 name='stateId'
                 value={selectedSector}
-                onChange={e => selectedSector(e.target.value)}
+                onChange={e => setSelectedSector(e.target.value)}
                 className='border-2 border-tax-blue py-4 px-5 outline-none rounded text-gray-400 bg-white'
                 disabled={!sectors}
               >
-                <option value='' key='select'>
+                <option value={null} key='select'>
                   Select Sector
                 </option>
                 {sectors?.map(({ id, sectorName }) => (
                   <option
                     className='text-black'
-                    value={{ sectorId: id, sector: sectorName }}
+                    value={{ id, sectorName }}
                     key={id}
                   >
                     {sectorName}
