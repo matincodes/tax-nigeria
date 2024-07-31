@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom'
 import InnerTable from '../inner-table/inner-table'
 import { useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
+import { useAuth } from '../../context/AuthContext'
 
 const AgentPage = () => {
-  const navigate = useNavigate()
+  const { user } = useAuth()
   const [agentData, setAgentData] = useState([])
   const [loading, setLoading] = useState(true)
+  const navigate = useNavigate()
 
   const columns = useMemo(
     () => [
@@ -60,24 +62,25 @@ const AgentPage = () => {
     [navigate],
   )
 
-    useEffect(() => {
-      async function fetchConsultantData() {
-        try {
-          setLoading(true)
-          const res = await axios.get(
-            'https://assettrack.com.ng/api/Agent',
-          )
-          setAgentData(res.data)
-        } catch (error) {
-          console.log(error)
-        } finally {
-          setLoading(false)
-        }
+  useEffect(() => {
+    async function fetchAgentData() {
+      try {
+        setLoading(true)
+        const res = await axios.get(
+          user.role === 'admin'
+            ? 'https://assettrack.com.ng/api/Agent'
+            : `https://assettrack.com.ng/api/Agent/AllByConsult/${user.email}`,
+        )
+        setAgentData(res.data)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        setLoading(false)
       }
+    }
 
-      fetchConsultantData()
-    }, [])
-
+    fetchAgentData()
+  }, [user.role, user.email])
 
   const addNewAgent = () => {
     navigate('/dashboard/taxagent-registration')
