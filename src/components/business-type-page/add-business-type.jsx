@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 const AddBusinessType = () => {
   const [sectors, setSectors] = useState(null)
-  const [selectedSector, setSelectedSector] = useState(null)
+  const [selectedSector, setSelectedSector] = useState('')
   const [type, setType] = useState('')
   const [submitting, setSubmitting] = useState(false)
 
@@ -28,14 +28,15 @@ const AddBusinessType = () => {
     e.preventDefault()
     setSubmitting(true)
     try {
+      // TODO: Add Business Type
       await axios.post('https://assettrack.com.ng/api/businessTypes', {
         id: 0,
         name: type,
         description: '',
         requiresLicense: true,
         isInternational: true,
-        sectorId: selectedSector?.id,
-        sector: selectedSector?.sectorName,
+        sectorId: JSON.parse(selectedSector)?.id,
+        sector: JSON.parse(selectedSector)?.sectorName,
         isTaxRuleEnabled: true,
       })
       navigate('/dashboard/business')
@@ -68,13 +69,13 @@ const AddBusinessType = () => {
                 className='border-2 border-tax-blue py-4 px-5 outline-none rounded text-gray-400 bg-white'
                 disabled={!sectors}
               >
-                <option value={null} key='select'>
+                <option value={''} key='select'>
                   Select Sector
                 </option>
                 {sectors?.map(({ id, sectorName }) => (
                   <option
                     className='text-black'
-                    value={{ id, sectorName }}
+                    value={JSON.stringify({ id, sectorName })}
                     key={id}
                   >
                     {sectorName}
