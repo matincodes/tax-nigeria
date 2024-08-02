@@ -22,20 +22,26 @@ const Dashboard = () => {
       try {
         setLoading(true);
         switch (user.role) {
-          case "admin":
+          case 'admin':
             const response = await axios.get(
-              "https://assettrack.com.ng/api/DashBoard",
-            );
-            setDashboardData(response.data);
-            break;
-          case "consultant":
+              'https://assettrack.com.ng/api/DashBoard',
+            )
+            setDashboardData(response.data)
+            break
+          case 'consultant':
             const consultantResponse = await axios.get(
               `https://assettrack.com.ng/api/DashBoard/ByConsulantEmail/${user.email}`,
-            );
-            setDashboardData(consultantResponse.data);
-            break;
+            )
+            setDashboardData(consultantResponse.data)
+            break
+          case 'agent':
+            const agentResponse = await axios.get(
+              `https://assettrack.com.ng/api/DashBoard/ByAgentEmail/${user.email}`,
+            )
+            setDashboardData(agentResponse.data)
+            break
           default:
-            break;
+            break
         }
       } catch (error) {
         console.log(error);
