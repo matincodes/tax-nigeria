@@ -17,6 +17,7 @@ const Billing = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [billingData, setBillingData] = useState([])
   const [loading, setLoading] = useState(true)
+  const [filteredData, setFilteredData] = useState([])
 
   const { user } = useAuth()
   const navigate = useNavigate()
@@ -101,7 +102,9 @@ const Billing = () => {
   useEffect(() => {
     setLoading(true)
     axios
-      .get(`https://assettrack.com.ng/api/BillGeneration`)
+      .get(
+        `https://assettrack.com.ng/api/BillGeneration/ByAgentsEmail/${user.email}`,
+      )
       .then(response => {
         setBillingData(response.data)
       })
@@ -113,23 +116,31 @@ const Billing = () => {
       })
   }, [user.email])
 
-  const filteredData = billingData.filter(item => {
-    const fullName = `${item.txPayFName} ${item.txPayLName}`.toLowerCase()
-    return (
-      item.year.toString().includes(searchQuery.toLowerCase()) ||
-      item.taxPayerId?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      fullName.includes(searchQuery.toLowerCase()) ||
-      item.miniTaxStation?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.billAmount.toString().includes(searchQuery.toLowerCase()) ||
-      item.totalAmountPaid.toString().includes(searchQuery.toLowerCase()) ||
-      item.billStatus.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.billReferenceNo.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.assessmentRef?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      new Date(item.billDate)
-        .toLocaleDateString()
-        .includes(searchQuery.toLowerCase())
-    )
-  })
+  useEffect(() => {
+    const filteredData = billingData.filter(item => {
+      const fullName = `${item.txPayFName} ${item.txPayLName}`.toLowerCase()
+      return (
+        item.year.toString().includes(searchQuery.toLowerCase()) ||
+        item.taxPayerId?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        fullName.includes(searchQuery.toLowerCase()) ||
+        item.miniTaxStation
+          ?.toLowerCase()
+          .includes(searchQuery.toLowerCase()) ||
+        item.billAmount.toString().includes(searchQuery.toLowerCase()) ||
+        item.totalAmountPaid.toString().includes(searchQuery.toLowerCase()) ||
+        item.billStatus.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.billReferenceNo
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()) ||
+        item.assessmentRef?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        new Date(item.billDate)
+          .toLocaleDateString()
+          .includes(searchQuery.toLowerCase())
+      )
+    })
+
+    setFilteredData(filteredData)
+  }, [billingData, searchQuery])
 
   return (
     <div className='w-full p-6 h-full space-y-6'>
