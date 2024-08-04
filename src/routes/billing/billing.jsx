@@ -22,6 +22,11 @@ const Billing = () => {
   const { user } = useAuth()
   const navigate = useNavigate()
 
+  const NGN = new Intl.NumberFormat('en-NG', {
+    style: 'currency',
+    currency: 'NGN',
+  })
+
   const billingColumns = useMemo(
     () => [
       {
@@ -44,13 +49,15 @@ const Billing = () => {
       {
         accessorKey: 'billAmount',
         header: 'Amount',
-        cell: ({ row }) => <p>${row.getValue('billAmount')?.toFixed(2)}</p>,
+        cell: ({ row }) => <p>
+          {NGN.format(row.getValue('billAmount')?.toFixed(2))}
+        </p>, 
       },
       {
         accessorKey: 'totalAmountPaid',
         header: 'Total Amount Paid',
         cell: ({ row }) => (
-          <p>${row.getValue('totalAmountPaid')?.toFixed(2)}</p>
+          <p>{NGN.format(row.getValue('totalAmountPaid')?.toFixed(2))}</p>
         ),
       },
       {
@@ -86,7 +93,12 @@ const Billing = () => {
             <DropdownMenuContent>
               <DropdownMenuItem
                 onClick={() =>
-                  navigate(`/dashboard/billing/bill-details/${row.original.id}`)
+                  navigate(
+                    `/dashboard/billing/bill-details/${row.original.id}`,
+                    {
+                      state: { data: row.original },
+                    },
+                  )
                 }
               >
                 View
@@ -96,7 +108,7 @@ const Billing = () => {
         ),
       },
     ],
-    [navigate],
+    [navigate, NGN],
   )
 
   useEffect(() => {
