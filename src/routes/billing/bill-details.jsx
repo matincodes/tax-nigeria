@@ -1,32 +1,15 @@
-import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
 
 const BillDetails = () => {
-  const [billData, setBillData] = useState(null)
-  const { id } = useParams()
-
-  useEffect(() => {
-    const fetchBill = async () => {
-      try {
-        const response = await axios.get(
-          `https://assettrack.com.ng/api/BillGeneration/${id}`,
-        )
-
-        setBillData(response.data)
-        console.log(response.data);
-      } catch (error) {
-        console.error('Error fetching data', error)
-      }
-    }
-
-    fetchBill()
-  }, [id])
+  const location = useLocation()
+  const billData = location.state?.data
+  
+  if (!billData) return <Navigate to='/dashboard/billing' />
 
   return (
     <div className='font-montserrat flex flex-col items-center'>
       <div className='flex flex-col text-center mt-16 mb-8'>
-        <h2 className='font-bold text-3xl'>Tax Assessment</h2>
+        <h2 className='font-bold text-3xl'>Bill Details</h2>
       </div>
       <div className='w-3/5'>
         <form className='flex flex-col items-center'>
