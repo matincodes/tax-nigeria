@@ -51,7 +51,7 @@ export const navData = [
     label: "Tax Payer Management",
     icon: receipt,
     path: "/dashboard/taxpayer",
-    visible: ["admin", "consultant"],
+    visible: ["admin", "consultant", "agent"],
   },
   {
     label: "Tax Card Management",

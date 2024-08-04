@@ -1,31 +1,15 @@
-import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
 
 const BillDetails = () => {
-  const [billData, setBillData] = useState(null)
-  const { id } = useParams()
-
-  useEffect(() => {
-    const fetchBill = async () => {
-      try {
-        const response = await axios.get(
-          `https://assettrack.com.ng/api/BillGeneration/${id}`,
-        )
-
-        setBillData(response.data)
-      } catch (error) {
-        console.error('Error fetching data', error)
-      }
-    }
-
-    fetchBill()
-  }, [id])
+  const location = useLocation()
+  const billData = location.state?.data
+  
+  if (!billData) return <Navigate to='/dashboard/billing' />
 
   return (
     <div className='font-montserrat flex flex-col items-center'>
       <div className='flex flex-col text-center mt-16 mb-8'>
-        <h2 className='font-bold text-3xl'>Tax Assessment</h2>
+        <h2 className='font-bold text-3xl'>Bill Details</h2>
       </div>
       <div className='w-3/5'>
         <form className='flex flex-col items-center'>
@@ -35,7 +19,8 @@ const BillDetails = () => {
               <input
                 type='text'
                 name='taxpayerId'
-                value={billData.taxpayerId}
+                value={billData?.taxPayer_Id}
+                placeholder='Taxpayer ID'
                 readOnly
                 className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
               />
@@ -45,7 +30,8 @@ const BillDetails = () => {
               <input
                 type='text'
                 name='amount'
-                value={billData.billReferenceNo}
+                value={billData?.billReferenceNo}
+                placeholder='Bill Reference No'
                 readOnly
                 className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
               />
@@ -57,7 +43,8 @@ const BillDetails = () => {
               <input
                 type='text'
                 name='income'
-                value={billData.billAmount}
+                value={billData?.billAmount}
+                placeholder='Bill Amount'
                 readOnly
                 className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
               />
@@ -67,7 +54,8 @@ const BillDetails = () => {
               <input
                 type='text'
                 name='assets'
-                value={billData.billStatus}
+                value={billData?.billStatus}
+                placeholder='Bill Status'
                 readOnly
                 className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
               />
@@ -78,7 +66,8 @@ const BillDetails = () => {
               <label className='text-gray-600'>First Name</label>
               <input
                 type='text'
-                value={billData.txPayFName}
+                value={billData?.txPayFName}
+                placeholder='First Name'
                 readOnly
                 className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
               />
@@ -87,7 +76,8 @@ const BillDetails = () => {
               <label className='text-gray-600'>Last Name</label>
               <input
                 type='text'
-                value={billData.txPayLName}
+                value={billData?.txPayLName}
+                placeholder='Last Name'
                 readOnly
                 className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
               />
@@ -98,7 +88,8 @@ const BillDetails = () => {
               <label className='text-gray-600'>Assessment Reference No</label>
               <input
                 type='text'
-                value={billData.assessmentRef}
+                value={billData?.assessmentRef}
+                placeholder='Assessment Reference No'
                 readOnly
                 className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
               />
@@ -107,7 +98,8 @@ const BillDetails = () => {
               <label className='text-gray-600'>Date</label>
               <input
                 type='text'
-                value={new Date(billData.billDate).toLocaleDateString()}
+                value={new Date(billData?.billDate).toLocaleDateString()}
+                placeholder='Date'
                 readOnly
                 className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-400 rounded'
               />
@@ -118,7 +110,8 @@ const BillDetails = () => {
               <label className='text-gray-600'>Total Amount Paid</label>
               <input
                 type='text'
-                value={billData.totalAmountPaid}
+                value={billData?.totalAmountPaid}
+                placeholder='Total Amount Paid'
                 readOnly
                 className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
               />
