@@ -92,12 +92,9 @@ const TaxPayerManagement = () => {
             <DropdownMenuContent>
               <DropdownMenuItem
                 onClick={() =>
-                  navigate(
-                    `/dashboard/taxpayer/${row.original.id}`,
-                    {
-                      state: { data: row.original },
-                    },
-                  )
+                  navigate(`/dashboard/taxpayer/${row.original.id}`, {
+                    state: { data: row.original },
+                  })
                 }
               >
                 View
@@ -114,11 +111,18 @@ const TaxPayerManagement = () => {
     // Simulating API call or data fetch
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          user.role === 'admin'
-            ? 'https://assettrack.com.ng/api/TaxPayer'
-            : `https://assettrack.com.ng/api/TaxPayer/ByPayerAnyCriteria/${user.email}`,
-        )
+        const getUrl = user => {
+          if (user.role === 'admin') {
+            return 'https://assettrack.com.ng/api/TaxPayer'
+          } else if (user.role === 'consultant') {
+            return `https://assettrack.com.ng/api/TaxPayer/ByConsultantEmail/${user.email}`
+          } else {
+            return `https://assettrack.com.ng/api/TaxPayer/ByAgentsEmail/${user.email}`
+          }
+        }
+
+        const response = await axios.get(getUrl(user))
+
         setTaxPayerData(response.data)
         setLoading(false)
       } catch (error) {
@@ -128,13 +132,21 @@ const TaxPayerManagement = () => {
     }
 
     fetchData()
-  }, [user.email, user.role])
+  }, [user])
 
   useEffect(() => {
     // Filter data based on search query
     const filteredResults = taxpayerdata.filter(item => {
       const fullName = `${item.firstName} ${item.lastname}`.toLowerCase()
-      return fullName.includes(searchQuery.toLowerCase())
+      return (
+        fullName.includes(searchQuery.toLowerCase()) ||
+        item.phoneNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.identificationNumber
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()) ||
+        item.identityTypeName.toLowerCase().includes(searchQuery.toLowerCase())
+      )
     })
     setFilteredData(filteredResults)
   }, [searchQuery, taxpayerdata])
@@ -159,7 +171,10 @@ const TaxPayerManagement = () => {
             <p>Export</p>
           </button>
           {user.role === 'agent' && (
-            <button className='text-white rounded-md px-2 h-11 flex items-center justify-center gap-x-2 w-fit  bg-[#4E72D1]'>
+            <button
+              className='text-white rounded-md px-2 h-11 flex items-center justify-center gap-x-2 w-fit  bg-[#4E72D1]'
+              onClick={() => navigate('/dashboard/onboarding')}
+            >
               <AiOutlinePlus className='text-[22px]' />
               <p>Add New Tax Payer</p>
             </button>
