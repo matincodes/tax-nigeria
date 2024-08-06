@@ -49,13 +49,15 @@ const ConsultantPage = () => {
       {
         accessorKey: 'action',
         header: () => <div className='text-right pr-7'>Action</div>,
-        cell: () => (
+        cell: ({ row }) => (
           <div className='flex place-content-end pr-4'>
             <Button
               text='Profile'
               handleButton={e => {
                 e.preventDefault()
-                navigate('/dashboard/consultant-profile')
+                navigate('/dashboard/consultant-profile', {
+                  state: { data: row.original },
+                })
               }}
             />
           </div>
@@ -71,6 +73,7 @@ const ConsultantPage = () => {
         setLoading(true)
         const res = await axios.get('https://assettrack.com.ng/api/Consultant')
         setConsultantData(res.data)
+        console.log(res.data)
       } catch (error) {
         console.log(error)
       } finally {
