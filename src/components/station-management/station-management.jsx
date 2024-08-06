@@ -192,7 +192,6 @@ const StationManagement = () => {
         // fetch tax stations
         const res = await axios.get('https://assettrack.com.ng/api/TaxStation')
         setTaxStaions(res.data)
-        console.log(res.data)
       } catch (error) {
         console.log(error)
       } finally {
