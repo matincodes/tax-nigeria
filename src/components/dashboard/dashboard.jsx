@@ -12,7 +12,7 @@ import axios from "axios";
 import { formatNumber } from "../../lib/formatNumber";
 
 const Dashboard = () => {
-  const [dashboardData, setDashboardData] = useState(null);
+  const [dashboardData, setDashboardData] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -65,8 +65,8 @@ const Dashboard = () => {
 
       <div className="w-full grid grid-cols-4 mb-3 items-center gap-6">
         {(user.role === "admin" ? inventoryData : consultantInventoryData)
-          .slice(0, -2)
-          .map(({ title, imageSrc, accessor }, index) => (
+          ?.slice(0, -2)
+          ?.map(({ title, imageSrc, accessor }, index) => (
             <Inventories
               key={index}
               title={title}
@@ -95,8 +95,8 @@ const Dashboard = () => {
         {/** 2 */}
         <div className="w-full col-span-3 space-y-5">
           {(user.role === "admin" ? inventoryData : consultantInventoryData)
-            .slice(-2)
-            .map(({ title, imageSrc, accessor }, index) => (
+            ?.slice(-2)
+            ?.map(({ title, imageSrc, accessor }, index) => (
               <Inventories
                 key={index}
                 title={title}
