@@ -46,13 +46,15 @@ const AgentPage = () => {
       {
         accessorKey: 'action',
         header: () => <div className='text-right pr-7'>Action</div>,
-        cell: () => (
+        cell: ({row}) => (
           <div className='flex place-content-end pr-4'>
             <Button
               text='Profile'
               handleButton={e => {
                 e.preventDefault()
-                navigate('/dashboard/user-profile')
+                navigate('/dashboard/agent-profile', {
+                  state: { data: row.original },
+                })
               }}
             />
           </div>
