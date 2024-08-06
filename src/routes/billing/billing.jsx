@@ -13,6 +13,11 @@ import ThreeDotIcon from '../../assets/img/Bussiness_Sector/three_dots.svg'
 import DataTable from '../../components/data-table/data-table'
 import { useNavigate } from 'react-router-dom'
 
+const NGN = new Intl.NumberFormat('en-NG', {
+  style: 'currency',
+  currency: 'NGN',
+})
+
 const Billing = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [billingData, setBillingData] = useState([])
@@ -22,10 +27,6 @@ const Billing = () => {
   const { user } = useAuth()
   const navigate = useNavigate()
 
-  const NGN = new Intl.NumberFormat('en-NG', {
-    style: 'currency',
-    currency: 'NGN',
-  })
 
   const billingColumns = useMemo(
     () => [
