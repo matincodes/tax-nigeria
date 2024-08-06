@@ -46,7 +46,7 @@ const AgentPage = () => {
       {
         accessorKey: 'action',
         header: () => <div className='text-right pr-7'>Action</div>,
-        cell: ({row}) => (
+        cell: ({ row }) => (
           <div className='flex place-content-end pr-4'>
             <Button
               text='Profile'
