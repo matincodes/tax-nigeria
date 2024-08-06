@@ -73,7 +73,6 @@ const ConsultantPage = () => {
         setLoading(true)
         const res = await axios.get('https://assettrack.com.ng/api/Consultant')
         setConsultantData(res.data)
-        console.log(res.data)
       } catch (error) {
         console.log(error)
       } finally {
