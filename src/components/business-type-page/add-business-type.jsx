@@ -28,18 +28,17 @@ const AddBusinessType = () => {
     e.preventDefault()
     setSubmitting(true)
     try {
-      // TODO: Add Business Type
       await axios.post('https://assettrack.com.ng/api/businessTypes', {
         id: 0,
         name: type,
         description: '',
         requiresLicense: true,
         isInternational: true,
-        sectorId: JSON.parse(selectedSector)?.id,
-        sector: JSON.parse(selectedSector)?.sectorName,
+        sectorId: selectedSector,
+        sector: null,
         isTaxRuleEnabled: true,
       })
-      navigate('/dashboard/business')
+      navigate('/dashboard/business/add-business-type')
     } catch (error) {
       console.log(error)
     } finally {
@@ -75,7 +74,7 @@ const AddBusinessType = () => {
                 {sectors?.map(({ id, sectorName }) => (
                   <option
                     className='text-black'
-                    value={JSON.stringify({ id, sectorName })}
+                    value={id}
                     key={id}
                   >
                     {sectorName}
