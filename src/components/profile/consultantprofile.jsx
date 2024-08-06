@@ -1,9 +1,9 @@
 import userprofile from '../../assets/img/userprofile.png'
 import phone from '../../assets/img/ph_phone-thin.png'
-import location from '../../assets/img/system-uicons_location.png'
+import locationImg from '../../assets/img/system-uicons_location.png'
 import { AiOutlinePlus } from 'react-icons/ai'
 import PayerCard from './payercard/payercard'
-import { useLocation } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
 
 const NGN = new Intl.NumberFormat('en-NG', {
   style: 'currency',
@@ -12,8 +12,9 @@ const NGN = new Intl.NumberFormat('en-NG', {
 
 const ConsultantProfile = () => {
   const location = useLocation()
-  const data = location.state.data
-  console.log(data)
+  const data = location?.state?.data
+  
+  if (!data) return <Navigate to='/dashboard/consultant' />
   return (
     <div className='w-full p-6 h-full space-y-6'>
       <div className='w-full bg-[#F6F6F6] grid grid-cols-10 p-6'>
@@ -30,7 +31,7 @@ const ConsultantProfile = () => {
                 <span>{data?.telephoneNo}</span>
               </p>
               <p className='text-base flex items-center gap-x-2'>
-                <img src={location} alt='' />
+                <img src={locationImg} alt='' />
                 <span>Lagos</span>
               </p>
             </div>
@@ -59,23 +60,23 @@ const ConsultantProfile = () => {
       </div>
 
       <div className='w-full flex gap-6 items-center'>
-        <div className='rounded-lg p-2 border border-[#87BB42] flex flex-col items-start justify-start w-[180px] h-fit'>
+        <div className='rounded-lg p-4 gap-3 border border-[#87BB42] flex flex-col items-start justify-start w-[180px] h-fit'>
           <p className='font-semibold text-xl'>
             {NGN.format(data?.wallet?.balance)}
           </p>
           <p className='text-base'>Balance</p>
         </div>
-        <div className='rounded-lg p-2 border border-[#87BB42] flex flex-col items-start justify-start w-[180px] h-fit'>
+        <div className='rounded-lg p-4 gap-3 border border-[#938406] flex flex-col items-start justify-start w-[180px] h-fit'>
           <p className='font-semibold text-xl'>
             {NGN.format(data?.amountDeposited)}
           </p>
           <p className='text-base'>Income</p>
         </div>
-        <div className='rounded-lg p-2 border border-[#87BB42] flex flex-col items-start justify-start w-[180px] h-fit'>
+        <div className='rounded-lg p-4 gap-3 border border-[#4E72D1] flex flex-col items-start justify-start w-[180px] h-fit'>
           <p className='font-semibold text-xl'>N 3,456</p>
           <p className='text-base'>Expenses</p>
         </div>
-        <div className='rounded-lg p-2 bg-[#4E72D1] text-white flex flex-col items-center justify-center w-[180px] h-fit'>
+        <div className='rounded-lg p-5 gap-4 bg-[#4E72D1] text-white flex flex-col items-center justify-center w-[180px] h-fit cursor-pointer'>
           <AiOutlinePlus className='text-[28px]' />
           <p className='font-semibold text-base'>Fund Account</p>
         </div>
