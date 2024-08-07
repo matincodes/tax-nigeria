@@ -3,7 +3,10 @@ import phone from '../../assets/img/ph_phone-thin.png'
 import locationImg from '../../assets/img/system-uicons_location.png'
 import { AiOutlinePlus } from 'react-icons/ai'
 import PayerCard from './payercard/payercard'
-import { Navigate, useLocation } from 'react-router-dom'
+import { Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { useAuth } from '../../context/AuthContext'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 const NGN = new Intl.NumberFormat('en-NG', {
   style: 'currency',
@@ -11,10 +14,25 @@ const NGN = new Intl.NumberFormat('en-NG', {
 })
 
 const AgentProfile = () => {
-  const location = useLocation()
-  const data = location?.state?.data
-  console.log(data)
-  if (!data) return <Navigate to='/dashboard/agent' />
+  const { user } = useAuth()
+  const [data, setData] = useState(null)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get(
+          `https://assettrack.com.ng/api/Agent/ByAgentEmial/${user.email}`,
+        )
+        setData(response.data)
+      } catch (error) {
+        console.error(error)
+        navigate('/dashboard/consultant')
+      }
+    }
+    fetchData()
+  }, [user.email, navigate])
+
   return (
     <div className='w-full p-6 h-full space-y-6'>
       <div className='w-full bg-[#F6F6F6] grid grid-cols-10 p-6'>
@@ -60,17 +78,17 @@ const AgentProfile = () => {
       </div>
 
       <div className='w-full flex gap-6 items-center'>
-        <div className='rounded-lg p-4 gap-3 border border-[#87BB42] flex flex-col items-start justify-start w-[180px] h-fit'>
+        <div className='rounded-lg p-4 gap-3 border border-[#87BB42] flex flex-col items-start justify-start min-w-48 h-fit'>
           <p className='font-semibold text-2xl'>
             {NGN.format(data?.wallet?.balance)}
           </p>
           <p className='text-base'>Balance</p>
         </div>
-        <div className='rounded-lg p-4 gap-3 border border-[#938406] flex flex-col items-start justify-start w-[180px] h-fit'>
-          <p className='font-semibold text-2xl'>{NGN.format(120500)}</p>
+        <div className='rounded-lg p-4 gap-3 border border-[#938406] flex flex-col items-start justify-start min-w-48 h-fit'>
+          <p className='font-semibold text-2xl'>{NGN.format(1230000)}</p>
           <p className='text-base'>Income</p>
         </div>
-        <div className='rounded-lg p-4 gap-3 border border-[#4E72D1] flex flex-col items-start justify-start w-[180px] h-fit'>
+        <div className='rounded-lg p-4 gap-3 border border-[#4E72D1] flex flex-col items-start justify-start min-w-48 h-fit'>
           <p className='font-semibold text-2xl'>{NGN.format(20000)}</p>
           <p className='text-base'>Expenses</p>
         </div>

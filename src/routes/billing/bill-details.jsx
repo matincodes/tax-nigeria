@@ -1,9 +1,31 @@
-import { Navigate, useLocation } from 'react-router-dom'
+import axios from 'axios'
+import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 
 const BillDetails = () => {
   const location = useLocation()
   const billData = location.state?.data
-  
+  const navigate = useNavigate()
+
+  const handlePayment = async e => {
+    e.preventDefault()
+    
+    try {
+      console.log(billData)
+      await axios.post('https://assettrack.com.ng/api/transactions', {
+        id: 0,
+        amount: billData.billAmount,
+        bill: billData.billReferenceNo,
+        date: billData.billDate,
+        walletId: billData.id,
+        wallet: null,
+        isConfirmed: false,
+      })
+      navigate('/dashboard/billing')
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   if (!billData) return <Navigate to='/dashboard/billing' />
 
   return (
@@ -120,7 +142,7 @@ const BillDetails = () => {
           <div className='w-full pb-5 flex gap-12'>
             <button
               className='bg-tax-blue w-full py-3 text-white rounded-md text-2xl'
-              onClick={() => console.log('Payment Successful')}
+              onClick={handlePayment}
             >
               Pay Now
             </button>

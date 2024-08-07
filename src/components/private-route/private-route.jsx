@@ -1,14 +1,14 @@
 import React from 'react'
 import { useAuth } from '../../context/AuthContext'
-import { Navigate } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
 
-const PrivateRoute = ({ allowedRoles, children }) => {
+const PrivateRoute = ({ allowedRoles }) => {
   const { user } = useAuth()
   const isAllowed = allowedRoles
     .map(role => role.toLowerCase())
     .includes(user.role.toLowerCase())
 
-  return isAllowed ? <>{children}</> : <Navigate to='/login' />
+  return isAllowed ? <Outlet /> : <Navigate to='/login' />
 }
 
 export default PrivateRoute
