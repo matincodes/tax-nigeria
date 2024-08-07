@@ -27,7 +27,7 @@ const AgentProfile = () => {
         setData(response.data)
       } catch (error) {
         console.error(error)
-        navigate('/dashboard/consultant')
+        navigate('/dashboard/agent')
       }
     }
     fetchData()
