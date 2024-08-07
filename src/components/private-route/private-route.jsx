@@ -8,7 +8,7 @@ const PrivateRoute = ({ allowedRoles }) => {
     .map(role => role.toLowerCase())
     .includes(user.role.toLowerCase())
 
-  return isAllowed ? <Outlet /> : <Navigate to='/login' />
+  return isAllowed ? <Outlet /> : <Navigate to='/dashboard' />
 }
 
 export default PrivateRoute
