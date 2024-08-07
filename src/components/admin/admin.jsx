@@ -57,8 +57,8 @@ const Admin = () => {
             <Route path='taxagent-registration' element={<TaxAgentReg />} />
           </Route>
           <Route path='taxcard' element={<TaskCardManagement />} />
-          <Route path='agent-profile' element={<AgentProfile />} />
-          <Route path='consultant-profile' element={<ConsultantProfile />} />
+          <Route path='agent-profile/:email' element={<AgentProfile />} />
+          <Route path='consultant-profile/:email' element={<ConsultantProfile />} />
           <Route path='taxpayer' element={<TaxPayerManagement />} />
           <Route path='settings' element={<ProfileSettings />} />
           <Route path='taxstation-registration' element={<TaxStationReg />} />

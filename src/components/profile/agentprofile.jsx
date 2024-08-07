@@ -3,7 +3,7 @@ import phone from '../../assets/img/ph_phone-thin.png'
 import locationImg from '../../assets/img/system-uicons_location.png'
 import { AiOutlinePlus } from 'react-icons/ai'
 import PayerCard from './payercard/payercard'
-import { Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
@@ -14,15 +14,15 @@ const NGN = new Intl.NumberFormat('en-NG', {
 })
 
 const AgentProfile = () => {
-  const { user } = useAuth()
   const [data, setData] = useState(null)
   const navigate = useNavigate()
+  const { email } = useParams()
 
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await axios.get(
-          `https://assettrack.com.ng/api/Agent/ByAgentEmial/${user.email}`,
+          `https://assettrack.com.ng/api/Agent/ByAgentEmial/${email}`,
         )
         setData(response.data)
       } catch (error) {
@@ -31,7 +31,7 @@ const AgentProfile = () => {
       }
     }
     fetchData()
-  }, [user.email, navigate])
+  }, [email, navigate])
 
   return (
     <div className='w-full p-6 h-full space-y-6'>
