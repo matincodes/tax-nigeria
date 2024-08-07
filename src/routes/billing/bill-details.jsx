@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 
 const BillDetails = () => {
   const location = useLocation()
@@ -26,7 +26,7 @@ const BillDetails = () => {
     }
   }
 
-  if (!billData) return navigate('/dashboard/billing')
+  if (!billData) return <Navigate to='/dashboard/billing' />
 
   return (
     <div className='font-montserrat flex flex-col items-center'>
