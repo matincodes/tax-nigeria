@@ -22,6 +22,7 @@ import Billing from '../../routes/billing/billing'
 import BusinessTypePage from '../business-type-page/business-type-page'
 import AddBusinessType from '../business-type-page/add-business-type'
 import BillDetails from '../../routes/billing/bill-details'
+import PrivateRoute from '../private-route/private-route'
 
 const Admin = () => {
   return (
@@ -29,39 +30,49 @@ const Admin = () => {
       <Routes>
         <Route path='/' element={<DashNav />}>
           <Route index element={<Dashboard />} />
-          <Route path='business/sector' element={<BusinessSector />} />
-          <Route path='business/type' element={<BusinessTypePage />} />
+          <Route element={<PrivateRoute allowedRoles={['admin']} />}>
+            <Route path='business/sector' element={<BusinessSector />} />
+            <Route path='business/type' element={<BusinessTypePage />} />
+            <Route
+              path='business/add-business-sector'
+              element={<AddBusinessSector />}
+            />
+            <Route
+              path='business/add-business-type'
+              element={<AddBusinessType />}
+            />
+            <Route path='station' element={<StationManagement />} />
+            <Route path='consultant' element={<ConsultantPage />} />
+            <Route
+              path='taxconsultant-registration'
+              element={<ConsultantReg />}
+            />
+          </Route>
           <Route
-            path='business/add-business-sector'
-            element={<AddBusinessSector />}
-          />
-          <Route
-            path='business/add-business-type'
-            element={<AddBusinessType />}
-          />
-          <Route path='consultant' element={<ConsultantPage />} />
-          <Route path='agent' element={<AgentPage />} />
+            element={<PrivateRoute allowedRoles={['admin', 'consultant']} />}
+          >
+            <Route path='agent' element={<AgentPage />} />
+          </Route>
+          <Route element={<PrivateRoute allowedRoles={['consultant']} />}>
+            <Route path='taxagent-registration' element={<TaxAgentReg />} />
+          </Route>
           <Route path='taxcard' element={<TaskCardManagement />} />
           <Route path='agent-profile' element={<AgentProfile />} />
           <Route path='consultant-profile' element={<ConsultantProfile />} />
-          <Route path='station' element={<StationManagement />} />
           <Route path='taxpayer' element={<TaxPayerManagement />} />
           <Route path='settings' element={<ProfileSettings />} />
-          <Route path='taxagent-registration' element={<TaxAgentReg />} />
-          <Route
-            path='taxconsultant-registration'
-            element={<ConsultantReg />}
-          />
           <Route path='taxstation-registration' element={<TaxStationReg />} />
           <Route
             path='minitaxstation-registration'
             element={<MiniTaxStationReg />}
           />
-          <Route path='debt-management' element={<DebtManagement />} />
-          <Route path='onboarding' element={<TaxpayerForm />} />
-          <Route path='assessment' element={<Assessment />} />
-          <Route path='billing' element={<Billing />} />
-          <Route path='billing/bill-details/:id' element={<BillDetails />} />
+          <Route element={<PrivateRoute allowedRoles={['agent']} />}>
+            <Route path='debt-management' element={<DebtManagement />} />
+            <Route path='onboarding' element={<TaxpayerForm />} />
+            <Route path='assessment' element={<Assessment />} />
+            <Route path='billing' element={<Billing />} />
+            <Route path='billing/bill-details/:id' element={<BillDetails />} />
+          </Route>
         </Route>
       </Routes>
     </div>
