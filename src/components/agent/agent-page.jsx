@@ -52,9 +52,9 @@ const AgentPage = () => {
               text='Profile'
               handleButton={e => {
                 e.preventDefault()
-                navigate('/dashboard/agent-profile', {
-                  state: { data: row.original },
-                })
+                navigate(
+                  `/dashboard/agent-profile/${row.original.emailAddress}`,
+                )
               }}
             />
           </div>

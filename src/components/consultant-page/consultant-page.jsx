@@ -55,9 +55,7 @@ const ConsultantPage = () => {
               text='Profile'
               handleButton={e => {
                 e.preventDefault()
-                navigate('/dashboard/consultant-profile', {
-                  state: { data: row.original },
-                })
+                navigate(`/dashboard/consultant-profile/${row.original.emailAddress}`)
               }}
             />
           </div>
