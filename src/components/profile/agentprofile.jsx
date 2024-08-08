@@ -85,11 +85,11 @@ const AgentProfile = () => {
           <p className='text-base'>Balance</p>
         </div>
         <div className='rounded-lg p-4 gap-3 border border-[#938406] flex flex-col items-start justify-start min-w-48 h-fit'>
-          <p className='font-semibold text-2xl'>{NGN.format(1230000)}</p>
+          <p className='font-semibold text-2xl'>N/A</p>
           <p className='text-base'>Income</p>
         </div>
         <div className='rounded-lg p-4 gap-3 border border-[#4E72D1] flex flex-col items-start justify-start min-w-48 h-fit'>
-          <p className='font-semibold text-2xl'>{NGN.format(20000)}</p>
+          <p className='font-semibold text-2xl'>N/A</p>
           <p className='text-base'>Expenses</p>
         </div>
         <div className='rounded-lg p-5 gap-4 bg-[#4E72D1] text-white flex flex-col items-center justify-center w-[180px] h-fit  cursor-pointer'>

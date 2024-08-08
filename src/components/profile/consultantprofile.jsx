@@ -91,7 +91,7 @@ const ConsultantProfile = () => {
           <p className='text-base'>Income</p>
         </div>
         <div className='rounded-lg p-4 gap-3 border border-[#4E72D1] flex flex-col items-start justify-start min-w-48 h-fit'>
-          <p className='font-semibold text-xl'>N 3,456</p>
+          <p className='font-semibold text-xl'>N/A</p>
           <p className='text-base'>Expenses</p>
         </div>
         <div className='rounded-lg p-5 gap-4 bg-[#4E72D1] text-white flex flex-col items-center justify-center w-[180px] h-fit cursor-pointer'>
