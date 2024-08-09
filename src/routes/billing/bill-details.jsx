@@ -1,14 +1,31 @@
 import axios from 'axios'
+import { useEffect, useState } from 'react'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { useAuth } from '../../context/AuthContext'
 
 const BillDetails = () => {
   const location = useLocation()
   const billData = location.state?.data
   const navigate = useNavigate()
+  const { user } = useAuth()
+
+  const [walletDetails, setWalletDetails] = useState(null)
+
+  useEffect(() => {
+    async function fetchWalletDetails() {
+      const response = await axios.get(
+        `https://assettrack.com.ng/api/Wallet/AgentWalletBalance/${user.email}`,
+      )
+      const wallet = response.data
+      setWalletDetails(wallet)
+      console.log(wallet)
+    }
+    fetchWalletDetails()
+  }, [user.email])
 
   const handlePayment = async e => {
     e.preventDefault()
-    
+
     try {
       console.log(billData)
       await axios.post('https://assettrack.com.ng/api/transactions', {
@@ -16,7 +33,7 @@ const BillDetails = () => {
         amount: billData.billAmount,
         bill: billData.billReferenceNo,
         date: billData.billDate,
-        walletId: billData.id,
+        walletId: walletDetails.id,
         wallet: null,
         isConfirmed: false,
       })
