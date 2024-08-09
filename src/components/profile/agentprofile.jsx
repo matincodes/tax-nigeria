@@ -40,7 +40,7 @@ const AgentProfile = () => {
           <div className='text-[#4C4C4C] flex flex-col gap-y-10 items-start justify-start border-r p-2 pr-14'>
             <div className='flex flex-col items-start justify-start gap-y-1'>
               <p className='font-medium text-lg'>{`${data?.firstName} ${data?.lastName}`}</p>
-              <p className='text-base'>Consultant</p>
+              <p className='text-base'>Agent</p>
             </div>
             <div className='flex flex-col items-start justify-start gap-y-1'>
               <p className='text-base flex items-center gap-x-2'>
