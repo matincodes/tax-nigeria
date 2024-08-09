@@ -10,6 +10,7 @@ import { consultantInventoryData } from '../../data/consultantInventoryData'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { formatNumber } from '../../lib/formatNumber'
+import { agentInventoryData } from '../../data/agentInventoryData'
 
 const Dashboard = () => {
   const [dashboardData, setDashboardData] = useState([])
@@ -38,6 +39,7 @@ const Dashboard = () => {
             const agentResponse = await axios.get(
               `https://assettrack.com.ng/api/DashBoard/ByAgentEmail/${user.email}`,
             )
+            console.log(agentResponse.data)
             setDashboardData(agentResponse.data)
             break
           default:
@@ -64,7 +66,12 @@ const Dashboard = () => {
       </h2>
 
       <div className='w-full grid grid-cols-4 mb-3 items-center gap-6'>
-        {(user.role === 'admin' ? inventoryData : consultantInventoryData)
+        {(user.role === 'admin'
+          ? inventoryData
+          : user.role === 'consultant'
+          ? consultantInventoryData
+          : agentInventoryData
+        )
           ?.slice(0, -2)
           ?.map(({ title, imageSrc, accessor }, index) => (
             <Inventories
@@ -94,7 +101,12 @@ const Dashboard = () => {
         </div>
         {/** 2 */}
         <div className='w-full col-span-3 space-y-5'>
-          {(user.role === 'admin' ? inventoryData : consultantInventoryData)
+          {(user.role === 'admin'
+            ? inventoryData
+            : user.role === 'consultant'
+            ? consultantInventoryData
+            : agentInventoryData
+          )
             ?.slice(-2)
             ?.map(({ title, imageSrc, accessor }, index) => (
               <Inventories
@@ -112,19 +124,33 @@ const Dashboard = () => {
             ))}
 
           <div className='w-full rounded-xl space-y-5 shadow p-4 flex flex-col justify-center items-center'>
-            <button
-              className='w-[80%] text-white rounded-full gap-x-2 bg-tax-blue flex items-center justify-center px-5 py-3 my-16'
-              onClick={() => addReg('taxconsultant-registration')}
-            >
-              <AiOutlinePlus className='text-2xl' />
-              <p className='text-sm'>
-                {user.role === 'admin'
-                  ? 'Add New Consultant'
-                  : user.role === 'consultant'
-                  ? 'Add New Agent'
-                  : 'Add Tax Payer'}
-              </p>
-            </button>
+            {user.role === 'admin' && (
+              <button
+                className='w-[80%] text-white rounded-full gap-x-2 bg-tax-blue flex items-center justify-center px-5 py-3 my-16'
+                onClick={() => addReg('taxconsultant-registration')}
+              >
+                <AiOutlinePlus className='text-2xl' />
+                <p className='text-sm'>Add New Consultant</p>
+              </button>
+            )}
+            {user.role === 'consultant' && (
+              <button
+                className='w-[80%] text-white rounded-full gap-x-2 bg-tax-blue flex items-center justify-center px-5 py-3 my-16'
+                onClick={() => addReg('taxagent-registration')}
+              >
+                <AiOutlinePlus className='text-2xl' />
+                <p className='text-sm'>Add New Agent</p>
+              </button>
+            )}
+            {user.role === 'agent' && (
+              <button
+                className='w-[80%] text-white rounded-full gap-x-2 bg-tax-blue flex items-center justify-center px-5 py-3 my-16'
+                onClick={() => addReg('onbaording')}
+              >
+                <AiOutlinePlus className='text-2xl' />
+                <p className='text-sm'>Add Tax Payer</p>
+              </button>
+            )}
           </div>
 
           <div>
