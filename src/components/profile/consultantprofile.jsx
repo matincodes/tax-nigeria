@@ -3,9 +3,8 @@ import phone from '../../assets/img/ph_phone-thin.png'
 import locationImg from '../../assets/img/system-uicons_location.png'
 import { AiOutlinePlus } from 'react-icons/ai'
 import PayerCard from './payercard/payercard'
-import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { useAuth } from '../../context/AuthContext'
 import axios from 'axios'
 
 const NGN = new Intl.NumberFormat('en-NG', {
