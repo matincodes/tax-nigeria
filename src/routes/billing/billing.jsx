@@ -109,7 +109,7 @@ const Billing = () => {
         ),
       },
     ],
-    [navigate, NGN],
+    [navigate],
   )
 
   useEffect(() => {

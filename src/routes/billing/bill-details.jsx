@@ -3,6 +3,12 @@ import { useEffect, useState } from 'react'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 
+
+const NGN = new Intl.NumberFormat('en-NG', {
+  style: 'currency',
+  currency: 'NGN',
+})
+
 const BillDetails = () => {
   const location = useLocation()
   const billData = location.state?.data
@@ -35,7 +41,6 @@ const BillDetails = () => {
         date: billData.billDate,
         walletId: walletDetails.id,
         wallet: null,
-        isConfirmed: false,
       })
       navigate('/dashboard/billing')
     } catch (error) {
@@ -82,7 +87,7 @@ const BillDetails = () => {
               <input
                 type='text'
                 name='income'
-                value={billData?.billAmount}
+                value={NGN.format(billData?.billAmount)}
                 placeholder='Bill Amount'
                 readOnly
                 className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
@@ -149,7 +154,7 @@ const BillDetails = () => {
               <label className='text-gray-600'>Total Amount Paid</label>
               <input
                 type='text'
-                value={billData?.totalAmountPaid}
+                value={NGN.format(billData?.totalAmountPaid)}
                 placeholder='Total Amount Paid'
                 readOnly
                 className='border-2 border-tax-blue py-4 px-5 outline-none placeholder:text-gray-300 rounded'
