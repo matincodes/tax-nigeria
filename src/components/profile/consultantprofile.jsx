@@ -1,4 +1,4 @@
-import userprofile from '../../assets/img/userprofile.png'
+import userprofile from '../../assets/img/face_placeholder.png'
 import phone from '../../assets/img/ph_phone-thin.png'
 import locationImg from '../../assets/img/system-uicons_location.png'
 import { AiOutlinePlus } from 'react-icons/ai'
@@ -35,7 +35,7 @@ const ConsultantProfile = () => {
   return (
     <div className='w-full p-6 h-full space-y-6'>
       <div className='w-full bg-[#F6F6F6] grid grid-cols-10 p-6'>
-        <img src={userprofile} alt='' className='col-span-2' />
+        <img src={userprofile} alt='' className='col-span-2 rounded-full' />
         <div className='w-full flex items-center justify-around h-full col-span-8'>
           <div className='text-[#4C4C4C] flex flex-col gap-y-10 items-start justify-start border-r p-2 pr-14'>
             <div className='flex flex-col items-start justify-start gap-y-1'>
