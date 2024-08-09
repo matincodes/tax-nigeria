@@ -4,6 +4,11 @@ import { useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
 import InnerTable from '../inner-table/inner-table'
 
+const NGN = new Intl.NumberFormat('en-NG', {
+  style: 'currency',
+  currency: 'NGN',
+})
+
 const ConsultantPage = () => {
   const [consultantData, setConsultantData] = useState([])
   const [loading, setLoading] = useState(true)
@@ -36,14 +41,14 @@ const ConsultantPage = () => {
         header: 'Amount Deposited',
         accessorKey: 'amountDeposited',
         cell: ({ cell }) => (
-          <div className='flex items-center gap-3'>{cell.getValue()}</div>
+          <div className='flex items-center gap-3'>{NGN.format(cell.getValue())}</div>
         ),
       },
       {
         header: 'Wallet Balance',
         accessorKey: 'wallet.balance',
         cell: ({ cell }) => (
-          <div className='flex items-center gap-3'>{cell.getValue()}</div>
+          <div className='flex items-center gap-3'>{NGN.format(cell.getValue())}</div>
         ),
       },
       {
