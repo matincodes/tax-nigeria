@@ -1,26 +1,26 @@
-import Inventories from "./inventories/inventories";
-import { inventoryData } from "../../data/inventoryData";
-import LineChart from "./lineChart/line-chart.jsx";
-import TaxInflow from "./tax-inflow/tax-inflow";
-import { AiOutlinePlus } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
-import TimeAndDate from "../time-and-date/time-and-date";
-import { useAuth } from "../../context/AuthContext";
-import { consultantInventoryData } from "../../data/consultantInventoryData";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { formatNumber } from "../../lib/formatNumber";
+import Inventories from './inventories/inventories'
+import { inventoryData } from '../../data/inventoryData'
+import LineChart from './lineChart/line-chart.jsx'
+import TaxInflow from './tax-inflow/tax-inflow'
+import { AiOutlinePlus } from 'react-icons/ai'
+import { useNavigate } from 'react-router-dom'
+import TimeAndDate from '../time-and-date/time-and-date'
+import { useAuth } from '../../context/AuthContext'
+import { consultantInventoryData } from '../../data/consultantInventoryData'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import { formatNumber } from '../../lib/formatNumber'
 
 const Dashboard = () => {
-  const [dashboardData, setDashboardData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
-  const { user } = useAuth();
+  const [dashboardData, setDashboardData] = useState([])
+  const [loading, setLoading] = useState(true)
+  const navigate = useNavigate()
+  const { user } = useAuth()
 
   useEffect(() => {
     async function fetchDashboardData() {
       try {
-        setLoading(true);
+        setLoading(true)
         switch (user.role) {
           case 'admin':
             const response = await axios.get(
@@ -44,17 +44,17 @@ const Dashboard = () => {
             break
         }
       } catch (error) {
-        console.log(error);
+        console.log(error)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
     }
-    fetchDashboardData();
-  }, [user.role, user.email]);
+    fetchDashboardData()
+  }, [user.role, user.email])
 
-  const addReg = (reg) => {
-    navigate(`/dashboard/${reg}`);
-  };
+  const addReg = reg => {
+    navigate(`/dashboard/${reg}`)
+  }
 
   return (
     <div className='p-4 w-full font-manrope'>
@@ -112,33 +112,19 @@ const Dashboard = () => {
             ))}
 
           <div className='w-full rounded-xl space-y-5 shadow p-4 flex flex-col justify-center items-center'>
-            {user.role === 'admin' && (
-              <button
-                className='w-[80%] text-white rounded-full gap-x-2 bg-tax-blue flex items-center justify-center px-5 py-3 my-16'
-                onClick={() => addReg('taxconsultant-registration')}
-              >
-                <AiOutlinePlus className='text-2xl' />
-                <p className='text-sm'>Add New Consultant</p>
-              </button>
-            )}
-            {user.role === 'consultant' && (
-              <button
-                className='w-[80%] text-white rounded-full gap-x-2 bg-tax-blue flex items-center justify-center px-5 py-3 my-16'
-                onClick={() => addReg('taxagent-registration')}
-              >
-                <AiOutlinePlus className='text-2xl' />
-                <p className='text-sm'>Add New Agent</p>
-              </button>
-            )}
-            {user.role === 'agent' && (
-              <button
-                className='w-[80%] text-white rounded-full gap-x-2 bg-tax-blue flex items-center justify-center px-5 py-3 my-16'
-                onClick={() => addReg('onbaording')}
-              >
-                <AiOutlinePlus className='text-2xl' />
-                <p className='text-sm'>Add Tax Payer</p>
-              </button>
-            )}
+            <button
+              className='w-[80%] text-white rounded-full gap-x-2 bg-tax-blue flex items-center justify-center px-5 py-3 my-16'
+              onClick={() => addReg('taxconsultant-registration')}
+            >
+              <AiOutlinePlus className='text-2xl' />
+              <p className='text-sm'>
+                {user.role === 'admin'
+                  ? 'Add New Consultant'
+                  : user.role === 'consultant'
+                  ? 'Add New Agent'
+                  : 'Add Tax Payer'}
+              </p>
+            </button>
           </div>
 
           <div>
@@ -148,9 +134,9 @@ const Dashboard = () => {
       </div>
     </div>
   )
-};
+}
 
-export default Dashboard;
+export default Dashboard
 
 /**
  import { Route, Routes } from "react-router-dom";
