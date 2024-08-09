@@ -22,7 +22,7 @@ const ConsultantProfile = () => {
     async function fetchData() {
       try {
         const response = await axios.get(
-          `https://assettrack.com.ng/api/Consultant/ConsultantByEmail${email}`,
+          `https://assettrack.com.ng/api/Consultant/ConsultantByEmail/${email}`,
         )
         setData(response.data)
       } catch (error) {
