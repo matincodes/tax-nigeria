@@ -7,33 +7,35 @@ import AgentImage from "../assets/img/agents.png";
 
 export const inventoryData = [
   {
-    title: "Bill Generated",
-    accessor: "billGenerated",
+    title: 'Bill Generated',
+    accessor: 'billGenerated',
     imageSrc: BillImage,
   },
   {
-    title: "Tax Income",
-    accessor: "taxIncome",
+    title: 'Tax Income',
+    accessor: 'taxIncome',
     imageSrc: TaxImage,
+    prefix: '₦',
   },
   {
-    title: "Revenue",
-    accessor: "revenue",
+    title: 'Revenue',
+    accessor: 'revenue',
     imageSrc: RevenueImage,
+    prefix: '₦',
   },
   {
-    title: "Consultant",
-    accessor: "numberOfConsultants",
+    title: 'Consultant',
+    accessor: 'numberOfConsultants',
     imageSrc: ConsultantImage,
   },
   {
-    title: "Number of Registered Taxpayers",
-    accessor: "numberOfRegisteredTaxpayers",
+    title: 'Number of Registered Taxpayers',
+    accessor: 'numberOfRegisteredTaxpayers',
     imageSrc: PayersImage,
   },
   {
-    title: "Number of Registered Tax Agents",
-    accessor: "numberOfRegisteredTaxAgents",
+    title: 'Number of Registered Tax Agents',
+    accessor: 'numberOfRegisteredTaxAgents',
     imageSrc: AgentImage,
   },
-];
+]
