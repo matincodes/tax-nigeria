@@ -59,7 +59,10 @@ const Admin = () => {
           </Route>
           <Route path='taxcard' element={<TaskCardManagement />} />
           <Route path='agent-profile/:email' element={<AgentProfile />} />
-          <Route path='consultant-profile/:email' element={<ConsultantProfile />} />
+          <Route
+            path='consultant-profile/:email'
+            element={<ConsultantProfile />}
+          />
           <Route path='taxpayer' element={<TaxPayerManagement />} />
           <Route path='settings' element={<ProfileSettings />} />
           <Route path='taxstation-registration' element={<TaxStationReg />} />
@@ -67,11 +70,15 @@ const Admin = () => {
             path='minitaxstation-registration'
             element={<MiniTaxStationReg />}
           />
-          <Route path='taxpayer/taxpayer-details/:id' element={<TaxpayerDetails />} />
+          <Route
+            path='taxpayer/taxpayer-details/:id'
+            element={<TaxpayerDetails />}
+          />
           <Route element={<PrivateRoute allowedRoles={['agent']} />}>
             <Route path='debt-management' element={<DebtManagement />} />
             <Route path='onboarding' element={<TaxpayerForm />} />
             <Route path='assessment' element={<Assessment />} />
+            <Route path='assessment/:taxId' element={<Assessment />} />
             <Route path='billing' element={<Billing />} />
             <Route path='billing/bill-details/:id' element={<BillDetails />} />
           </Route>
