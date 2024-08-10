@@ -16,6 +16,7 @@ const TaxpayerDetails = () => {
   const taxpayer = location?.state?.data
   const [billDetails, setBillDetails] = useState([])
   const [loading, setLoading] = useState(true)
+  const [image, setImage] = useState(null)
 
   const billingColumns = useMemo(
     () => [
@@ -112,6 +113,17 @@ const TaxpayerDetails = () => {
 
   useEffect(() => {
     async function fetchBillDetails() {
+      axios
+        .get(
+          `https://assettrack.com.ng/api/TaxPayer/OnlyTaxpayerPics/${taxpayer?.taxPayerId}`,
+        )
+        .then(response => {
+          setImage(response.data)
+        })
+        .catch(error => {
+          console.error(error)
+        })
+
       try {
         setLoading(true)
         const response = await axios.get(
@@ -126,14 +138,18 @@ const TaxpayerDetails = () => {
     }
 
     fetchBillDetails()
-  }, [taxpayer?.taxPayerId])
+  }, [taxpayer?.taxPayerId, taxpayer?.id])
 
   if (!taxpayer) return <Navigate to='/dashboard/taxpayer' />
 
   return (
     <div className='w-full p-6 h-full space-y-6'>
       <div className='w-full bg-[#F6F6F6] grid grid-cols-10 p-6'>
-        <img src={userprofile} alt='' className='col-span-2 rounded-full' />
+        <img
+          src={image?.taxpayerPics ?? userprofile}
+          alt=''
+          className='col-span-2 rounded-full'
+        />
         <div className='w-full flex items-center justify-around h-full col-span-8'>
           <div className='text-[#4C4C4C] flex flex-col gap-y-10 items-start justify-start border-r p-2 pr-14'>
             <div className='flex flex-col items-start justify-start gap-y-1'>
