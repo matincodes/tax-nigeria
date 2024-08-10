@@ -1,5 +1,5 @@
 import { Smile, PlusCircle } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 const TaxPayerFour = ({ prevStep, setOnboardingData, onboardingData }) => {
@@ -35,7 +35,7 @@ const TaxPayerFour = ({ prevStep, setOnboardingData, onboardingData }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios({
+      await axios({
         method: "POST",
         url: "https://assettrack.com.ng/api/TaxPayer",
         data: onboardingData,
