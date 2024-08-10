@@ -30,7 +30,7 @@ const TaxPayerManagement = () => {
         header: 'Tax Payer',
         cell: ({ row }) => {
           return (
-            <p className='w-full text-ellipsis overflow-hidden whitespace-nowrap'>
+            <p className='w-full text-ellipsis text-black font-semibold overflow-hidden whitespace-nowrap'>
               {`${row.original.firstName} ${row.original.lastname} ${row.original.othername}`}
             </p>
           )

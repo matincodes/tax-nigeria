@@ -1,11 +1,166 @@
-import { Navigate, useLocation } from 'react-router-dom'
+import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import phone from '../../assets/img/ph_phone-thin.png'
 import locationImg from '../../assets/img/system-uicons_location.png'
 import userprofile from '../../assets/img/face_placeholder.png'
+import { useEffect, useMemo, useState } from 'react'
+import axios from 'axios'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '../../components/ui/dropdown-menu'
+import ThreeDotIcon from '../../assets/img/Bussiness_Sector/three_dots.svg'
+import DataTable from '../../components/data-table/data-table'
+
+const NGN = new Intl.NumberFormat('en-NG', {
+  style: 'currency',
+  currency: 'NGN',
+})
 
 const TaxpayerDetails = () => {
   const location = useLocation()
+  const navigate = useNavigate()
   const taxpayer = location?.state?.data
+  const [billDetails, setBillDetails] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  const billingColumns = useMemo(
+    () => [
+      {
+        accessorKey: 'year',
+        header: 'Year',
+        cell: ({ row }) => (
+          <p className='text-black font-semibold ml-2'>
+            {row.getValue('year')}
+          </p>
+        ),
+      },
+      {
+        accessorKey: 'billAmount',
+        header: 'Amount',
+        cell: ({ row }) => (
+          <p className='ml-2'>
+            {NGN.format(row.getValue('billAmount')?.toFixed(2))}
+          </p>
+        ),
+      },
+      {
+        accessorKey: 'totalAmountPaid',
+        header: 'Amount Paid',
+        cell: ({ row }) => (
+          <p className='ml-2'>
+            {NGN.format(row.getValue('totalAmountPaid')?.toFixed(2))}
+          </p>
+        ),
+      },
+      {
+        accessorKey: 'billStatus',
+        header: 'Status',
+        cell: ({ row }) => {
+          const status = row.getValue('billStatus')
+          let statusClass = ''
+          let dotClass = ''
+
+          switch (status) {
+            case 'Paid':
+              statusClass = 'bg-[#ECFDF3] text-[#14BA6D]'
+              dotClass = 'bg-[#14BA6D]'
+              break
+            case 'Unpaid':
+              statusClass = 'bg-[#F2F4F7] text-[#6C778B]'
+              dotClass = 'bg-[#6C778B]'
+              break
+            default:
+              statusClass = 'bg-[#F2F4F7] text-[#6C778B]'
+              dotClass = 'bg-[#6C778B]'
+              break
+          }
+
+          return (
+            <div
+              className={`pl-1.5 pr-2 py-0.5 ${statusClass} rounded-2xl justify-center items-center gap-1.5 inline-flex`}
+            >
+              <div className='w-2 h-2 relative'>
+                <div
+                  className={`w-1.5 h-1.5 left-[1px] top-[1px] absolute rounded-full ${dotClass}`}
+                />
+              </div>
+              <div className='text-center text-xs font-semibold leading-[18px]'>
+                {status}
+              </div>
+            </div>
+          )
+        },
+      },
+      {
+        accessorKey: 'billReferenceNo',
+        header: 'Reference No',
+        cell: ({ row }) => (
+          <p className='ml-2'>{row.getValue('billReferenceNo')}</p>
+        ),
+      },
+      // {
+      //   accessorKey: 'assessmentRef',
+      //   header: 'Assessment Reference',
+      //   cell: ({ row }) => <p>{row.getValue('assessmentRef')}</p>,
+      // },
+      {
+        accessorKey: 'billDate',
+        header: 'Date',
+        cell: ({ row }) => (
+          <p className='ml-2'>
+            {new Date(row.getValue('billDate')).toLocaleDateString()}
+          </p>
+        ),
+      },
+      {
+        accessorKey: '',
+        header: 'Action',
+        cell: ({ row }) => (
+          <DropdownMenu>
+            <DropdownMenuTrigger className='w-full outline-none flex justify-center'>
+              <img src={ThreeDotIcon} alt='' />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem
+                onClick={() =>
+                  navigate(
+                    `/dashboard/billing/bill-details/${row.original.id}`,
+                    {
+                      state: { data: row.original },
+                    },
+                  )
+                }
+              >
+                View
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ),
+      },
+    ],
+    [navigate],
+  )
+
+  useEffect(() => {
+    async function fetchBillDetails() {
+      try {
+        setLoading(true)
+        const response = await axios.get(
+          `https://assettrack.com.ng/api/BillGeneration/AllBillByTaxPayerID/${taxpayer?.taxPayerId}`,
+        )
+        setBillDetails(response.data)
+        console.log(response.data)
+      } catch (error) {
+        console.error(error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchBillDetails()
+  }, [taxpayer?.taxPayerId])
 
   if (!taxpayer) return <Navigate to='/dashboard/taxpayer' />
 
@@ -52,16 +207,12 @@ const TaxpayerDetails = () => {
           </div>
         </div>
       </div>
-      <div className='w-full flex gap-6 items-center'>
-        <div className='rounded-lg p-4 gap-3 border border-[#87BB42] flex flex-col items-start justify-start min-w-48 h-fit'>
-          <p className='font-semibold text-2xl'>{taxpayer?.annualTurnover}</p>
-          <p className='text-base'>Annual Turnover</p>
-        </div>
-        <div className='rounded-lg p-4 gap-3 border border-[#938406] flex flex-col items-start justify-start min-w-48 h-fit'>
-          <p className='font-semibold text-2xl'>{taxpayer?.numberofShops}</p>
-          <p className='text-base'>Number of Shops</p>
-        </div>
-      </div>
+
+      <DataTable
+        data={billDetails}
+        columns={billingColumns}
+        loading={loading}
+      />
     </div>
   )
 }
