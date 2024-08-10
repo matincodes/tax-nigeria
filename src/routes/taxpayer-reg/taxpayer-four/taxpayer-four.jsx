@@ -1,12 +1,15 @@
 import { Smile, PlusCircle } from "lucide-react";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const TaxPayerFour = ({ prevStep, setOnboardingData, onboardingData }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const onImageSelect = (e) => {
     const file = e.target.files[0];
@@ -42,6 +45,9 @@ const TaxPayerFour = ({ prevStep, setOnboardingData, onboardingData }) => {
       });
       setError(false);
       setSuccess(true);
+      setTimeout(() => {
+        navigate(`/dashboard/assessment/${onboardingData.taxPayerId}`);
+      }, 200);
     } catch (error) {
       setError(true);
       console.error("Error creating Tax Station", error);
@@ -103,6 +109,7 @@ const TaxPayerFour = ({ prevStep, setOnboardingData, onboardingData }) => {
         <button
           className="bg-tax-blue w-6/12 py-3 text-white rounded-md text-2xl text-center"
           onClick={handleSubmit}
+          disabled={loading || !selectedImage || success}
         >
           {loading ? "Submitting..." : "Submit"}
         </button>
