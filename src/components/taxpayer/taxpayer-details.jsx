@@ -1,10 +1,18 @@
-import { Navigate, useLocation } from 'react-router-dom'
+import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import phone from '../../assets/img/ph_phone-thin.png'
 import locationImg from '../../assets/img/system-uicons_location.png'
 import userprofile from '../../assets/img/face_placeholder.png'
 import { useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
 import DataTable from '../../components/data-table/data-table'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '../../components/ui/dropdown-menu'
+
+import ThreeDotIcon from '../../assets/img/Bussiness_Sector/three_dots.svg'
 
 const NGN = new Intl.NumberFormat('en-NG', {
   style: 'currency',
@@ -13,6 +21,7 @@ const NGN = new Intl.NumberFormat('en-NG', {
 
 const TaxpayerDetails = () => {
   const location = useLocation()
+  const navigate = useNavigate()
   const taxpayer = location?.state?.data
   const [billDetails, setBillDetails] = useState([])
   const [loading, setLoading] = useState(true)
@@ -107,8 +116,33 @@ const TaxpayerDetails = () => {
           </p>
         ),
       },
+      {
+        accessorKey: '',
+        header: 'Action',
+        cell: ({ row }) => (
+          <DropdownMenu>
+            <DropdownMenuTrigger className='w-full outline-none flex justify-center'>
+              <img src={ThreeDotIcon} alt='' />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem
+                onClick={() =>
+                  navigate(
+                    `/dashboard/billing/bill-details/${row.original.id}`,
+                    {
+                      state: { data: row.original },
+                    },
+                  )
+                }
+              >
+                View
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ),
+      },
     ],
-    [],
+    [navigate],
   )
 
   useEffect(() => {
@@ -148,7 +182,7 @@ const TaxpayerDetails = () => {
         <img
           src={image?.taxpayerPics ?? userprofile}
           alt=''
-          className='col-span-2 rounded-full object-cover'
+          className='col-span-2 rounded-full object-cover w-[200px] h-[200px]'
         />
         <div className='w-full flex items-center justify-around h-full col-span-8'>
           <div className='text-[#4C4C4C] flex flex-col gap-y-10 items-start justify-start border-r p-2 pr-14'>
