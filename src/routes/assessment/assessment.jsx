@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useEffect, useReducer } from 'react'
+import { useParams } from 'react-router-dom'
 
 const initialState = {
   taxpayerData: {
@@ -120,6 +121,12 @@ const validateInput = data => {
 
 const useTaxAssessmentForm = initialState => {
   const [state, dispatch] = useReducer(reducer, initialState)
+  const { taxId } = useParams()
+
+  useEffect(() => {
+    if (taxId)
+      dispatch({ type: 'UPDATE_FIELD', field: 'taxpayerId', value: taxId })
+  }, [taxId])
 
   const closePopup = () => {
     dispatch({ type: 'SHOW_SUCCESS', showSuccess: false })
@@ -253,7 +260,9 @@ const SuccessPopup = ({ messages, onClose }) => (
     <div className='bg-tax-gray p-6 rounded shadow-lg text-center font-montserrat'>
       <h2 className='text-green-500 text-2xl mb-4'>Success!</h2>
       {messages.map((message, index) => (
-        <p className='mb-4' key={index}>{message}</p>
+        <p className='mb-4' key={index}>
+          {message}
+        </p>
       ))}
       <button
         onClick={onClose}
