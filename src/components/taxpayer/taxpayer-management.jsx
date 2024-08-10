@@ -81,6 +81,45 @@ const TaxPayerManagement = () => {
         ),
       },
       {
+        accessorKey: 'assessmentStatus',
+        header: 'Assessment Status',
+        cell: ({ row }) => {
+          const status = row.getValue('assessmentStatus')
+          let statusClass = ''
+          let dotClass = ''
+
+          switch (status) {
+            case 'Done':
+              statusClass = 'bg-[#ECFDF3] text-[#14BA6D]'
+              dotClass = 'bg-[#14BA6D]'
+              break
+            case 'NotDone':
+              statusClass = 'bg-[#F2F4F7] text-[#6C778B]'
+              dotClass = 'bg-[#6C778B]'
+              break
+            default:
+              statusClass = 'bg-[#F2F4F7] text-[#6C778B]'
+              dotClass = 'bg-[#6C778B]'
+              break
+          }
+
+          return (
+            <div
+              className={`pl-1.5 pr-2 py-0.5 ${statusClass} rounded-2xl justify-center items-center gap-1.5 inline-flex`}
+            >
+              <div className='w-2 h-2 relative'>
+                <div
+                  className={`w-1.5 h-1.5 left-[1px] top-[1px] absolute rounded-full ${dotClass}`}
+                />
+              </div>
+              <div className='text-center text-xs font-semibold leading-[18px]'>
+                {status}
+              </div>
+            </div>
+          )
+        },
+      },
+      {
         accessorKey: 'action',
         header: '',
         cell: ({ row }) => (
@@ -91,19 +130,34 @@ const TaxPayerManagement = () => {
             <DropdownMenuContent>
               <DropdownMenuItem
                 onClick={() =>
-                  navigate(`/dashboard/taxpayer/taxpayer-details/${row.original.id}`, {
-                    state: { data: row.original },
-                  })
+                  navigate(
+                    `/dashboard/taxpayer/taxpayer-details/${row.original.id}`,
+                    {
+                      state: { data: row.original },
+                    },
+                  )
                 }
               >
                 View
               </DropdownMenuItem>
+              {user.role === 'agent' &&
+                row.original.assessmentStatus === 'NotDone' && (
+                  <DropdownMenuItem
+                    onClick={() =>
+                      navigate(
+                        `/dashboard/assessment/${row.original.taxPayerId}`,
+                      )
+                    }
+                  >
+                    Assessment
+                  </DropdownMenuItem>
+                )}
             </DropdownMenuContent>
           </DropdownMenu>
         ),
       },
     ],
-    [navigate],
+    [navigate, user.role],
   )
 
   useEffect(() => {
@@ -142,7 +196,9 @@ const TaxPayerManagement = () => {
         item.identificationNumber
           .toLowerCase()
           .includes(searchQuery.toLowerCase()) ||
-        item.identityTypeName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.identityTypeName
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()) ||
         item.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.taxPayerId.toLowerCase().includes(searchQuery.toLowerCase())
       )

@@ -148,7 +148,7 @@ const TaxpayerDetails = () => {
         <img
           src={image?.taxpayerPics ?? userprofile}
           alt=''
-          className='col-span-2 rounded-full'
+          className='col-span-2 rounded-full object-cover'
         />
         <div className='w-full flex items-center justify-around h-full col-span-8'>
           <div className='text-[#4C4C4C] flex flex-col gap-y-10 items-start justify-start border-r p-2 pr-14'>
