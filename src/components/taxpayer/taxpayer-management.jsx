@@ -64,8 +64,8 @@ const TaxPayerManagement = () => {
         ),
       },
       {
-        accessorKey: 'identificationNumber',
-        header: 'Identification Number',
+        accessorKey: 'taxPayerId',
+        header: 'Tax ID',
         cell: ({ cell }) => (
           <p className='w-full text-ellipsis overflow-hidden whitespace-nowrap'>
             {cell.getValue()}
@@ -92,7 +92,7 @@ const TaxPayerManagement = () => {
             <DropdownMenuContent>
               <DropdownMenuItem
                 onClick={() =>
-                  navigate(`/dashboard/taxpayer/${row.original.id}`, {
+                  navigate(`/dashboard/taxpayer/taxpayer-details/${row.original.id}`, {
                     state: { data: row.original },
                   })
                 }
@@ -122,11 +122,11 @@ const TaxPayerManagement = () => {
         }
 
         const response = await axios.get(getUrl(user))
-
+        console.log(response.data)
         setTaxPayerData(response.data)
-        setLoading(false)
       } catch (error) {
         console.error('Error fetching taxpayer data:', error)
+      } finally {
         setLoading(false)
       }
     }
@@ -176,7 +176,7 @@ const TaxPayerManagement = () => {
               onClick={() => navigate('/dashboard/onboarding')}
             >
               <AiOutlinePlus className='text-[22px]' />
-              <p>Add New Tax Payer</p>
+              <p>Add New Payer</p>
             </button>
           )}
         </div>

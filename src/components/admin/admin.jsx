@@ -23,6 +23,7 @@ import BusinessTypePage from '../business-type-page/business-type-page'
 import AddBusinessType from '../business-type-page/add-business-type'
 import BillDetails from '../../routes/billing/bill-details'
 import PrivateRoute from '../private-route/private-route'
+import TaxpayerDetails from '../taxpayer/taxpayer-details'
 
 const Admin = () => {
   return (
@@ -66,6 +67,7 @@ const Admin = () => {
             path='minitaxstation-registration'
             element={<MiniTaxStationReg />}
           />
+          <Route path='taxpayer/taxpayer-details/:id' element={<TaxpayerDetails />} />
           <Route element={<PrivateRoute allowedRoles={['agent']} />}>
             <Route path='debt-management' element={<DebtManagement />} />
             <Route path='onboarding' element={<TaxpayerForm />} />
