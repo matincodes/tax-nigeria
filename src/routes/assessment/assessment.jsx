@@ -461,7 +461,7 @@ const TaxAssessment = () => {
             <button
               className='bg-tax-blue w-full py-3 text-white rounded-md text-2xl'
               onClick={handleSubmit}
-              disabled={submitting}
+              disabled={submitting || showSuccess || showNotFound}
             >
               {submitting ? 'Submitting...' : 'Submit'}
             </button>
