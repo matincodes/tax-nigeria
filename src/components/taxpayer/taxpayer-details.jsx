@@ -220,11 +220,16 @@ const TaxpayerDetails = () => {
         </div>
       </div>
 
-      <DataTable
-        data={billDetails}
-        columns={billingColumns}
-        loading={loading}
-      />
+      <div className='flex flex-col items-start justify-start'>
+        <h2 className='font-medium text-xl'>Billings</h2>
+        <div className='w-full'>
+          <DataTable
+            data={billDetails}
+            columns={billingColumns}
+            loading={loading}
+          />
+        </div>
+      </div>
     </div>
   )
 }
