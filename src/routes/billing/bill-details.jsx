@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 
 const NGN = new Intl.NumberFormat('en-NG', {
@@ -11,7 +11,6 @@ const NGN = new Intl.NumberFormat('en-NG', {
 const BillDetails = () => {
   const location = useLocation()
   const billData = location.state?.data
-  const navigate = useNavigate()
   const { user } = useAuth()
 
   const [walletDetails, setWalletDetails] = useState(null)
@@ -48,7 +47,6 @@ const BillDetails = () => {
         wallet: null,
       })
       setSuccess('Payment successful')
-      // navigate('/dashboard/billing')
     } catch (error) {
       console.error(error)
       setError('An error occurred. Please try again later')
