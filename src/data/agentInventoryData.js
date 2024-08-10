@@ -5,19 +5,22 @@ import PayersImage from '../assets/img/payers.png'
 
 export const agentInventoryData = [
   {
-    title: 'Tax Wallet',
+    title: 'Wallet Balance',
     accessor: 'agentWalletBalance',
     imageSrc: BillImage,
+    prefix: '₦',
   },
   {
     title: 'Tax Expenses',
     accessor: 'taxExpenses',
     imageSrc: TaxImage,
+    prefix: '₦',
   },
   {
     title: 'Revenue',
     accessor: 'revenue',
     imageSrc: RevenueImage,
+    prefix: '₦',
   },
   {
     title: 'Bill Generated',
