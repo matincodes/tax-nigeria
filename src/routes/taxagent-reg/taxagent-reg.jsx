@@ -87,15 +87,6 @@ const TaxAgentReg = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      console.log("agent data", {
-        ...agentData,
-        id: 0,
-        consultantId: 0,
-        wallletId: 0,
-        agentPics: "",
-        userRole: "Agent",
-        miniStationsIDs: selectedMiniTaxStations.map(({ value }) => value),
-      });
       await fetchWithRetry({
         method: "POST",
         data: {

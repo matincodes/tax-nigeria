@@ -41,14 +41,18 @@ const ConsultantPage = () => {
         header: 'Amount Deposited',
         accessorKey: 'amountDeposited',
         cell: ({ cell }) => (
-          <div className='flex items-center gap-3'>{NGN.format(cell.getValue())}</div>
+          <div className='flex items-center gap-3'>
+            {NGN.format(cell.getValue())}
+          </div>
         ),
       },
       {
         header: 'Wallet Balance',
         accessorKey: 'wallet.balance',
         cell: ({ cell }) => (
-          <div className='flex items-center gap-3'>{NGN.format(cell.getValue())}</div>
+          <div className='flex items-center gap-3'>
+            {NGN.format(cell.getValue())}
+          </div>
         ),
       },
       {
@@ -60,7 +64,9 @@ const ConsultantPage = () => {
               text='Profile'
               handleButton={e => {
                 e.preventDefault()
-                navigate(`/dashboard/consultant-profile/${row.original.emailAddress}`)
+                navigate(
+                  `/dashboard/consultant-profile/${row.original.emailAddress}`,
+                )
               }}
             />
           </div>
@@ -77,7 +83,7 @@ const ConsultantPage = () => {
         const res = await axios.get('https://assettrack.com.ng/api/Consultant')
         setConsultantData(res.data)
       } catch (error) {
-        console.log(error)
+        console.error(error)
       } finally {
         setLoading(false)
       }

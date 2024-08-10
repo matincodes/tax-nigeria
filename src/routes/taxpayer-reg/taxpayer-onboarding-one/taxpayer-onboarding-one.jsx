@@ -8,7 +8,6 @@ const TaxPayerOnboardingOne = () => {
 
   const onImageSelect = (e) => {
     const file = e.target.files[0];
-    console.log(file);
     if (!file) return;
 
     setSelectedImage(URL.createObjectURL(file));

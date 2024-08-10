@@ -40,7 +40,7 @@ const AddBusinessType = () => {
       })
       navigate('/dashboard/business/add-business-type')
     } catch (error) {
-      console.log(error)
+      console.error(error)
     } finally {
       setSubmitting(false)
     }
@@ -72,11 +72,7 @@ const AddBusinessType = () => {
                   Select Sector
                 </option>
                 {sectors?.map(({ id, sectorName }) => (
-                  <option
-                    className='text-black'
-                    value={id}
-                    key={id}
-                  >
+                  <option className='text-black' value={id} key={id}>
                     {sectorName}
                   </option>
                 ))}

@@ -39,14 +39,13 @@ const Dashboard = () => {
             const agentResponse = await axios.get(
               `https://assettrack.com.ng/api/DashBoard/ByAgentEmail/${user.email}`,
             )
-            console.log(agentResponse.data)
             setDashboardData(agentResponse.data)
             break
           default:
             break
         }
       } catch (error) {
-        console.log(error)
+        console.error(error)
       } finally {
         setLoading(false)
       }
@@ -83,7 +82,9 @@ const Dashboard = () => {
                 ) : (
                   `${
                     (dashboardData[accessor] ?? 'N/A') !== 'N/A'
-                      ? `${prefix ?? ''}${formatNumber(dashboardData[accessor])}`
+                      ? `${prefix ?? ''}${formatNumber(
+                          dashboardData[accessor],
+                        )}`
                       : 'N/A'
                   }`
                 )

@@ -42,14 +42,11 @@ const TaxPayerFour = ({ prevStep, setOnboardingData, onboardingData }) => {
       });
       setError(false);
       setSuccess(true);
-      console.log("Tax Station created", res.data);
-      console.log("response status", res.status);
     } catch (error) {
       setError(true);
       console.error("Error creating Tax Station", error);
     } finally {
       setLoading(false);
-      console.log("Onboarding Data", onboardingData);
     }
   };
 

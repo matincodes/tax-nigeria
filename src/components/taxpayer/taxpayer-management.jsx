@@ -108,7 +108,6 @@ const TaxPayerManagement = () => {
   )
 
   useEffect(() => {
-    // Simulating API call or data fetch
     const fetchData = async () => {
       try {
         const getUrl = user => {
@@ -122,7 +121,6 @@ const TaxPayerManagement = () => {
         }
 
         const response = await axios.get(getUrl(user))
-        console.log(response.data)
         setTaxPayerData(response.data)
       } catch (error) {
         console.error('Error fetching taxpayer data:', error)
@@ -145,7 +143,9 @@ const TaxPayerManagement = () => {
         item.identificationNumber
           .toLowerCase()
           .includes(searchQuery.toLowerCase()) ||
-        item.identityTypeName.toLowerCase().includes(searchQuery.toLowerCase())
+        item.identityTypeName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.taxPayerId.toLowerCase().includes(searchQuery.toLowerCase())
       )
     })
     setFilteredData(filteredResults)
