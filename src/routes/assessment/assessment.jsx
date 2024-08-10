@@ -252,8 +252,8 @@ const SuccessPopup = ({ messages, onClose }) => (
   <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50'>
     <div className='bg-tax-gray p-6 rounded shadow-lg text-center font-montserrat'>
       <h2 className='text-green-500 text-2xl mb-4'>Success!</h2>
-      {messages.map(message => (
-        <p className='mb-4'>{message}</p>
+      {messages.map((message, index) => (
+        <p className='mb-4' key={index}>{message}</p>
       ))}
       <button
         onClick={onClose}
