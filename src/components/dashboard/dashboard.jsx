@@ -73,7 +73,7 @@ const Dashboard = () => {
           : agentInventoryData
         )
           ?.slice(0, -2)
-          ?.map(({ title, imageSrc, accessor }, index) => (
+          ?.map(({ title, imageSrc, accessor, prefix }, index) => (
             <Inventories
               key={index}
               title={title}
@@ -81,7 +81,11 @@ const Dashboard = () => {
                 loading ? (
                   <p className='text-sm'>loading...</p>
                 ) : (
-                  formatNumber(dashboardData[accessor]) ?? 'N/A'
+                  `${
+                    (dashboardData[accessor] ?? 'N/A') !== 'N/A'
+                      ? `${prefix}${formatNumber(dashboardData[accessor])}`
+                      : 'N/A'
+                  }`
                 )
               }
               image={imageSrc}
