@@ -83,7 +83,7 @@ const Dashboard = () => {
                 ) : (
                   `${
                     (dashboardData[accessor] ?? 'N/A') !== 'N/A'
-                      ? `${prefix}${formatNumber(dashboardData[accessor])}`
+                      ? `${prefix ?? ''}${formatNumber(dashboardData[accessor])}`
                       : 'N/A'
                   }`
                 )
