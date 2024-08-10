@@ -13,6 +13,7 @@ import {
 } from '../../components/ui/dropdown-menu'
 
 import ThreeDotIcon from '../../assets/img/Bussiness_Sector/three_dots.svg'
+import { useAuth } from '../../context/AuthContext'
 
 const NGN = new Intl.NumberFormat('en-NG', {
   style: 'currency',
@@ -22,6 +23,7 @@ const NGN = new Intl.NumberFormat('en-NG', {
 const TaxpayerDetails = () => {
   const location = useLocation()
   const navigate = useNavigate()
+  const { user } = useAuth()
   const taxpayer = location?.state?.data
   const [billDetails, setBillDetails] = useState([])
   const [loading, setLoading] = useState(true)
@@ -102,11 +104,6 @@ const TaxpayerDetails = () => {
           <p className='ml-2'>{row.getValue('billReferenceNo')}</p>
         ),
       },
-      // {
-      //   accessorKey: 'assessmentRef',
-      //   header: 'Assessment Reference',
-      //   cell: ({ row }) => <p>{row.getValue('assessmentRef')}</p>,
-      // },
       {
         accessorKey: 'billDate',
         header: 'Date',
@@ -116,34 +113,33 @@ const TaxpayerDetails = () => {
           </p>
         ),
       },
-      {
-        accessorKey: '',
-        header: 'Action',
-        cell: ({ row }) => (
-          <DropdownMenu>
-            <DropdownMenuTrigger className='w-full outline-none flex justify-center'>
-              <img src={ThreeDotIcon} alt='' />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem
-                onClick={() =>
-                  navigate(
-                    `/dashboard/billing/bill-details/${row.original.id}`,
-                    {
-                      state: { data: row.original },
-                    },
-                  )
-                }
-              >
-                View
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        ),
-      },
     ],
-    [navigate],
+    [],
   )
+
+  if (user.role.toLowerCase() === 'agent')
+    billingColumns.push({
+      accessorKey: '',
+      header: 'Action',
+      cell: ({ row }) => (
+        <DropdownMenu>
+          <DropdownMenuTrigger className='w-full outline-none flex justify-center'>
+            <img src={ThreeDotIcon} alt='' />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem
+              onClick={() =>
+                navigate(`/dashboard/billing/bill-details/${row.original.id}`, {
+                  state: { data: row.original },
+                })
+              }
+            >
+              View
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ),
+    })
 
   useEffect(() => {
     async function fetchBillDetails() {
