@@ -33,7 +33,11 @@ const Billing = () => {
       {
         accessorKey: 'year',
         header: 'Year',
-        cell: ({ row }) => <p>{row.getValue('year')}</p>,
+        cell: ({ row }) => (
+          <p className='text-black font-semibold ml-2'>
+            {row.getValue('year')}
+          </p>
+        ),
       },
       {
         accessorKey: 'taxPayer_Id',
@@ -50,25 +54,59 @@ const Billing = () => {
       {
         accessorKey: 'billAmount',
         header: 'Amount',
-        cell: ({ row }) => <p>
-          {NGN.format(row.getValue('billAmount')?.toFixed(2))}
-        </p>, 
+        cell: ({ row }) => (
+          <p>{NGN.format(row.getValue('billAmount')?.toFixed(2))}</p>
+        ),
       },
       {
         accessorKey: 'totalAmountPaid',
-        header: 'Total Amount Paid',
+        header: 'Amount Paid',
         cell: ({ row }) => (
           <p>{NGN.format(row.getValue('totalAmountPaid')?.toFixed(2))}</p>
         ),
       },
       {
         accessorKey: 'billStatus',
-        header: 'Bill Status',
-        cell: ({ row }) => <p>{row.getValue('billStatus')}</p>,
+        header: 'Status',
+        cell: ({ row }) => {
+          const status = row.getValue('billStatus')
+          let statusClass = ''
+          let dotClass = ''
+
+          switch (status) {
+            case 'Paid':
+              statusClass = 'bg-[#ECFDF3] text-[#14BA6D]'
+              dotClass = 'bg-[#14BA6D]'
+              break
+            case 'Unpaid':
+              statusClass = 'bg-[#F2F4F7] text-[#6C778B]'
+              dotClass = 'bg-[#6C778B]'
+              break
+            default:
+              statusClass = 'bg-[#F2F4F7] text-[#6C778B]'
+              dotClass = 'bg-[#6C778B]'
+              break
+          }
+
+          return (
+            <div
+              className={`pl-1.5 pr-2 py-0.5 ${statusClass} rounded-2xl justify-center items-center gap-1.5 inline-flex`}
+            >
+              <div className='w-2 h-2 relative'>
+                <div
+                  className={`w-1.5 h-1.5 left-[1px] top-[1px] absolute rounded-full ${dotClass}`}
+                />
+              </div>
+              <div className='text-center text-xs font-semibold leading-[18px]'>
+                {status}
+              </div>
+            </div>
+          )
+        },
       },
       {
         accessorKey: 'billReferenceNo',
-        header: 'Bill Reference',
+        header: 'Reference No',
         cell: ({ row }) => <p>{row.getValue('billReferenceNo')}</p>,
       },
       // {
