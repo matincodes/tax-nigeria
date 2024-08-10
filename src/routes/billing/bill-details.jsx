@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 
-
 const NGN = new Intl.NumberFormat('en-NG', {
   style: 'currency',
   currency: 'NGN',
@@ -16,6 +15,9 @@ const BillDetails = () => {
   const { user } = useAuth()
 
   const [walletDetails, setWalletDetails] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
 
   useEffect(() => {
     async function fetchWalletDetails() {
@@ -24,27 +26,34 @@ const BillDetails = () => {
       )
       const wallet = response.data
       setWalletDetails(wallet)
-      console.log(wallet)
     }
     fetchWalletDetails()
   }, [user.email])
 
   const handlePayment = async e => {
     e.preventDefault()
-
+    setError('')
     try {
-      console.log(billData)
+      setLoading(true)
+      if (billData.billAmount > walletDetails?.balance)
+        return setError(
+          'Insufficient balance. Please fund your wallet to make payment',
+        )
       await axios.post('https://assettrack.com.ng/api/transactions', {
         id: 0,
         amount: billData.billAmount,
         bill: billData.billReferenceNo,
         date: billData.billDate,
-        walletId: walletDetails.id,
+        walletId: walletDetails?.id,
         wallet: null,
       })
-      navigate('/dashboard/billing')
+      setSuccess('Payment successful')
+      // navigate('/dashboard/billing')
     } catch (error) {
       console.error(error)
+      setError('An error occurred. Please try again later')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -52,7 +61,14 @@ const BillDetails = () => {
 
   return (
     <div className='font-montserrat flex flex-col items-center'>
-      <div className='flex flex-col text-center mt-16 mb-8'>
+      <div className='flex w-full text-center items-center justify-end place-content-end mt-4 mr-8 pr-8'>
+        <h2 className='font-semibold text-2xl'>Wallet Balance:</h2>
+        <p className='text-xl ml-3'>
+          {walletDetails ? NGN.format(walletDetails.balance) : 'loading...'}
+        </p>
+      </div>
+
+      <div className='flex flex-col text-center mt-10 mb-8'>
         <h2 className='font-bold text-3xl'>Bill Details</h2>
       </div>
       <div className='w-3/5'>
@@ -161,12 +177,15 @@ const BillDetails = () => {
               />
             </div>
           </div>
+          {error && <p className='text-red-500'>{error}</p>}
+          {success && <p className='text-green-500'>{success}</p>}
           <div className='w-full pb-5 flex gap-12'>
             <button
               className='bg-tax-blue w-full py-3 text-white rounded-md text-2xl'
               onClick={handlePayment}
+              disabled={loading || success}
             >
-              Pay Now
+              {loading ? 'Processing...' : 'Pay'}
             </button>
           </div>
         </form>
