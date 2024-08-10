@@ -1,7 +1,6 @@
 import BillImage from "../assets/img/icon.png";
 import TaxImage from "../assets/img/icon (1).png";
 import RevenueImage from "../assets/img/icon (2).png";
-import ConsultantImage from "../assets/img/icon (3).png";
 import PayersImage from "../assets/img/payers.png";
 import AgentImage from "../assets/img/agents.png";
 
