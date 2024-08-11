@@ -27,7 +27,6 @@ const Billing = () => {
   const { user } = useAuth()
   const navigate = useNavigate()
 
-
   const billingColumns = useMemo(
     () => [
       {
@@ -40,9 +39,9 @@ const Billing = () => {
         ),
       },
       {
-        accessorKey: 'taxPayer_Id',
-        header: 'Tax Payer ID',
-        cell: ({ row }) => <p>{row.getValue('taxPayer_Id')}</p>,
+        accessorKey: 'txPayerID',
+        header: 'Tax ID',
+        cell: ({ row }) => <p>{row.getValue('txPayerID')}</p>,
       },
       {
         accessorKey: 'payerFullName',
@@ -122,8 +121,8 @@ const Billing = () => {
         ),
       },
       {
-        accessorKey: '',
-        header: 'Action',
+        accessorKey: 'action',
+        header: '',
         cell: ({ row }) => (
           <DropdownMenu>
             <DropdownMenuTrigger className='w-full outline-none flex justify-center'>
@@ -172,7 +171,7 @@ const Billing = () => {
       const fullName = `${item.txPayFName} ${item.txPayLName}`.toLowerCase()
       return (
         item.year.toString().includes(searchQuery.toLowerCase()) ||
-        item.taxPayerId?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.txPayerID?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         fullName.includes(searchQuery.toLowerCase()) ||
         item.miniTaxStation
           ?.toLowerCase()
