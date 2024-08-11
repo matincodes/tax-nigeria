@@ -30,7 +30,7 @@ const TaxPayerManagement = () => {
         cell: ({ row }) => {
           return (
             <p className='w-full text-ellipsis text-black font-semibold overflow-hidden whitespace-nowrap'>
-              {`${row.original.firstName} ${row.original.lastname} ${row.original.othername}`}
+              {`${row.original.firstName} ${row.original.lastname}`}
             </p>
           )
         },
@@ -162,6 +162,7 @@ const TaxPayerManagement = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true)
       try {
         const getUrl = user => {
           if (user.role === 'admin') {
