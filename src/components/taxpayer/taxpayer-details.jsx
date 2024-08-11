@@ -119,8 +119,8 @@ const TaxpayerDetails = () => {
 
   if (user.role.toLowerCase() === 'agent')
     billingColumns.push({
-      accessorKey: '',
-      header: 'Action',
+      accessorKey: 'action',
+      header: '',
       cell: ({ row }) => (
         <DropdownMenu>
           <DropdownMenuTrigger className='w-full outline-none flex justify-center'>
