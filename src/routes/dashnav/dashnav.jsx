@@ -169,8 +169,12 @@ const DashNav = () => {
               )
             }
           >
-            <div className='w-full'>
-              <img src={ProfilePicture} alt='' className='w-[100%]' />
+            <div className='w-[40px] '>
+              <img
+                src={ProfilePicture}
+                alt=''
+                className='w-[100%] rounded-full'
+              />
             </div>
             <div className='ml-2 flex flex-col font-manrope'>
               <h4 className='font-medium capitalize'>
