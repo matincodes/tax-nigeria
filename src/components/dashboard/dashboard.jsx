@@ -100,9 +100,9 @@ const Dashboard = () => {
             <LineChart />
           </div>
           {/** */}
-          <div className='w-full mt-3 grid grid-cols-5 gap-3 items-start'>
+          {/* <div className='w-full mt-3 grid grid-cols-5 gap-3 items-start'>
             <TaxInflow />
-          </div>
+          </div> */}
         </div>
         {/** 2 */}
         <div className='w-full col-span-3 space-y-5'>
